@@ -1,0 +1,5 @@
+# -*- Makefile -*-
+#  $Id: Makevars 913 2011-03-22 10:20:01Z imosqueira $
+# PKG_CFLAGS=-Wunused -pedantic
+
+PKG_LIBS = $(SUBLIBS) $(shell $(R_HOME)/bin/${R_ARCH}/R --slave --no-site-file --no-init-file -e 'cat(system.file("libs", package="FLash"))')/${R_ARCH}/FLash.so

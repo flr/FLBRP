@@ -1,0 +1,4 @@
+PKG_LIBS = $(SUBLIBS) '$(shell "$(R_HOME)/bin/${R_ARCH_BIN}/Rterm.exe" --slave -e 'cat(system.file("libs", package="FLCore"))')/${R_ARCH}/FLCore.dll'
+COPTFLAG=-O0
+CXXOPTFLAG=-O0
+DEBUG=F
