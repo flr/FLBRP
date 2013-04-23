@@ -13,4 +13,6 @@ setMethod("recycle6d<-", signature(object="FLQuant", value="FLQuant"),
             if (!all(dim(value)[nDim]==1 | dim(value)[nDim]==dim(object)[nDim]))
               stop("dims in 2nd arg can't be greater than 1 and != those in arg 1")
             
-            return(sweep(FLQuant(0,dimnames=dimnames(object)), (1:6)[!(1:6 %in% nDim)], value, "+"))})     
+            return(sweep(FLQuant(0,dimnames=dimnames(object)), (1:6)[!(1:6 %in% nDim)], value, "+"))})    
+
+setMethod("biomass.obs", signature(object="FLBRP"), function(object,...) stock.obs(object,...))

@@ -1,5 +1,4 @@
 # stf - prepare an object for a Short Term Forecast
-# FLAssess/R/stf.R
 
 # Copyright 2003-2008 FLR Team. Distributed under the GPL 2 or later
 # Maintainer: Finlay Scott, Cefas & Robert Scott, JRC

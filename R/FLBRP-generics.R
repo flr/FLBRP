@@ -36,6 +36,9 @@ setGeneric('catch.obs', function(object, ...)
 setGeneric('yield.obs', function(object, ...)
 		standardGeneric('yield.obs'))
 
+setGeneric('biomass.obs', function(object, ...)
+  standardGeneric('biomass.obs'))
+
 setGeneric('computeFbar', function(object, ...)
 		standardGeneric('computeFbar'))
 
@@ -96,4 +99,9 @@ setGeneric('myers', function(object, ...)
 ## expands & fills
 setGeneric("recycle6d<-", function(object,value){
   standardGeneric("recycle6d<-")})
+
+## fwd(FLStock)
+if (!isGeneric("fwd"))
+  setGeneric("fwd", function(object, ctrl, ...)
+    standardGeneric("fwd"))
 
