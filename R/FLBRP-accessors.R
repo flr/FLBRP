@@ -1,4 +1,4 @@
-# createAccessors - «Short one line description»
+# createAccessors - ??Short one line description??
 # FLBRP/R/createAccessors.R
 
 # Copyright 2003-2009 FLR Team. Distributed under the GPL 2 or later

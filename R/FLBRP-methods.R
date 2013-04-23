@@ -1,3 +1,4 @@
+
 setMethod("recycle6d<-", signature(object="FLQuant", value="FLQuant"),
           function(object, value) {
             

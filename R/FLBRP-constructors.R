@@ -2,7 +2,7 @@
 # FLBRP/R/constructors.R
 
 # Copyright 2003-2009 FLR Team. Distributed under the GPL 2 or later
-# Maintainers: Laurence Kell, ICCAT & Santiago Cerviño, IEO
+# Maintainers: Laurence Kell, ICCAT & Santiago Cervi??o, IEO
 # $Id: constructors.R 926 2011-04-26 14:23:22Z lauriekell $
 
 # FLBRP
