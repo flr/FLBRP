@@ -8,7 +8,7 @@ Description: Calculates a range of biological reference points based upon yield 
 URL: http://flr-project.org
 Depends: methods, FLCore(>= 2.3), FLash, akima, ggplotFL, FLAssess
 LinkingTo: FLash
-Collate:   generics.R class.R createAccessors.R  constructors.R setplusgroup.R coerce.R  advicePlots.R fbar.R refpts.R spr.R functions.R indicators.R ggplot.R  kobe.R fwd.R fwdSetup.R MSE-funcs.R lh.R methods.R beer.R bivariate.R aav.R calcR.R econ.R glmPlots.R plotCatches.R simAR.R sp.R stf.R M.R growth.R noise.R cohortEffect.R leslie.R doIt.R elasticity.R ep.R io.SS3.R
+Collate:   FLBRP-generics.R FLBRP-class.R FLBRP-accessors.R FLBRP-constructors.R setplusgroup.R FLBRP-coerce.R  advicePlots.R fbar.R refpts.R spr.R functions.R indicators.R ggplot.R  kobe.R fwd.R fwdSetup.R MSE-funcs.R lh.R methods.R beer.R bivariate.R aav.R calcR.R econ.R glmPlots.R plotCatches.R simAR.R sp.R stf.R M.R growth.R noise.R cohortEffect.R leslie.R doIt.R elasticity.R ep.R io.SS3.R
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2.0
 lazyLoad: Yes
