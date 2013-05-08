@@ -45,6 +45,7 @@ Collate:   FLBRP-generics.R
            rand-cohortEffect.R 
            io.SS3.R
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
-License: GPL-2.0
+License: GPL-2
 lazyLoad: Yes
 lazyData: No
+LinkingTo: FLash

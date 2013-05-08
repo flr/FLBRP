@@ -4,7 +4,7 @@ double t1,t2;
  * FLBRP.cpp = 
  *
  * Author : Laurie Kell <laurence.kell@cefas.co.uk> Cefas, UK
- * Last Change: Thu Apr 11, 2013 at 01:49 PM +0200
+ * Last Change: Wed May 08, 2013 at 02:33 PM +0200
  * $Id: FLBRP.cpp 994 2011-06-03 14:30:21Z lauriekell $
  *
  */
@@ -12,7 +12,7 @@ double t1,t2;
 #include <adouble.h>
 typedef adtl::adouble adouble;
 
-#include "FLBRP.hpp"
+#include "FLBRP.h"
 
 int RP_harvest=0,                
     RP_yield  =1,                
