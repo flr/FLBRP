@@ -2,7 +2,7 @@
 # FLBRP/R/constructors.R
 
 # Copyright 2003-2009 FLR Team. Distributed under the GPL 2 or later
-# Maintainers: Laurence Kell, ICCAT & Santiago Cerviño, IEO
+# Maintainers: Laurence Kell, ICCAT & Santiago Cervi??o, IEO
 # $Id: constructors.R 926 2011-04-26 14:23:22Z lauriekell $
 
 # FLBRP
@@ -129,8 +129,8 @@ setMethod('FLBRP', signature(object='FLStock', sr='missing'),
       foo <- function(x) ifelse(all(is.na(x)), 0, mean(x, na.rm=na.rm))
     else if (mean =='geometric')
       foo <- function(x) ifelse(all(is.na(x)), 0, exp(mean(log(x), na.rm=na.rm)))
-    
-		# scaling
+
+    # scaling
     # 1. harvest values are divided for that year fbar (mean harvest for fages)
     scaling  <- sweep(object@harvest[,fyears], 2:6, apply(object@harvest[fages,fyears] ,
       2:6, 'mean', na.rm=na.rm), "/")
