@@ -107,7 +107,6 @@ setMethod('window', signature(x='FLStock'),
       return(x)})
 
 if (FALSE){
-  library(FLAssess)
   library(FLBRP)
   
   tmp=FLStock(m=FLQuant(0.1,dimnames=list(age=1:5,year=2001:2020)))

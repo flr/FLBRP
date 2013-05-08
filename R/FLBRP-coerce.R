@@ -6,7 +6,6 @@
 # Last Change: Wed Sep 14, 2011 at 11:21 AM +0200
 # $Id: coerce.R 995 2011-06-03 15:29:02Z lauriekell $
 
-# as(FLSR) {{{
 setAs('FLBRP', 'FLSR',
   function(from) {
 
@@ -22,13 +21,19 @@ setAs('FLBRP', 'FLSR',
     ssb <- ssb.obs(from)[,ac(ssbYrCls)]
 
    # create the FLSR from
-   return(FLSR(name=from@name,
-	  rec     =rec,
-    ssb     =ssb,
-    desc    = "'rec' and 'ssb' slots obtained from a 'FLBRP' from"))
+   res=FLSR(name=from@name,
+            desc    = "Obtained from a 'FLBRP' object",
+	          rec     =rec,
+            ssb     =ssb,
+            params  =params(from),
+            model   =model(from))
+    
+    res@params=params(from)
 
-  }
-) # }}}
+    residuals(res)=log(rec(res)/predict(res))
+    units(residuals(res))="NA"
+    
+    return(res)})
 
 # as.data.frame {{{
 setMethod("as.data.frame", 

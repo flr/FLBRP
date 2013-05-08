@@ -5,6 +5,7 @@
 # Maintainer: Iago Mosqueira, JRC
 # $Id:  $
 
+
 setGeneric('FLBRP', function(object, sr, ...)
 		standardGeneric('FLBRP'))
 
@@ -34,6 +35,9 @@ setGeneric('catch.obs', function(object, ...)
 
 setGeneric('yield.obs', function(object, ...)
 		standardGeneric('yield.obs'))
+
+setGeneric('biomass.obs', function(object, ...)
+  standardGeneric('biomass.obs'))
 
 setGeneric('computeFbar', function(object, ...)
 		standardGeneric('computeFbar'))
@@ -91,3 +95,13 @@ setGeneric('FLBRPs', function(object, ...)
 
 setGeneric('myers', function(object, ...)
   	standardGeneric('myers'))
+
+## expands & fills
+setGeneric("recycle6d<-", function(object,value){
+  standardGeneric("recycle6d<-")})
+
+## fwd(FLStock)
+if (!isGeneric("fwd"))
+  setGeneric("fwd", function(object, ctrl, ...)
+    standardGeneric("fwd"))
+
