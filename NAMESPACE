@@ -1,5 +1,7 @@
 useDynLib("FLBRP")
 import("FLCore")	
+importFrom("FLash",
+	"fwd")	
 exportClasses(
   "FLBRP",
   "FLBRPs")
