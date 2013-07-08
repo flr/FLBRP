@@ -5,7 +5,6 @@
 # Maintainer: Iago Mosqueira, JRC
 # $Id:  $
 
-
 setGeneric('FLBRP', function(object, sr, ...)
 		standardGeneric('FLBRP'))
 
@@ -104,4 +103,8 @@ setGeneric("recycle6d<-", function(object,value){
 if (!isGeneric("fwd"))
   setGeneric("fwd", function(object, ctrl, ...)
     standardGeneric("fwd"))
+
+setGeneric('refpts',   function(object,params,...) 
+    standardGeneric('refpts'))
+
 

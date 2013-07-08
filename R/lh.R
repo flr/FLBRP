@@ -91,36 +91,70 @@ abPars. <- function(x,spr0=NA,model){
 #  
 #    return(res)})
 
+setGeneric('rbind.', function(...)
+  standardGeneric('rbind.'))
+
+# rbind {{{
+setMethod('rbind.', signature('FLPar'),
+          function(..., deparse.level=1) {
+            
+            args <- list(...)
+            
+            # dims
+            dimar <- lapply(args, function(x) dim(x))
+            iterar <- lapply(dimar, function(x) x[length(x)])
+            
+            
+            # idx <- unlist(lapply(args, is, 'FLPar'))
+            # if(!all(idx))
+            #   stop("input objects must all be of class 'FLPar'")
+            
+            # extend iters
+            
+            res <- args[[1]]@.Data
+            if(length(args) > 1)
+              for (i in seq(length(args))[-1])
+                res <- rbind(res, args[[i]]@.Data)
+            
+            # dimnames
+            names(dimnames(res)) <- names(dimnames(args[[1]]))
+            if(any(unlist(lapply(dimnames(res), function(x) any((x==x[1])[-1])))))
+              warning("Repeated dimnames in output FLPar")
+            
+            return(FLPar(res, units=units(args[[1]])))
+          }
+) # }}}
+
 gislasim=function(par,t0=-0.1,a=0.00001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   
   names(dimnames(par)) <- tolower(names(dimnames(par)))
   
-  if (!("t0"    %in% dimnames(par)$params)) par=rbind(par,FLPar("t0"    =t0, iter=dims(par)$iter))
-  if (!("a"     %in% dimnames(par)$params)) par=rbind(par,FLPar("a"     =a,  iter=dims(par)$iter))
-  if (!("b"     %in% dimnames(par)$params)) par=rbind(par,FLPar("b"     =b,  iter=dims(par)$iter))
-  if (!("asym"  %in% dimnames(par)$params)) par=rbind(par,FLPar("asym"  =1,  iter=dims(par)$iter))
-  if (!("bg"    %in% dimnames(par)$params)) par=rbind(par,FLPar("bg"    =b,  iter=dims(par)$iter))
-  if (!("sl"    %in% dimnames(par)$params)) par=rbind(par,FLPar("sl"    =sl, iter=dims(par)$iter))
-  if (!("sr"    %in% dimnames(par)$params)) par=rbind(par,FLPar("sr"    =sr, iter=dims(par)$iter))
-  if (!("s"     %in% dimnames(par)$params)) par=rbind(par,FLPar("s"     =s,  iter=dims(par)$iter))
-  if (!("v"     %in% dimnames(par)$params)) par=rbind(par,FLPar("v"     =v,  iter=dims(par)$iter))
+  if (!("t0"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("t0"    =t0, iter=dims(par)$iter))
+  if (!("a"     %in% dimnames(par)$params)) par=rbind.(par,FLPar("a"     =a,  iter=dims(par)$iter))
+  if (!("b"     %in% dimnames(par)$params)) par=rbind.(par,FLPar("b"     =b,  iter=dims(par)$iter))
+  if (!("asym"  %in% dimnames(par)$params)) par=rbind.(par,FLPar("asym"  =1,  iter=dims(par)$iter))
+  if (!("bg"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("bg"    =b,  iter=dims(par)$iter))
+  if (!("sl"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("sl"    =sl, iter=dims(par)$iter))
+  if (!("sr"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("sr"    =sr, iter=dims(par)$iter))
+  if (!("s"     %in% dimnames(par)$params)) par=rbind.(par,FLPar("s"     =s,  iter=dims(par)$iter))
+  if (!("v"     %in% dimnames(par)$params)) par=rbind.(par,FLPar("v"     =v,  iter=dims(par)$iter))
 
   ## growth parameters
-  if (!("k"     %in% dimnames(par)$params)) par=rbind(par,FLPar("k"=3.15*par["linf"]^(-0.64), iter=dims(par)$iter)) # From Gislason et al 2008, all species combined
+  if (!("k"     %in% dimnames(par)$params)) par=rbind.(par,FLPar("k"=3.15*par["linf"]^(-0.64), iter=dims(par)$iter)) # From Gislason et al 2008, all species combined
   
   # Natural mortality parameters from Model 2, Table 1 Gislason 2010
-  par=rbind(par,FLPar(M1=0.55+1.44*log(par["linf"])+log(par["k"]), iter=dims(par)$iter),
+  par=rbind.(par,FLPar(M1=0.55+1.44*log(par["linf"])+log(par["k"]), iter=dims(par)$iter),
                 FLPar(M2=-1.61                                   , iter=dims(par)$iter))
 
-  if (!("ato95" %in% dimnames(par)$params)) par=rbind(par,FLPar("ato95" =ato95, iter=dims(par)$iter))
-  if (!("sl"    %in% dimnames(par)$params)) par=rbind(par,FLPar("sl"    =sl,    iter=dims(par)$iter))
-  if (!("sr"    %in% dimnames(par)$params)) par=rbind(par,FLPar("sr"    =sr,    iter=dims(par)$iter))
+  if (!("ato95" %in% dimnames(par)$params)) par=rbind.(par,FLPar("ato95" =ato95, iter=dims(par)$iter))
+  if (!("sl"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("sl"    =sl,    iter=dims(par)$iter))
+  if (!("sr"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("sr"    =sr,    iter=dims(par)$iter))
  
   ## maturity parameters from http://www.fishbase.org/manual/FishbaseThe_MATURITY_Table.htm
-  if (!("asym"    %in% dimnames(par)$params)) par=rbind(par,FLPar("asym"    =asym, iter=dims(par)$iter))
+  if (!("asym"    %in% dimnames(par)$params)) par=rbind.(par,FLPar("asym"    =asym, iter=dims(par)$iter))
 
   if (!("a50" %in% dimnames(par)$params)){
-    par=rbind(par,FLPar(a50=0.72*par["linf"]^0.93, iter=dims(par)$iter))
+    par=rbind.(par,FLPar(a50=0.72*par["linf"]^0.93, iter=dims(par)$iter))
     par["a50"]=invVonB(par,c(par["a50"]))
     }
 
@@ -129,7 +163,7 @@ gislasim=function(par,t0=-0.1,a=0.00001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
  
   dimnames(a1)$params="a1"
  
-  par=rbind(par,a1)
+  par=rbind.(par,a1)
   
   attributes(par)$units=c("cm","kg","1000s")
   
@@ -166,8 +200,8 @@ setUnits=function(res, par){
                "vcost"=          "",           
                "fcost"=          "")            
 
-    
-    units(res)[names(allUnits)]=allUnits
+    for (i in names(allUnits))
+      units(slot(res,i))=allUnits[i]
     
     return(res)}
 
@@ -187,6 +221,23 @@ lh=function(par,
             units=if("units" %in% names(attributes(par))) attributes(par)$units else NULL,
             ...){
 
+  if (!("min" %in% names(range)))
+    range=c(range,min=1)
+  if (!("minfbar" %in% names(range))){
+    val=c(range["min"])
+    names(val)="minfbar"
+    range=c(range,val)}
+  if (!("maxfbar" %in% names(range))){
+    val=c(range["max"])
+    names(val)="maxfbar"
+    range=c(range,val)}
+  if (!("plusgroup" %in% names(range))){
+    val=c(range["plusgroup"])
+    names(val)="plusgroup"
+    range=c(range,val)}
+  
+  range=range[c("min","max","minfbar","maxfbar","plusgroup")]
+  
   # Check that m.spwn and harvest.spwn are 0 - 1
   if (spwn > 1 | spwn < 0 | fish > 1 | fish < 0)
     stop("spwn and fish must be in the range 0 to 1\n")
@@ -234,7 +285,8 @@ lh=function(par,
              harvest.spwn   =FLQuant(harvest.spwn,    dimnames=dimnames(m.)),
              m.spwn         =FLQuant(m.spwn,    dimnames=dimnames(m.)),
              availability   =FLQuant(1,    dimnames=dimnames(m.)),
-             range          =range)
+             range          =range
+             )
 
    ## FApex
    #if (!("range" %in% names(args))) range(res,c("minfbar","maxfbar"))[]<-as.numeric(dimnames(landings.sel(res)[landings.sel(res)==max(landings.sel(res))][1])$age)
@@ -267,13 +319,13 @@ lh=function(par,
       fbar(res)<-args[["fbar"]] else 
    if (any((!is.nan(refpts(res)["crash","harvest"])))) 
       fbar(res)<-FLQuant(seq(0,1,length.out=101),quant="age")*refpts(res)["crash","harvest"]
-  
+
    res=brp(res)
-
-
+  
   if (!("units" %in% names(attributes(par))))  return(res)
+  
   if (all(is.na(attributes(par)$units)))  return(res)
-   
-   res <- setUnits(res, par)
-
+ 
+  #res <- setUnits(res, par)
+  
   return(res)}

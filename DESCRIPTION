@@ -7,15 +7,15 @@ Description: Calculates a range of biological reference points based upon yield 
   reference points like F0.1, FMSY and biomass based reference points like BMSY.
 URL: http://flr-project.org
 Depends: methods, FLCore(>= 2.3)
-Collate:   FLBRP-generics.R 
-           FLBRP-class.R 
+Collate:   FLBRP-class.R 
            FLBRP-accessors.R 
+           FLBRP-generics.R 
+           FLBRP-methods.R 
            FLBRP-constructors.R 
            FLBRP-coerce.R  
-           FLBRP-methods.R 
            FLBRP-setplusgroup.R 
            plot-ggplot.R  
-           plot-kobe.R fwd.R 
+           fwd.R 
            plot-glm.R 
            plot-advice.R 
            plot-catches.R 
@@ -40,10 +40,12 @@ Collate:   FLBRP-generics.R
            funcs-econ.R 
            funcs-ep.R 
            funcs-sp.R 
+           funcs-rand.R 
            rand-simAR.R 
            rand-noise.R 
            rand-cohortEffect.R 
            io.SS3.R
+           plot-kobe.R 
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2.0
 lazyLoad: Yes

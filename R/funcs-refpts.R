@@ -139,14 +139,14 @@ setMethod("msy", signature(object="FLBRP",params="missing"),
 #   }
 # ) # }}}
 
-# # refpts<- {{{
-# setMethod('refpts<-', signature(object='FLBRP', value='FLPar'),
-#   function(object, value) {
-#     slot(object, 'refpts') <- value
-#     return(object)
-#   }
-# )
-#     
+# refpts<- {{{
+setMethod('refpts<-', signature(object='FLBRP', value='FLPar'),
+  function(object, value) {
+    slot(object, 'refpts') <- value
+    return(object)
+  }
+)
+    
 # setMethod('refpts<-', signature(object='FLBRP', value='numeric'),
 #   function(object, ..., value) {
 # 

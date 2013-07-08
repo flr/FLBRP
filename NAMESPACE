@@ -1,5 +1,5 @@
 useDynLib("FLBRP")
-import("FLCore")	
+import("FLCore","kobe")	
 exportClasses(
   "FLBRP",
   "FLBRPs")
@@ -23,10 +23,9 @@ export(
   "plotCatches",
   "doIt")
 exportMethods(
-	"kobe",
   "simAR",
   "Arith",
-#  "fwd",
+  "fwd",
   "fwdWindow",
   "window",
   "FLBRP",
@@ -155,4 +154,6 @@ exportMethods(
   "leslie",
   "ep",
   "myers",
-  "readSS3")
+  "readSS3",
+  "plot",
+   "kobe")

@@ -1,14 +1,14 @@
-setGeneric('kobe',       function(file,method,...)    standardGeneric('kobe'))
+setGeneric('kobe',       function(object,method,...)    standardGeneric('kobe'))
 
-setMethod('kobe', signature(file="FLBRPs",method="missing"),  
-          function(file,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),ptYrs=NULL,nwrms=10){
-  if (is.null(ptYrs)) ptYrs=range(file[[1]])["maxyear"]
+setMethod('kobe', signature(object="FLBRPs",method="missing"),  
+          function(object,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),year=NULL,nwrms=10){
+  if (is.null(year)) year=range(object[[1]])["maxyear"]
   
-  res=llply(file, function(x,what=what,prob=prob,ptYrs=ptYrs,nwrms=nwrms)
+  res=llply(object, function(x,what=what,prob=prob,year=year,nwrms=nwrms)
     kobe(model.frame(mcf(FLQuants(stock  =ssb.obs( x)%/%x@refpts[proxy,"ssb"],
                                   harvest=fbar.obs(x)%/%x@refpts[proxy,"harvest"])),drop=T),
-            what=what,prob=prob,ptYrs=ptYrs,nwrms=nwrms),
-            what=what,prob=prob,ptYrs=ptYrs,nwrms=nwrms)
+            what=what,prob=prob,year=year,nwrms=nwrms),
+            what=what,prob=prob,year=year,nwrms=nwrms)
   
   res=list(trks=ldply(res, function(x) x$trks),
            pts =ldply(res, function(x) x$pts),
@@ -21,16 +21,19 @@ setMethod('kobe', signature(file="FLBRPs",method="missing"),
   else
     return(res[what]) })
 
-setMethod('kobe',  signature(file="FLBRP",method="missing"),  
-          function(file,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),ptYrs=NULL,nwrms=10){
-            if (is.null(ptYrs)) ptYrs=range(file)["maxyear"]
+setMethod('kobe',  signature(object="FLBRP",method="missing"),  
+          function(object,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),year=NULL,nwrms=10){
+            if (is.null(year)) year=range(object)["maxyear"]
             
-            dat=model.frame(mcf(FLQuants(stock  =ssb.obs( file)%/%refpts(file)[proxy,"ssb"],
-                                         harvest=fbar.obs(file)%/%refpts(file)[proxy,"harvest"])),drop=T)
+            dat=model.frame(mcf(FLQuants(stock  =ssb.obs( object)%/%refpts(object)[proxy,"ssb"],
+                                         harvest=fbar.obs(object)%/%refpts(object)[proxy,"harvest"])),drop=T)
             
-            res=kobeFn(dat,what=what,prob=prob,ptYrs=ptYrs,nwrms=nwrms)
-            if (length(what)==1)
-              return(res[[what]])
+            res=kobe:::kobeFn(dat,what=what,year=year,prob=prob,nwrms=nwrms)
+
+            if (length(what)==1){
+              if ("list" %in% class(res))
+                return(res[[what]])
+               else return(res)}
             else
               return(res[what])})
 
@@ -52,8 +55,8 @@ setMethod('kobe',  signature(file="FLBRP",method="missing"),
 #     
 #       invisible(p)}
 #     
- setGeneric('kobe', function(object, ...)
-     standardGeneric('kobe'))
+# setGeneric('kobe', function(object, ...)
+#     standardGeneric('kobe'))
 # setMethod('kobe', signature(object='missing'),
 #   function(object,xlim=c(0,2),ylim=xlim){
 #     
