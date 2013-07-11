@@ -4,7 +4,7 @@
 # Maintainer: Finlay Scott, Cefas & Robert Scott, JRC
 # $Id: stf.R 1044 2011-06-20 08:14:01Z imosqueira $
 
-if (!isGeneric("stf"))
+#if (!isGeneric("stf"))
     setGeneric("stf", function(object,...)
 	    standardGeneric("stf"))
 
