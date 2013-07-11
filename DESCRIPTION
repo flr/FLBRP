@@ -6,7 +6,7 @@ Description: Calculates a range of biological reference points based upon yield 
   recruit and stock recruit based equilibrium calculations. These include F based
   reference points like F0.1, FMSY and biomass based reference points like BMSY.
 URL: http://flr-project.org
-Depends: methods, FLCore(>= 2.3), FLash
+Depends: methods, FLCore(>= 2.3), FLash, ggplotFL
 Collate:   FLBRP-generics.R 
            FLBRP-class.R 
            FLBRP-accessors.R 

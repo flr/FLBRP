@@ -1,5 +1,6 @@
 useDynLib("FLBRP")
 import("FLCore")	
+import("ggplotFL")	
 importFrom("FLash",
 	"fwd")	
 exportClasses(
