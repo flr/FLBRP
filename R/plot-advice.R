@@ -23,8 +23,8 @@ setMethod("plot", signature(x="FLBRP", y="missing"),
  }
 ) # }}}
 
-# [plpot(FLBRP, FLStocks) {{{
-setMethod("plot", signature(x="FLStocks", y="missing"),
+# plot(FLBRP, FLStocks) {{{
+setMethod("plot", signature(x="FLBRPs", y="missing"),
   function(x, probs=c(0.95,0.50,0.05), size=c(0.5,1.0,0.5), lty=c(2,1,2),
     facet=facet_wrap(~qname,scale="free"),
     fn=list("SSB"=function(x) ssb.obs(X)/refpts(x)[scale,"ssb"],
