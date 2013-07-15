@@ -3,6 +3,14 @@ import("FLCore")
 import("ggplotFL")	
 importFrom("FLash",
 	"fwd")	
+importFrom("plyr",
+	"ddply",
+	"dlply",
+	"ldply",
+	"llply",
+	"maply",
+	"mdply",	
+	"mlply")
 exportClasses(
   "FLBRP",
   "FLBRPs")
