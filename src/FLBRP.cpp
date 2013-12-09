@@ -4,7 +4,7 @@ double t1,t2;
  * FLBRP.cpp = 
  *
  * Author : Laurie Kell <laurence.kell@cefas.co.uk> Cefas, UK
- * Last Change: Wed May 08, 2013 at 02:33 PM +0200
+ * Last Change: Mon Dec 09, 2013 at 12:54 PM +0100
  * $Id: FLBRP.cpp 994 2011-06-03 14:30:21Z lauriekell $
  *
  */
@@ -1390,14 +1390,14 @@ SEXP FLBRP::brp(SEXP Object)
       {
       UNPROTECT(1);
   
-      return FALSE;
+			return ScalarLogical(FALSE);
       }
 
    if (INTEGER(dims)[1] != 8)
       {
       UNPROTECT(1);
   
-      return FALSE;
+			return ScalarLogical(FALSE);
       }
 
    dim[0] = INTEGER(dims)[0];
