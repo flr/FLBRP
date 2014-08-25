@@ -290,7 +290,7 @@ setMethod('landings.hat', signature(object='FLBRP'),
 
 setMethod('stock', signature(object='FLBRP'),
   function(object)
-    return(apply(sweep(stock.n(object),c(1,3:6),stock.wt(object),"*"),2,sum)))
+		return(quantSums(stock.n(object) %*% stock.wt(object))))
 
 setMethod('stock.hat', signature(object='FLBRP'),
   function(object) return(stock(object)))
@@ -298,11 +298,12 @@ setMethod('stock.hat', signature(object='FLBRP'),
 setMethod('ssb', signature(object='FLBRP'),
   function(object)
      {
-     f    <-sweep(harvest(object), c(1,3:6), harvest.spwn(object), "*")
-     M    <-sweep(      m(object), c(1,3:6),       m.spwn(object), "*")
-     expZ <-exp(-sweep(f, c(1,3:6), M, "+"))
+     f    <-harvest(object) %*% harvest.spwn(object)
+     M    <-      m(object) %*%       m.spwn(object)
+     expZ <-exp(-f%-%M)
 
-     return(apply(sweep(stock.n(object) * expZ, c(1,3:6), stock.wt(object)*mat(object),"*"),2,sum))})
+     return(apply(stock.n(object) %*% expZ %*% stock.wt(object)%*%mat(object),c(2,6),sum))})
+
 
 setMethod('ssb.hat', signature(object='FLBRP'),
   function(object) return(ssb(object)))

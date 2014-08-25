@@ -136,3 +136,55 @@ plotBeer=function(v){
   		text(xmid,ymid,labels=c(paste("+",abs(v))),cex=.5+abs(v)*2)
       }
     }
+
+# '[[' {{{
+setMethod('[[', signature(x='FLComp', i='character'),
+function(x, i, j, ..., drop=FALSE) {
+warning("using a local copy of '[[' which will be removed in later versions of FLCore")
+res <- FLlst()
+args <- list(...)
+# j
+if(!missing(j))
+if(is(j, 'character'))
+i <- c(i, j)
+else
+stop(paste('Only character vectors for slot names allowed:', as.character(j)))
+# args
+if(length(args) > 0)
+if(all(unlist(lapply(args, function(x) is(x, 'character')))))
+i <- c(i, unlist(args))
+else
+stop(paste('Only character vectors for slot names allowed:',
+unlist(args[!unlist(lapply(args, function(x) is(x, 'character')))])))
+for (j in 1:length(i))
+res[[i[j]]] <- do.call(i[j],list(x))
+names(res) <- i
+return(new(getPlural(res[[1]]), res))
+}
+) # }}}
+# '[[<-' {{{
+setMethod('[[<-', signature(x='FLComp', i='character', value='FLlst'),
+function(x, i, j, ..., value) {
+warning("using a local copy of '[[<-' which will be removed in later versions of FLCore")
+args <- list(...)
+# j
+if(!missing(j))
+if(is(j, 'character'))
+i <- c(i, j)
+else
+stop(paste('Only character vectors for slot names allowed:', as.character(j)))
+# args
+if(length(args) > 0)
+if(all(unlist(lapply(args, function(x) is(x, 'character')))))
+i <- c(i, unlist(args))
+else
+stop(paste('Only character vectors for slot names allowed:',
+unlist(args[!unlist(lapply(args, function(x) is(x, 'character')))])))
+# check names match
+if(!identical(sort(names(value)), sort(i)))
+stop('Names in list do not match those in selection.')
+for (j in 1:length(i))
+slot(x, i[j]) <- value[[i[j]]]
+return(x)
+}
+) # }}}
