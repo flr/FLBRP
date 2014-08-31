@@ -50,9 +50,10 @@ setMethod("wt2len", signature(params="FLPar", data="numeric"),
 ################################################################################
 
 vonB=function(params,data){
-  res=params["linf"]%*%(1.0-exp(-params["k"]%*%(data-params["t0"])))
+  res=params["linf"]%*%(1.0-exp((-params["k"])%*%(data%-%params["t0"])))
   dimnames(res)=dimnames(data)
   res}
+
 
 invVonB=function(params,data)
     -log(1.0-(data/params["linf"]))/params["k"]+params["t0"]

@@ -120,7 +120,11 @@ gislasim=function(par,t0=-0.1,a=0.00001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   if (!("asym"    %in% dimnames(par)$params)) par=rbind(par,FLPar("asym"    =asym, iter=dims(par)$iter))
 
   if (!("a50" %in% dimnames(par)$params)){
-    par=rbind(par,FLPar(a50=0.72*par["linf"]^0.93, iter=dims(par)$iter))
+    if (("l50" %in% dimnames(par)$params))
+      par=rbind(par,FLPar(a50=par["l50"]))
+    else
+      par=rbind(par,FLPar(a50=0.72*par["linf"]^0.93, iter=dims(par)$iter))
+    
     par["a50"]=invVonB(par,c(par["a50"]))
     }
 
@@ -137,6 +141,7 @@ gislasim=function(par,t0=-0.1,a=0.00001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
 
 setUnits=function(res, par){
 
+    if (is.null(attributes(par)$units)) return(res)
     units=attributes(par)$units
     #browser()
     allUnits=list("params"=      "",          
@@ -191,6 +196,8 @@ lh=function(par,
   if (spwn > 1 | spwn < 0 | fish > 1 | fish < 0)
     stop("spwn and fish must be in the range 0 to 1\n")
   
+  args<-list(...)
+  if (is.null(attributes(par)$units)) return(res)
   if (("m.spwn" %in% names(args)))
      m.spwn =args[["m.spwn"]]
   else

@@ -39,20 +39,22 @@ mcgurk=function(data) #(wt)
 gislason=function(params,data) #(l,linf,k) 
    exp(0.55-1.61*log(data) + 1.44*log(params["linf"]) + log(params["k"]))
 
-chenWatanabe=function(params,data) { #(age,k,t0=-0.1){
-   m =params["k"]/(1-exp(-params["k"]*(data-params["t0"])))
-
-   tm =-(1/params["k"])*log(1-exp(params["k"]*params["t0"]))+params["t0"]
-   bit=exp(-params["k"]*(tm-params["t0"]))
-   
-   a0=1-bit
-   a1=params["k"]*bit
-   a2=-0.5*params["k"]^2*bit
-   age.=data>c(tm)
-   m[age.] =params["k"]/(a0+a1*(data[age.]-tm)+a2*(data[age.]-tm)^2)
+## M, bathtub
+chenWatanabe=function(par,age) { #(age,k,t0=-0.1){
+  m =par["k"]/(1-exp(-par["k"]*(age-par["t0"])))
   
-   return(m)}   
-
+  tm =-(1/par["k"])*log(1-exp(par["k"]*par["t0"]))+par["t0"]
+  bit=exp(-par["k"]*(tm-par["t0"]))
+  
+  a0=1-bit
+  a1=par["k"]*bit
+  a2=-0.5*par["k"]^2*bit
+  age.=age>c(tm)
+  m[age.] =par["k"]/(a0+a1*(age[age.]-tm)+a2*(age[age.]-tm)^2)
+  
+  m[m<0]=max(m)
+  
+  return(m)}   
 ##########################################################################################################
 ##########################################################################################################
 mlst=list("gunderson"         =gundersonDygert,
