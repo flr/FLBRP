@@ -46,15 +46,20 @@ kobeFn=function(object,what=c("sims","trks","pts","smry","wrms")[1],
 setMethod('kobe',  signature(object="FLBRP",method="missing"),  
           function(object,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),year=NULL,nwrms=10){
             if (is.null(year)) year=range(object)["maxyear"]
-            
+print(1)            
             dat=model.frame(mcf(FLQuants(stock  =ssb.obs( object)%/%refpts(object)[proxy,"ssb"],
                                          harvest=fbar.obs(object)%/%refpts(object)[proxy,"harvest"])),drop=T)
             
-            res=kobe:::kobeFn(dat,what=what,prob=prob,year=year,nwrms=nwrms)
-            if (length(what)==1)
-              return(res[[what]])
-            else
-              return(res[what])})
+print(head(dat)) 
+          res=kobeFn(dat,what=what,prob=prob,year=year,nwrms=nwrms)
+print(head(res))
+# 
+#           if (length(what)==1)
+#               return(res[[what]])
+#             else
+#               return(res[what])
+res
+})
 
 setMethod('kobe',  signature(object="FLBRPs",method="missing"),  
           function(object,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),year=NULL,nwrms=10){
@@ -75,7 +80,11 @@ setMethod('kobe',  signature(object="FLBRPs",method="missing"),
               return(res[what])})
 
 setMethod('kobe',  signature(object="FLBRP",method="FLStock"),  
-          function(object,method,proxy="msy",what=c("sims","trks","pts","smry","wrms")[1],prob=c(0.75,0.5,.25),year=NULL,nwrms=10){
+          function(object,method,proxy="msy",
+                   what=c("sims","trks","pts","smry","wrms")[1],
+                   prob=c(0.75,0.5,.25),
+                   year=NULL,
+                   nwrms=10){
             
             if (is.null(year)) year=range(method)["maxyear"]
             

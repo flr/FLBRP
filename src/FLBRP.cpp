@@ -247,8 +247,8 @@ void FLBRP::Init(SEXP x)
    niters   = __max(niters,availability.niters());     
    niters   = __max(niters,cost_fix.niters());      
    niters   = __max(niters,cost_var.niters());      
-   niters   = __max(niters,price.niters());         
-
+   niters   = __max(niters,price.niters()); 
+   
    stock_n.Init(   minage,maxage,fbar.minyr(),fbar.maxyr(), nunits, nseasons, nareas, niters, 0.0);
    discards_n.Init(minage,maxage,fbar.minyr(),fbar.maxyr(), nunits, nseasons, nareas, niters, 0.0);
    landings_n.Init(minage,maxage,fbar.minyr(),fbar.maxyr(), nunits, nseasons, nareas, niters, 0.0);

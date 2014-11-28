@@ -45,6 +45,7 @@ Collate:   FLBRP-generics.R
            rand-noise.R 
            rand-cohortEffect.R 
            io.SS3.R
+           pMeasure.R
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2
 lazyLoad: Yes

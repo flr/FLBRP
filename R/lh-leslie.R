@@ -2,11 +2,13 @@ setGeneric('leslie', function(object, ...)
   	standardGeneric('leslie'))
 
 setMethod("leslie", signature(object="FLBRP"),
-  function(object,fbar=FLQuant(0),numbers=TRUE,...){
+  function(object,f=FLQuant(0),fbar=f,numbers=TRUE,...){
 
   args=list(...)  
   for (slt in names(args)[names(args) %in% names(getSlots("FLBRP"))])
      slot(object, slt)=args[[slt]]
+  
+  if ("FLPar" %in% is(fbar)) fbar=FLQuant(fbar[drop=TRUE])
   fbar(object)=fbar  
  
   ages=dims(object)$min:dims(object)$max

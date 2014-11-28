@@ -274,7 +274,7 @@ setMethod('yield.hat', signature(object='FLBRP'),
 
 setMethod('discards', signature(object='FLBRP'),
   function(object)
-    return(apply(sweep(discards.n(object),c(1,3:6),discards.wt(object),"*"),2,sum)))
+    return(apply(sweep(discards.n(object),c(1,3:6),discards.wt(object),"*"),c(2,6),sum)))
 
 setMethod('discards.hat', signature(object='FLBRP'),
   function(object) return(discards(object)))
@@ -282,7 +282,7 @@ setMethod('discards.hat', signature(object='FLBRP'),
 
 setMethod('landings', signature(object='FLBRP'),
   function(object){
-    return(apply(sweep(landings.n(object),c(1,3:6),landings.wt(object),"*"),2,sum))})
+    return(apply(sweep(landings.n(object),c(1,3:6),landings.wt(object),"*"),c(2,6),sum))})
 
 setMethod('landings.hat', signature(object='FLBRP'),
   function(object) return(landings(object))
@@ -290,7 +290,7 @@ setMethod('landings.hat', signature(object='FLBRP'),
 
 setMethod('stock', signature(object='FLBRP'),
   function(object)
-    return(apply(sweep(stock.n(object),c(1,3:6),stock.wt(object),"*"),2,sum)))
+    return(apply(sweep(stock.n(object),c(1,3:6),stock.wt(object),"*"),c(2,6),sum)))
 
 setMethod('stock.hat', signature(object='FLBRP'),
   function(object) return(stock(object)))
@@ -302,18 +302,18 @@ setMethod('ssb', signature(object='FLBRP'),
      M    <-sweep(      m(object), c(1,3:6),       m.spwn(object), "*")
      expZ <-exp(-sweep(f, c(1,3:6), M, "+"))
 
-     return(apply(sweep(stock.n(object) * expZ, c(1,3:6), stock.wt(object)*mat(object),"*"),2,sum))})
+     return(apply(sweep(stock.n(object) * expZ, c(1,3:6), stock.wt(object)*mat(object),"*"),c(2,6),sum))})
 
 setMethod('ssb.hat', signature(object='FLBRP'),
   function(object) return(ssb(object)))
 
 setMethod('revenue', signature(object='FLBRP'),
   function(object)
-    return(apply(sweep(landings.n(object),c(1,3:6),price(object)*landings.wt(object),"*"),2,sum)))
+    return(apply(sweep(landings.n(object),c(1,3:6),price(object)*landings.wt(object),"*"),c(2,6),sum)))
 
 setMethod('cost', signature(object='FLBRP'),
   function(object){
-    res<-apply(sweep(sweep(fbar(object),3:6,vcost(object),"*"),3:6,fcost(object),"+"),2,sum)
+    res<-apply(sweep(sweep(fbar(object),3:6,vcost(object),"*"),3:6,fcost(object),"+"),c(2,6),sum)
     return(res)})
 
 setMethod('profit', signature(object='FLBRP'),
