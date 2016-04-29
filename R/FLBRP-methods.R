@@ -350,3 +350,21 @@ setMethod("recycle6d<-", signature(object="FLQuant", value="FLQuant"),
             return(sweep(FLQuant(0,dimnames=dimnames(object)), (1:6)[!(1:6 %in% nDim)], value, "+"))})    
 
 setMethod("biomass.obs", signature(object="FLBRP"), function(object,...) stock.obs(object,...))
+
+
+# window    {{{
+setMethod("window", signature(x="FLBRP"),
+	function(x, start=dims(x@ssb.obs)$minyear, end=dims(x@ssb.obs)$maxyear,
+    extend=TRUE, frequency=1) {
+    # To window: *.obs
+    obs <- c("fbar.obs", "landings.obs", "discards.obs", "rec.obs", "ssb.obs",
+      "stock.obs", "profit.obs")
+
+    for(s in obs) {
+      slot(x, s) <- window(slot(x, s), start=start, end=end, extend=extend,
+        frequency=frequency)
+    }
+  	
+		return(x)
+	}
+)	# }}}
