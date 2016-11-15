@@ -161,7 +161,7 @@ exportMethods(
   "pa<-",
   "obs<-",
 #  "vonB",
-  "logistic",
+#  "logistic",
 #  "invVonB",
   "leslie",
   "ep",
