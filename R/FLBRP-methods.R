@@ -282,7 +282,8 @@ setMethod('discards.hat', signature(object='FLBRP'),
 
 setMethod('landings', signature(object='FLBRP'),
   function(object){
-    return(apply(sweep(landings.n(object),c(1,3:6),landings.wt(object),"*"),2,sum))})
+    return(quantSums(landings.n(object) %*% landings.wt(object)))
+  })
 
 setMethod('landings.hat', signature(object='FLBRP'),
   function(object) return(landings(object))
