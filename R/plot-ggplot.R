@@ -54,7 +54,7 @@ setMethod("plot", signature(x="FLBRP", y="missing"),
   if (refpts & !all(is.na(refpts(x))))
     p<-p+geom_point(aes(x,y,colour=refpt),data=subset(ref.,x>=0 & y>=0 & !is.na(x) & !is.na(y)))
 
-  invisible(p)})
+  return(p)})
 
 #x<-brp(FLBRP(ple4,params=FLPar(exp(mean(log(rec(ple4)))))))
 
@@ -88,9 +88,7 @@ setMethod("plot", signature(x="FLBRPs", y="missing"),
       obs.=subset(obs., pnl %in% paste("Equilibrium",panel))
       p<-p+geom_point(aes(x,y,group=iter:.id,col=.id),data=subset(obs.,x>=0 & y>=0 & !is.na(x) & !is.na(y)))} 
 
-     print(p)
-
-     invisible(p)})
+     return(p)})
 
 ## Bivariate CI
 bvOrder<-function(dt)
