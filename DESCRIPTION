@@ -1,7 +1,7 @@
 Package: FLBRP
 Title: Reference Points and Advice
-Version: 2.5.20161115
-Date: 2016-11-15
+Version: 2.5.20161129
+Date: 2016-11-29
 Author: Laurence T. Kell
 Description: Calculates a range of biological reference points based upon yield per
   recruit and stock recruit based equilibrium calculations. These include F based
