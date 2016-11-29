@@ -211,7 +211,7 @@ setMethod('hcrYield', signature(object='FLBRP', fbar='FLQuant'),
     if(dims(res)$iter != dims(landings.wt(object))$iter)
       landings.wt(object) <- propagate(landings.wt(object), dims(res)$iter)
 
-    return(apply(sweep(res, c(1,3:6), landings.wt(object), "*"), 2, sum))
+    return(quantSums(res %*% landings.wt(object)))
    }
 )
 setMethod('hcrYield', signature(object='FLBRP', fbar='numeric'),
@@ -273,8 +273,9 @@ setMethod('yield.hat', signature(object='FLBRP'),
   function(object) return(landings(object)))
 
 setMethod('discards', signature(object='FLBRP'),
-  function(object)
-    return(apply(sweep(discards.n(object),c(1,3:6),discards.wt(object),"*"),2,sum)))
+  function(object) {
+    return(quantSums(discards.n(object) %*% discards.wt(object)))
+  })
 
 setMethod('discards.hat', signature(object='FLBRP'),
   function(object) return(discards(object)))
@@ -310,13 +311,14 @@ setMethod('ssb.hat', signature(object='FLBRP'),
   function(object) return(ssb(object)))
 
 setMethod('revenue', signature(object='FLBRP'),
-  function(object)
-    return(apply(sweep(landings.n(object),c(1,3:6),price(object)*landings.wt(object),"*"),2,sum)))
+  function(object) {
+    return(quantSums(landings.n(object) %*% landings.wt(object) %*% price(object)))
+  })
 
 setMethod('cost', signature(object='FLBRP'),
   function(object){
-    res<-apply(sweep(sweep(fbar(object),3:6,vcost(object),"*"),3:6,fcost(object),"+"),2,sum)
-    return(res)})
+    return(quantSums((fbar(object) %*% vcost(object)) %+% fcost(object)))
+  })
 
 setMethod('profit', signature(object='FLBRP'),
   function(object)
