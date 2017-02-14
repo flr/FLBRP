@@ -1,0 +1,14 @@
+# CHANGES IN FLBRP VERSION 2.6
+
+## NEW FEATURES
+
+## USER-VISIBLE CHANGES
+
+## BUG FIXES
+- Calls to sweep substitute by %*% and quantSums
+
+## UTILITIES
+
+## DOCUMENTATION
+
+## DEPRECATED & DEFUNCT

@@ -211,7 +211,7 @@ setMethod('hcrYield', signature(object='FLBRP', fbar='FLQuant'),
     if(dims(res)$iter != dims(landings.wt(object))$iter)
       landings.wt(object) <- propagate(landings.wt(object), dims(res)$iter)
 
-    return(apply(sweep(res, c(1,3:6), landings.wt(object), "*"), 2, sum))
+    return(quantSums(res %*% landings.wt(object)))
    }
 )
 setMethod('hcrYield', signature(object='FLBRP', fbar='numeric'),
@@ -249,7 +249,7 @@ setMethod('iter', signature(obj='FLBRP'),
     obj <- callNextMethod(obj, iter, ...)
     params(obj) <- iter(params(obj), iter)
     if(dim(refpts(obj))[3] > 1)
-      refpts(object) <- refpts(obj)[,,iter]
+      refpts(obj) <- iter(refpts(obj), iter)
 
     return(obj)})
 
@@ -273,8 +273,9 @@ setMethod('yield.hat', signature(object='FLBRP'),
   function(object) return(landings(object)))
 
 setMethod('discards', signature(object='FLBRP'),
-  function(object)
-    return(apply(sweep(discards.n(object),c(1,3:6),discards.wt(object),"*"),2,sum)))
+  function(object) {
+    return(quantSums(discards.n(object) %*% discards.wt(object)))
+  })
 
 setMethod('discards.hat', signature(object='FLBRP'),
   function(object) return(discards(object)))
@@ -282,7 +283,8 @@ setMethod('discards.hat', signature(object='FLBRP'),
 
 setMethod('landings', signature(object='FLBRP'),
   function(object){
-    return(apply(sweep(landings.n(object),c(1,3:6),landings.wt(object),"*"),2,sum))})
+    return(quantSums(landings.n(object) %*% landings.wt(object)))
+  })
 
 setMethod('landings.hat', signature(object='FLBRP'),
   function(object) return(landings(object))
@@ -290,7 +292,7 @@ setMethod('landings.hat', signature(object='FLBRP'),
 
 setMethod('stock', signature(object='FLBRP'),
   function(object)
-    return(apply(sweep(stock.n(object),c(1,3:6),stock.wt(object),"*"),2,sum)))
+		return(quantSums(stock.n(object) %*% stock.wt(object))))
 
 setMethod('stock.hat', signature(object='FLBRP'),
   function(object) return(stock(object)))
@@ -298,23 +300,25 @@ setMethod('stock.hat', signature(object='FLBRP'),
 setMethod('ssb', signature(object='FLBRP'),
   function(object)
      {
-     f    <-sweep(harvest(object), c(1,3:6), harvest.spwn(object), "*")
-     M    <-sweep(      m(object), c(1,3:6),       m.spwn(object), "*")
-     expZ <-exp(-sweep(f, c(1,3:6), M, "+"))
+     f    <-harvest(object) %*% harvest.spwn(object)
+     M    <-      m(object) %*%       m.spwn(object)
+     expZ <-exp(-f%-%M)
 
-     return(apply(sweep(stock.n(object) * expZ, c(1,3:6), stock.wt(object)*mat(object),"*"),2,sum))})
+     return(apply(stock.n(object) %*% expZ %*% stock.wt(object)%*%mat(object),c(2,6),sum))})
+
 
 setMethod('ssb.hat', signature(object='FLBRP'),
   function(object) return(ssb(object)))
 
 setMethod('revenue', signature(object='FLBRP'),
-  function(object)
-    return(apply(sweep(landings.n(object),c(1,3:6),price(object)*landings.wt(object),"*"),2,sum)))
+  function(object) {
+    return(quantSums(landings.n(object) %*% landings.wt(object) %*% price(object)))
+  })
 
 setMethod('cost', signature(object='FLBRP'),
   function(object){
-    res<-apply(sweep(sweep(fbar(object),3:6,vcost(object),"*"),3:6,fcost(object),"+"),2,sum)
-    return(res)})
+    return(quantSums((fbar(object) %*% vcost(object)) %+% fcost(object)))
+  })
 
 setMethod('profit', signature(object='FLBRP'),
   function(object)
@@ -349,3 +353,21 @@ setMethod("recycle6d<-", signature(object="FLQuant", value="FLQuant"),
             return(sweep(FLQuant(0,dimnames=dimnames(object)), (1:6)[!(1:6 %in% nDim)], value, "+"))})    
 
 setMethod("biomass.obs", signature(object="FLBRP"), function(object,...) stock.obs(object,...))
+
+
+# window    {{{
+setMethod("window", signature(x="FLBRP"),
+	function(x, start=dims(x@ssb.obs)$minyear, end=dims(x@ssb.obs)$maxyear,
+    extend=TRUE, frequency=1) {
+    # To window: *.obs
+    obs <- c("fbar.obs", "landings.obs", "discards.obs", "rec.obs", "ssb.obs",
+      "stock.obs", "profit.obs")
+
+    for(s in obs) {
+      slot(x, s) <- window(slot(x, s), start=start, end=end, extend=extend,
+        frequency=frequency)
+    }
+  	
+		return(x)
+	}
+)	# }}}

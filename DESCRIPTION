@@ -1,52 +1,61 @@
 Package: FLBRP
 Title: Reference Points and Advice
-Version: 2.5.20140708
-Date: 20140708
+Version: 2.5.20170109
+Date: 2017-01-09
 Author: Laurence T. Kell
-Description: Calculates a range of biological reference points based upon yield per
-  recruit and stock recruit based equilibrium calculations. These include F based
-  reference points like F0.1, FMSY and biomass based reference points like BMSY.
+Description: Calculates a range of biological reference points based upon yield
+    per recruit and stock recruit based equilibrium calculations. These include F
+    based reference points like F0.1, FMSY and biomass based reference points like
+    BMSY.
 URL: http://flr-project.org
-Depends: methods, FLCore(>= 2.3), FLash, ggplotFL, plyr
-Collate:   FLBRP-generics.R 
-           FLBRP-class.R 
-           FLBRP-accessors.R 
-           FLBRP-constructors.R 
-           FLBRP-coerce.R  
-           FLBRP-methods.R 
-           FLBRP-setplusgroup.R 
-           plot-advice.R 
-           plot-ggplot.R  
-           plot-kobe.R fwd.R 
-           plot-glm.R 
-           plot-catches.R 
-           plot-beer.R 
-           plot-bivariate.R 
-           lh.R 
-           lh-M.R 
-           lh-growth.R 
-           lh-leslie.R 
-           lh-doIt.R 
-           lh-elasticity.R 
-           lh-calcR.R 
-           fwd-setup.R 
-           fwd-stf.R 
-           funcs-fbar.R 
-           funcs-refpts.R 
-           funcs-spr.R 
-           funcs-MSE.R 
-           funcs.R 
-           funcs-indicators.R 
-           funcs-aav.R 
-           funcs-econ.R 
-           funcs-ep.R 
-           funcs-sp.R 
-           rand-simAR.R 
-           rand-noise.R 
-           rand-cohortEffect.R 
-           io.SS3.R
+Depends:
+    FLCore(>= 2.3),
+    FLash,
+    ggplotFL,
+    plyr,
+    reshape
+Collate:
+    FLBRP-generics.R
+    FLBRP-class.R
+    FLBRP-accessors.R
+    FLBRP-constructors.R
+    FLBRP-coerce.R
+    FLBRP-methods.R
+    FLBRP-setplusgroup.R
+    plot-advice.R
+    plot-ggplot.R
+    plot-kobe.R
+    fwd.R
+    plot-glm.R
+    plot-catches.R
+    plot-beer.R
+    plot-bivariate.R
+    lh.R
+    lh-M.R
+    lh-growth.R
+    lh-leslie.R
+    lh-doIt.R
+    lh-elasticity.R
+    lh-calcR.R
+    fwd-setup.R
+    fwd-stf.R
+    funcs-fbar.R
+    funcs-refpts.R
+    funcs-spr.R
+    funcs-MSE.R
+    funcs.R
+    funcs-indicators.R
+    funcs-aav.R
+    funcs-econ.R
+    funcs-ep.R
+    funcs-sp.R
+    rand-simAR.R
+    rand-noise.R
+    rand-cohortEffect.R
+    io.SS3.R
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2
 lazyLoad: Yes
 lazyData: No
 LinkingTo: FLash
+RoxygenNote: 5.0.1

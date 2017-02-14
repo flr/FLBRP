@@ -38,8 +38,6 @@ setMethod('sv', signature(x='FLPar', model='character'),
 doIt=function(what,par,dynamic=FALSE,fbar=FLQuant(c(seq(0,.75,length.out=21),seq(.75,.0,length.out=21)[-1]),dimnames=list(year=1:41))){
 
 
-  require(reshape)
-
   func=function(x,dmns,par,fbar,what) {
 
     unt=units(par) 
