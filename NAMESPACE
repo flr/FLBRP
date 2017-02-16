@@ -39,7 +39,7 @@ exportMethods(
 	"kobe",
   "simAR",
   "Arith",
-#  "fwd",
+  "fwd",
   "fwdWindow",
   "window",
   "FLBRP",
