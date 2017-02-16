@@ -163,7 +163,7 @@ runMSE<-function(OM,start,srPar,srRsdl=srRsdl,plusgroup=range(OM,"plusgroup"),fm
      
      SRrs<-FLQuant(c(apply(rec(MP)[,ac(range(MP,"minyear"):(iYr-1))],6,function(x) exp(mean(log(x))))),dimnames=list(year=0:2+iYr,iter=1:nits))
 
-     MP  <-fwd(MP,ctrl=ctrl,sr=list(model="mean",params=FLPar(1)),sr.residuals=SRrs)
+     MP  <-fwd(MP,control=ctrl,sr=list(model="mean",params=FLPar(1)),sr.residuals=SRrs)
 
      TAC<-catch(MP)[,ac(iYr+2),drop=T]
      ###########################################################################
@@ -176,7 +176,7 @@ runMSE<-function(OM,start,srPar,srRsdl=srRsdl,plusgroup=range(OM,"plusgroup"),fm
      ctrl@trgtArray[1,"val", ]<-TAC
      ctrl@trgtArray[2,"max", ]<-2.0
 
-     OM <-fwd(OM,ctrl=ctrl,sr=list(model="bevholt",params=srPar),sr.residuals=srRsdl)
+     OM <-fwd(OM,control=ctrl,sr=list(model="bevholt",params=srPar),sr.residuals=srRsdl)
 
      #print(plot(FLStocks(lapply(FLStocks(OM=OM,MP=MP),window,end=iYr))))
      }

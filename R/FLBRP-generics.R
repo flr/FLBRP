@@ -100,8 +100,5 @@ setGeneric('myers', function(object, ...)
 setGeneric("recycle6d<-", function(object,value){
   standardGeneric("recycle6d<-")})
 
-## fwd(FLStock)
-if (!isGeneric("fwd"))
-  setGeneric("fwd", function(object, ctrl, ...)
-    standardGeneric("fwd"))
-
+setGeneric("msyRange", function(object, ...) {
+  standardGeneric('msyRange')})
