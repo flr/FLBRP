@@ -14,6 +14,7 @@ Depends:
     ggplotFL,
     plyr,
     reshape
+Additional_repositories: http://flr-project.org/R
 Collate:
     FLBRP-generics.R
     FLBRP-class.R
