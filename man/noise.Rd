@@ -74,4 +74,3 @@ vt = B * vt-1 + s * sqrt(1 - B^2)
 s is normally distributed random variable with mean = 0, variance = 1
 B is the autocorrelation parameter
 }
-

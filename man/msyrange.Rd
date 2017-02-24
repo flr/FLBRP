@@ -33,4 +33,3 @@ msyRange(ple4.eql)
 \seealso{
 \code{\link{refpts}}
 }
-
