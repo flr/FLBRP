@@ -9,9 +9,10 @@ Description: Calculates a range of biological reference points based upon yield
     BMSY.
 URL: http://flr-project.org
 Depends:
-    FLCore(>= 2.3),
+    FLCore(>= 2.6),
     FLash,
-    ggplotFL,
+    ggplotFL
+Imports:
     plyr,
     reshape
 Additional_repositories: http://flr-project.org/R
