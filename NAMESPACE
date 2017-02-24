@@ -1,8 +1,37 @@
 useDynLib("FLBRP")
 import("FLCore")	
-import("ggplotFL")	
+import("ggplotFL")
+importFrom("graphics",
+  "lines", 
+  "par", 
+  "points", 
+  "polygon")
+importFrom("methods",
+  "as", 
+  "callNextMethod", 
+  "getSlots", 
+  "is", 
+  "new",
+  "slot",
+  "slot<-", 
+  "validObject")
+importFrom("stats",
+  "acf",
+  "coefficients",
+  "fft",
+  "formula",
+  "hat",
+  "lm",
+  "optimise",
+  "qqnorm",
+  "rstandard",
+  "runif", 
+  "spline")
 importFrom("FLash",
-	"fwd")	
+  "fwd",
+importFrom("utils",
+  "read.csv",
+  "unstack")
 importFrom("plyr",
 	"ddply",
 	"dlply",
