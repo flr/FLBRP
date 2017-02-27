@@ -2,13 +2,17 @@ Package: FLBRP
 Title: Reference Points and Advice
 Version: 2.5.201702116
 Date: 2017-02-16
-Author: Laurence T. Kell
+Authors@R: c(
+  person("Iago", "Mosqueira", email = "iago.mosqueira@ec.europa.eu", role = "cre"),
+  person("Laurence T.", "Kell", email = "laurie.kell@iccat.int", role = "aut"),
+  person("Finlay", "Scott", email = "finlay.scott@ec.europa.eu", role = "aut"))
 Description: Calculates a range of biological reference points based upon yield
     per recruit and stock recruit based equilibrium calculations. These include F
     based reference points like F0.1, FMSY and biomass based reference points like
     BMSY.
 URL: http://flr-project.org
 Depends:
+    methods,
     FLCore(>= 2.6),
     FLash,
     ggplotFL
@@ -57,7 +61,7 @@ Collate:
     io.SS3.R
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2
-lazyLoad: Yes
-lazyData: No
+LazyLoad: Yes
+LazyData: No
 LinkingTo: FLash
 RoxygenNote: 6.0.1

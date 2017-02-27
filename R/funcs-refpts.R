@@ -2,7 +2,7 @@
 # FLBRP/R/refpts.R
 
 # Copyright 2003-2008 FLR Team. Distributed under the GPL 2 or later
-# Maintainers: Laurence Kell, Cefas & Santiago Cerviño, IEO
+# Maintainers: Laurence Kell, Cefas & Santiago Cervino, IEO
 # $Id: refpts.R 888 2011-01-17 00:56:11Z lauriekell $
 
 

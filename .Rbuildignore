@@ -3,3 +3,4 @@ docs/
 man-roxygen/
 .git/
 ^appveyor\.yml$
+_pkgdown.yml

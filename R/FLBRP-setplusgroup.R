@@ -1,4 +1,4 @@
-# setplusgroup - «Short one line description»
+# setplusgroup
 # FLBRP/R/setplusgroup.R
 
 # Copyright 2003-2009 FLR Team. Distributed under the GPL 2 or later
