@@ -1,6 +1,15 @@
 useDynLib("FLBRP")
 import("FLCore")	
 import("ggplotFL")
+importFrom("methods",
+  "as",
+  "callNextMethod",
+  "getSlots",
+  "is",
+  "new",
+  "slot",
+  "slot<-",
+  "validObject")
 importFrom("graphics",
   "lines", 
   "par", 
