@@ -1,7 +1,7 @@
 Package: FLBRP
 Title: Reference Points and Advice
-Version: 2.5.20170228
-Date: 2017-02-28
+Version: 2.5.20170307
+Date: 2017-03-07
 Authors@R: c(
   person("Iago", "Mosqueira", email = "iago.mosqueira@ec.europa.eu", role = "cre"),
   person("Laurence T.", "Kell", email = "laurie.kell@iccat.int", role = "aut"),
