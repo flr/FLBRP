@@ -132,6 +132,7 @@ exportMethods(
   "refpts<-",
   "show",
   "msy",
+  "msyRange",
   "spr",
   "spr0",
 #  "ages",
