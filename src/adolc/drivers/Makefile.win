@@ -1,0 +1,16 @@
+include ../../scripts/adolc.flags
+
+HEADERS=-I../../../inst/include
+
+DRVOBJS=drivers.o driversf.o odedrivers.o odedriversf.o taylor.o
+
+%.o: %.c
+	@echo CC  $<
+	@${CC} ${HEADERS} ${ADOLC_CFLAGS} -c $<
+
+library: $(DRVOBJS)
+
+clean:
+	@if exist *.o del *.o
+	@if exist error_out del error_out
+	@if exist *~ del *~

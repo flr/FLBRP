@@ -27,8 +27,6 @@ importFrom("stats",
   "rstandard",
   "runif", 
   "spline")
-importFrom("FLash",
-  "fwd")
 importFrom("utils",
   "read.csv",
   "unstack")
@@ -54,21 +52,11 @@ export(
   "biOrder",
   "calcR",
   "shepherdCovB",
-  "OEMStock",
-  "OEMSurvey",
-  "OEMCpue",
-  "misAgeing",
-  "biasLinear",
-  "vpaMP",
-  "hcr",
-  "runMSE",
-  "plotCatches",
-  "doIt")
+  "plotCatches")
 exportMethods(
 	"kobe",
   "simAR",
   "Arith",
-  "fwd",
   "fwdWindow",
   "window",
   "FLBRP",

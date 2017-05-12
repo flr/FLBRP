@@ -202,8 +202,9 @@ void FLBRP::Init(SEXP x)
       else  if (strcmp(s, "plusgroup")==0)
          if (R_IsNA(REAL(range)[i])) 
             plusgrp = maxage+1;
-         else 
+         else {
             plusgrp = (short)(REAL(range)[i]);
+         }
       }
 
    fbar.Init(           GET_SLOT(x, install("fbar")));       
