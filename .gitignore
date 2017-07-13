@@ -1,2 +1,4 @@
 src/*.o
+src/adolc/*.o
 src/*.so
+src/*.a

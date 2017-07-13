@@ -8,11 +8,7 @@ double t1,t2;
  * $Id: FLBRP.cpp 994 2011-06-03 14:30:21Z lauriekell $
  *
  */
-#define ADOLC_TAPELESS
-#include <adouble.h>
-typedef adtl::adouble adouble;
-
-#include "FLBRP.h"
+#include <FLBRP.h>
 
 int RP_harvest=0,                
     RP_yield  =1,                
@@ -42,15 +38,18 @@ extern "C" SEXPDLLExport Adolc_gr_tapeless(SEXP xX)
 
    x1 = REAL(xX)[0];
    x2 = REAL(xX)[1];
+   double seed1=1.0;
+   double seed0=0.0;
+   double seed12=1.0;
 
-   x1.setADValue(1);
+   x1.setADValue(&seed1);
    val_ad = 100.0*(x2-x1*x1)*(x2-x1*x1)+(1.0-x1)*(1.0-x1);
-   REAL(Grad)[0] = val_ad.getADValue();
+   REAL(Grad)[0] = *(val_ad.getADValue());
 
-   x1.setADValue(0);
-   x2.setADValue(1);
+   x1.setADValue(&seed0);
+   x2.setADValue(&seed12);
    val_ad = 100.0*(x2-x1*x1)*(x2-x1*x1)+(1.0-x1)*(1.0-x1);
-   REAL(Grad)[1] = val_ad.getADValue();
+   REAL(Grad)[1] = *(val_ad.getADValue());
  
    UNPROTECT(1);
 
@@ -199,11 +198,14 @@ void FLBRP::Init(SEXP x)
          minyr      = (short)(REAL(range)[i]);
       else if ( strcmp(s, "maxyear")==0)
          maxyr      = (short)(REAL(range)[i]);
-      else  if (strcmp(s, "plusgroup")==0)
-         if (R_IsNA(REAL(range)[i])) 
+      else  if (strcmp(s, "plusgroup")==0){
+         if (R_IsNA(REAL(range)[i])){
             plusgrp = maxage+1;
-         else 
+         }
+         else {
             plusgrp = (short)(REAL(range)[i]);
+         }
+      }
       }
 
    fbar.Init(           GET_SLOT(x, install("fbar")));       
@@ -616,11 +618,14 @@ double  FLBRP::QuadSearch(int iIter)
       Newf = QSGetFunc(Newx, iIter);
     
       //Check for one sided convergence
-      if (fabs(Newx - x[1]) < 0.000000001)
-         if (x[1] - x[0] >= x[2] - x[1])
+      if (fabs(Newx - x[1]) < 0.000000001){
+         if (x[1] - x[0] >= x[2] - x[1]){
             Newx = x[1] - (x[2] - x[1]);
-         else
+         }
+         else{
             Newx = x[1] + (x[1] - x[0]);
+         }
+      }
         
       if (Newx > x[1])
          if (Newf > F[1])
@@ -1150,7 +1155,8 @@ double FLBRP::YPRGrad(double FMult, int iIter)
   adouble ReturnValue=0.0;
   adouble FMult_ad;
   FMult_ad = FMult;
-  FMult_ad.setADValue(1);
+  double seed=1.0;
+  FMult_ad.setADValue(&seed);
 
   int iAge, iUnit, iSeason, iArea;
   for (iUnit=1; iUnit<=nunits; iUnit++)
@@ -1193,7 +1199,7 @@ double FLBRP::YPRGrad(double FMult, int iIter)
      }
    }
 
-   double RtnVal = ReturnValue.getADValue();
+   double RtnVal = *(ReturnValue.getADValue());
 
    return RtnVal;
    }
@@ -1203,7 +1209,8 @@ double FLBRP::RPRGrad(double FMult, int iIter)
   adouble ReturnValue = 0.0;
   adouble FMult_ad;
   FMult_ad = FMult;
-  FMult_ad.setADValue(1);
+  double seed=1.0;
+  FMult_ad.setADValue(&seed);
 
   int iAge, iUnit, iSeason, iArea;
   for (iUnit=1; iUnit<=nunits; iUnit++)
@@ -1243,7 +1250,7 @@ double FLBRP::RPRGrad(double FMult, int iIter)
      }
    }
 
-   double RtnVal = ReturnValue.getADValue();
+   double RtnVal = *(ReturnValue.getADValue());
 
    return RtnVal;
    }
@@ -1253,7 +1260,8 @@ double FLBRP::PPRGrad(double FMult, int iIter)
   adouble ReturnValue = 0.0;
   adouble FMult_ad;
   FMult_ad = FMult;
-  FMult_ad.setADValue(1);
+  double seed=1.0;
+  FMult_ad.setADValue(&seed);
 
   int iAge, iUnit, iSeason, iArea;
   for (iUnit=1; iUnit<=nunits; iUnit++)
@@ -1295,7 +1303,7 @@ double FLBRP::PPRGrad(double FMult, int iIter)
      }
    }
 
-   double RtnVal = ReturnValue.getADValue();
+   double RtnVal = *(ReturnValue.getADValue());
 
    return RtnVal;
    }
@@ -1879,11 +1887,12 @@ double FLBRP::YieldGrad(double FMult, int iIter)
    {
    adouble FMult_ad;
    FMult_ad = FMult;
-   FMult_ad.setADValue(1);
+   double seed=1.0;
+   FMult_ad.setADValue(&seed);
 
    adouble ReturnValue = YPR(FMult_ad, 1, iIter)*Recruits(FMult_ad, 1, iIter);
 
-   double RtnVal = ReturnValue.getADValue();
+   double RtnVal = *(ReturnValue.getADValue());
    double t      = ReturnValue.getValue();
    return RtnVal;
    }
@@ -1892,7 +1901,8 @@ double FLBRP::ProfitGrad(double FMult, int iIter)
    {
    adouble FMult_ad;
    FMult_ad = FMult;
-   FMult_ad.setADValue(1);
+    double seed=1.0;
+   FMult_ad.setADValue(&seed);
 
    adouble ReturnValue = RPR(FMult_ad, 1, iIter)*Recruits(FMult_ad, 1, iIter);
 
@@ -1902,7 +1912,7 @@ double FLBRP::ProfitGrad(double FMult, int iIter)
          for (iArea=1; iArea<=nareas; iArea++)
             ReturnValue += FMult_ad*cost_var(1,minyr,iUnit,iSeason,iArea,iIter)-cost_fix(1,minyr,iUnit,iSeason,iArea,iIter);
 
-   double RtnVal = ReturnValue.getADValue();
+   double RtnVal = *(ReturnValue.getADValue());
    double t      = ReturnValue.getValue();
    return RtnVal;
    }
@@ -1912,12 +1922,13 @@ double FLBRP::SSBGrad(double FMult, int iIter)
   adouble result=0.0;
   adouble FMult_ad;
   FMult_ad = FMult;
-  FMult_ad.setADValue(1);
+  double seed=1.0;
+  FMult_ad.setADValue(&seed);
 
    for (int iUnit=1; iUnit<=nunits; iUnit++)
       result += SPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
 
-   double RtnVal = result.getADValue();
+   double RtnVal = *(result.getADValue());
 
    return RtnVal;
    }
@@ -1927,12 +1938,13 @@ double FLBRP::RecGrad(double FMult, int iIter)
   adouble result=0.0;
   adouble FMult_ad;
   FMult_ad = FMult;
-  FMult_ad.setADValue(1);
+  double seed=1.0;
+  FMult_ad.setADValue(&seed);
 
    for (int iUnit=1; iUnit<=nunits; iUnit++)
       result += Recruits(FMult_ad,iUnit,iIter);
 
-   double RtnVal = result.getADValue();
+   double RtnVal = *(result.getADValue());
 
    return RtnVal;
    }
@@ -1943,12 +1955,13 @@ double FLBRP::BiomassGrad(double FMult, int iIter)
   result=0.0;
   adouble FMult_ad;
   FMult_ad = FMult;
-  FMult_ad.setADValue(1);
+  double seed=1.0;
+  FMult_ad.setADValue(&seed);
 
    for (int iUnit=1; iUnit<=nunits; iUnit++)
       result += BPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
 
-   double RtnVal = result.getADValue();
+   double RtnVal = *(result.getADValue());
 
    return RtnVal;
    }
@@ -1961,7 +1974,7 @@ double FLBRP::ad_SSB(double FMult, int iIter)
    for (int iUnit=1; iUnit<=nunits; iUnit++)
       result += SPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
 
-   return result.getADValue();
+   return *(result.getADValue());
    }
 
 double FLBRP::ad_Biomass(double FMult, int iIter)
@@ -1972,7 +1985,7 @@ double FLBRP::ad_Biomass(double FMult, int iIter)
    for (int iUnit=1; iUnit<=nunits; iUnit++)
       result += BPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
 
-   return result.getADValue();}
+   return *(result.getADValue());}
 
 extern "C" SEXPDLLExport InitialCond(SEXP xStk, SEXP xSRModel, SEXP xSRPar, SEXP xCtrl){
    FLStock stock(xStk);

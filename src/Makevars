@@ -1,5 +1,24 @@
-# -*- Makefile -*-
-#  $Id: Makevars 913 2011-03-22 10:20:01Z imosqueira $
-# PKG_CFLAGS=-Wunused -pedantic
+PKG_CXXFLAGS = -I../inst/include
+PKG_CFLAGS = -I../inst/include
+PKG_LIBS = $(SUBLIBS)
 
-PKG_LIBS = $(SUBLIBS) $(shell $(R_HOME)/bin/${R_ARCH}/R --slave --no-site-file --no-init-file -e 'cat(system.file("libs", package="FLash"))')/${R_ARCH}/FLash.so
+MkInclude = $(RHOME)/etc/Makeconf
+CFLAGS = -O0 -Wall
+CXXFLAGS = -O0 -Wall -fPIC
+
+SOURCES_CPP = FLCoreClasses.cpp FLBRP.cpp
+SOURCES_C = init.c
+
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_CPP:.cpp=.o) 
+
+SUBDIRS = adolc
+SUBLIBS = $(SUBDIRS:=.a)
+
+all: $(SHLIB)
+$(SHLIB): sublibs $(OBJECTS)
+
+sublibs: 
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" MkInclude="$(MkInclude)" $(MAKE) library) || exit 1; \
+	done
+

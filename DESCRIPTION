@@ -59,9 +59,9 @@ Collate:
     rand-noise.R
     rand-cohortEffect.R
     io.SS3.R
+SystemRequirements: C++11
 Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2
 LazyLoad: Yes
 LazyData: No
-LinkingTo: FLash
 RoxygenNote: 6.0.1
