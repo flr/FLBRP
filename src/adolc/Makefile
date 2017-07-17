@@ -1,4 +1,4 @@
-HEADERS = -I../../inst/include -I./
+HEADERS = -I../../inst/include -I../adolc
 CXXFLAGS = -std=c++11
 
 ADOLC_CXXFLAGS= -DHAVE_MALLOC=1 -DHAVE_REALLOC=1 -DADOLC_VERSION=1 -DADOLC_SUBVERSION=9 -DADOLC_PATCHLEVEL=0 -DADOLC_USE_CALLOC=1
@@ -21,11 +21,11 @@ library: lib
 
 %.o: %.c
 	@echo CC  $<
-	@${CC} ${HEADERS} ${ADOLC_CFLAGS} -fPIC -c $<
+	@${CC} ${HEADERS} ${ADOLC_CFLAGS} -c $<
 
 %.o: %.cpp
 	@echo CXX $<
-	@${CXX} ${CXXFLAGS} ${HEADERS} ${ADOLC_CXXFLAGS} -fPIC -c $<
+	@${CXX} ${CXXFLAGS} ${HEADERS} ${ADOLC_CXXFLAGS} -c $<
 
 LIB = ../adolc.a
 
@@ -33,14 +33,7 @@ lib: $(LIB)
 
 $(LIB): $(ADCOBJS)
 	@${AR} -rucs $(LIB) ${ADCOBJS}
-	#@make -C drivers -f Makefile library
-	#@make -C sparse -f Makefile library
-	#@make -C tapedoc -f Makefile library
-	#@${AR} -rucs $(LIB) ${ADCOBJS} ${DRVOBJS} ${SPAOBJS} ${TAPOBJS}
 
 clean:
 		@-rm -f $(LIB)
 		@-rm -f $(ADCOBJS)
-#		@make -C drivers -f Makefile clean
-#		@make -C sparse -f Makefile clean
-#		@make -C tapedoc -f Makefile clean

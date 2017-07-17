@@ -27,8 +27,6 @@ importFrom("stats",
   "rstandard",
   "runif", 
   "spline")
-importFrom("FLash",
-  "fwd")
 importFrom("utils",
   "read.csv",
   "unstack")
