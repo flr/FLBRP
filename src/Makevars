@@ -1,4 +1,4 @@
-PKG_CXXFLAGS = -I../inst/include
+PKG_CXXFLAGS = -I../inst/include -std=c++11
 PKG_CFLAGS = -I../inst/include
 PKG_LIBS = $(SUBLIBS)
 
@@ -20,5 +20,15 @@ $(SHLIB): sublibs $(OBJECTS)
 sublibs: 
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" MkInclude="$(MkInclude)" $(MAKE) library) || exit 1; \
+	done
+
+clean: subclean
+	@-rm -rf .libs _libs
+	@-rm -f *.o $(SHLIB)
+
+subclean:
+	@-rm -f *.a
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && Mkinclude="$(MKinclude)" $(MAKE) clean) || exit 1; \
 	done
 
