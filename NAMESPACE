@@ -1,4 +1,6 @@
 useDynLib("FLBRP")
+import("plyr")	
+import("reshape")	
 import("FLCore")	
 import("ggplotFL")
 importFrom("methods",

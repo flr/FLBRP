@@ -1,7 +1,7 @@
 
 # FLBRP
-- Version: 2.5.20170307
-- Date: 2017-03-07
+- Version: 2.5.1.9000
+- Date: 2017-08-23
 - Author: Laurence T. Kell <laurie.kell@iccat.int>
 - Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 - Repository: <https://github.com/flr/FLBRP/>

@@ -5,29 +5,6 @@
 # Maintainers: Laurence Kell, ICCAT & Santiago Cervi?o, IEO
 # $Id: class.R 945 2011-05-10 13:22:49Z lauriekell $
 
-
-# # refpts class {{{
-# validrefpts <- function(object)
-# {
-#   # array must have 3 dims
-#   if(length(dim(object)) != 3 )
-#     return('object array must have 3 dimensions')
-# 
-#   # names of dimnames must be refpt, quantity and iter
-#   if(!all.equal(names(dimnames(object)), c('refpt', 'quantity', 'iter')))
-#     return('dimnames must be refpt, quantity and iter')
-# 
-#   return(TRUE)
-# }
-# 
-# setClass('refpts', representation('FLPar'),
-#   prototype=prototype(new('FLPar', array(as.numeric(NA), dim=c(5,8,1),
-#   dimnames=list(refpt=c('f0.1', 'fmax', 'spr.30', 'msy', 'mey'), quantity=c('harvest', 
-#   'yield', 'rec', 'ssb', 'biomass', 'revenue', 'cost', 'profit'), iter=1)))),
-#   validity=validrefpts)
-# 
-# # }}}
-
 # FLBRP {{{
 validFLBRP <- function(object){
 
@@ -70,7 +47,6 @@ setClass("FLBRP",
       ssb.obs        ="FLQuant",
       stock.obs      ="FLQuant",
       profit.obs     ="FLQuant",
- #     revenue.obs    ="FLQuant",
       landings.sel   ="FLQuant",
       discards.sel   ="FLQuant",
       bycatch.harvest="FLQuant",
@@ -87,8 +63,8 @@ setClass("FLBRP",
       vcost          ="FLQuant",
       fcost          ="FLQuant"),
    prototype=prototype(
-      name            =character(0),
-      desc            =character(0),
+      name            =character(1),
+      desc            =character(1),
       range           =unlist(list(min=as.numeric(NA), max=as.numeric(NA),
                                    plusgroup=as.numeric(NA), minfbar=as.numeric(NA), maxfbar=as.numeric(NA))),
       model        =formula(rec~a),
