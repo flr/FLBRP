@@ -27,3 +27,8 @@ branches:
 repos:
   CRAN: https://cloud.r-project.org
   flr: http://flr-project.org/R
+
+after_failure:
+  - cat /home/travis/build/flr/FLBRP/FLBRP.Rcheck/00install.out 
+  - cat /home/travis/build/flr/FLBRP/FLBRP.Rcheck/00check.log
+  - ./travis-tool.sh dump_logs
