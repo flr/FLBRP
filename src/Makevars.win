@@ -1,4 +1,4 @@
-PKG_CXXFLAGS = -I../inst/include -std=c++11
+PKG_CXXFLAGS = -I../inst/include
 PKG_CFLAGS = -I../inst/include
 PKG_LIBS = $(SUBLIBS)
 
