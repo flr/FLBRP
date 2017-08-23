@@ -18,7 +18,6 @@ Imports:
     methods,
     plyr,
     reshape
-SystemRequirements: C++11
 Additional_repositories: http://flr-project.org/R
 Collate:
     FLBRP-generics.R
