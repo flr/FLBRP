@@ -7,7 +7,7 @@ navbar:
     href: http://flr-project.org/
   left:
   - text: Source
-    href: http://github.com/flr/FLash
+    href: http://github.com/flr/FLBRP
     icon: fa-github fa-lg
   - text: Reference
     href: reference/index.html
