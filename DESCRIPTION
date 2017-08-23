@@ -13,7 +13,6 @@ Description: Calculates a range of biological reference points based upon yield
 URL: http://flr-project.org
 Depends:
     FLCore(>= 2.6.0.20170228),
-    FLash,
     ggplotFL
 Imports:
     methods,
@@ -63,5 +62,4 @@ Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
 License: GPL-2
 LazyLoad: Yes
 LazyData: No
-LinkingTo: FLash
 RoxygenNote: 6.0.1
