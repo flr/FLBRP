@@ -22,7 +22,8 @@ setAs('FLBRP', 'FLSR',
 
    # create the FLSR from
    res=FLSR(name=from@name,
-            desc    = "Obtained from a 'FLBRP' object",
+            desc=" ",
+ #           desc    = "Obtained from a 'FLBRP' object",
 	          rec     =rec,
             ssb     =ssb,
             params  =params(from),
@@ -66,7 +67,7 @@ setAs('FLBRP', 'FLStock',
     flq[]<-NA
     res <- FLStock(flq,
       # TODO extend slots for years: check all slots present
-      name=name(from))
+      name=name(from), desc=desc(from))
       #, desc=paste("Created by coercion from 'FLBRP'", desc(from)))
 
     # range

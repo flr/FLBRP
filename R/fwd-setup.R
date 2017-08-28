@@ -4,7 +4,6 @@ setGeneric("recycle6d<-", function(object,value){
   standardGeneric("recycle6d<-")})
 setMethod("recycle6d<-", signature(object="FLQuant", value="FLQuant"),
 	function(object, value) {
-  
    if (any(dim(value)[-6]>dim(object)[-6]))
       stop("dims in 2nd arg can't be greater than those in 1st")
    if (dims(value)$iter>1 & dims(object)$iter==1)
