@@ -1,6 +1,6 @@
 
 # FLBRP
-- Version: 2.5.2
+- Version: 0.1.0
 - Date: 2017-08-24
 - Author: Laurence T. Kell <laurie.kell@iccat.int>
 - Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>

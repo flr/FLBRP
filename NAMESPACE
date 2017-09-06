@@ -1,4 +1,4 @@
-useDynLib("FLBRP")
+useDynLib("FLRP")
 import("plyr")	
 import("reshape")	
 import("FLCore")	

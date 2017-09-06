@@ -1,6 +1,6 @@
-Package: FLBRP
+Package: FLRP
 Title: Reference Points and Advice
-Version: 2.5.2
+Version: 0.1.0
 Date: 2017-08-24
 Authors@R: c(
   person("Iago", "Mosqueira", email = "iago.mosqueira@ec.europa.eu", role = "cre"),
