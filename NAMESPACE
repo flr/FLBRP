@@ -1,5 +1,4 @@
-useDynLib("FLRP")
-import("plyr")	
+useDynLib("FLBRP")
 import("reshape")	
 import("FLCore")	
 import("ggplotFL")
@@ -29,6 +28,8 @@ importFrom("stats",
   "rstandard",
   "runif", 
   "spline")
+importFrom("FLash",
+  "fwd")
 importFrom("utils",
   "read.csv",
   "unstack")

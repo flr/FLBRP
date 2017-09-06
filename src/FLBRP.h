@@ -16,9 +16,8 @@
    #define SEXPDLLExport SEXP    
 #endif
 
-#include <FLCoreClasses.h>
-#include <adolc/adtl.h>
-typedef adtl::adouble adouble;
+#include "FLCoreClasses.h"
+#include <adouble.h>
 
 #define N_SR_PARAM 3;
    

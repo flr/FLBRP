@@ -1,34 +1,4 @@
-PKG_CXXFLAGS = -I../inst/include
-PKG_CFLAGS = -I../inst/include
-PKG_LIBS = $(SUBLIBS)
-
-MkInclude = $(RHOME)/etc/Makeconf
-CFLAGS = -O0 -Wall
-CXXFLAGS = -O0 -Wall
-
-SOURCES_CPP = FLCoreClasses.cpp FLBRP.cpp
-SOURCES_C = init.c
-
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_CPP:.cpp=.o) 
-
-SUBDIRS = adolc
-SUBLIBS = $(SUBDIRS:=.a)
-
-all: $(SHLIB)
-$(SHLIB): sublibs $(OBJECTS)
-
-sublibs: subclean
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" MkInclude="$(MkInclude)" $(MAKE) library) || exit 1; \
-	done
-
-clean: subclean
-	@-rm -rf .libs _libs
-	@-rm -f *.o $(SHLIB)
-
-subclean:
-	@-rm -f *.a
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && Mkinclude="$(MKinclude)" $(MAKE) clean) || exit 1; \
-	done
-
+PKG_LIBS = $(SUBLIBS) '$(shell "$(R_HOME)/bin/${R_ARCH_BIN}/Rterm.exe" --slave -e 'cat(system.file("libs", package="FLash"))')/${R_ARCH}/FLash.dll'
+COPTFLAG=-O0
+CXXOPTFLAG=-O0
+DEBUG=F
