@@ -23,7 +23,6 @@ or download from the [FLBRP releases page](https://github.com/flr/FLBRP/releases
 ## Build Status
 [![Travis Build Status](https://travis-ci.org/flr/FLBRP.svg?branch=master)](https://travis-ci.org/flr/FLBRP)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/flr/FLBRP?branch=master&svg=true)](https://ci.appveyor.com/project/flr/FLBRP)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/FLBRP)](https://cran.r-project.org/package=FLBRP)
 
 ## Releases
 - [Latest release](https://github.com/flr/FLBRP/releases/tag/v2.5.20170109)

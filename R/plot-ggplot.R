@@ -136,7 +136,6 @@ plotBeer=function(v){
 # '[[' {{{
 setMethod('[[', signature(x='FLComp', i='character'),
 function(x, i, j, ..., drop=FALSE) {
-warning("using a local copy of '[[' which will be removed in later versions of FLCore")
 res <- FLlst()
 args <- list(...)
 # j
@@ -161,7 +160,6 @@ return(new(getPlural(res[[1]]), res))
 # '[[<-' {{{
 setMethod('[[<-', signature(x='FLComp', i='character', value='FLlst'),
 function(x, i, j, ..., value) {
-warning("using a local copy of '[[<-' which will be removed in later versions of FLCore")
 args <- list(...)
 # j
 if(!missing(j))
