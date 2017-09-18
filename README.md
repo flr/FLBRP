@@ -25,8 +25,7 @@ or download from the [FLBRP releases page](https://github.com/flr/FLBRP/releases
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/flr/FLBRP?branch=master&svg=true)](https://ci.appveyor.com/project/flr/FLBRP)
 
 ## Releases
-- [Latest release](https://github.com/flr/FLBRP/releases/tag/v2.5.20170109)
-- [All release](https://github.com/flr/FLBRP/releases/)
+- [All releases](https://github.com/flr/FLBRP/releases/)
 
 ## License
 Copyright (c) 2004-2015 The FLR Team. Released under the [GPL v2](http://www.gnu.org/licenses/gpl-2.0.html).
