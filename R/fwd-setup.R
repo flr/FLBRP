@@ -4,6 +4,7 @@ setGeneric("recycle6d<-", function(object,value){
   standardGeneric("recycle6d<-")})
 setMethod("recycle6d<-", signature(object="FLQuant", value="FLQuant"),
 	function(object, value) {
+  
    if (any(dim(value)[-6]>dim(object)[-6]))
       stop("dims in 2nd arg can't be greater than those in 1st")
    if (dims(value)$iter>1 & dims(object)$iter==1)
@@ -24,7 +25,7 @@ setMethod('fwdWindow', signature(x='FLStock',y="FLBRP"),
   function(x,y,start=dims(x)$minyear, end=dims(x)$maxyear, extend=TRUE, frequency=1,...){
       object =qapply(x, FLCore::window, start=start, end=end, extend=extend, frequency=frequency)
 
-        object@range["minyear"] <- start
+      object@range["minyear"] <- start
      	object@range["maxyear"] <- end
       
       yr1 =dimnames(m(object))$year
@@ -39,13 +40,17 @@ setMethod('fwdWindow', signature(x='FLStock',y="FLBRP"),
       args<-data.frame(e1=c("stock.wt","landings.wt","discards.wt","catch.wt","landings.n",  "discards.n",   "m","mat","harvest"  ,"harvest.spwn","m.spwn"),    
                        e2=c("stock.wt","landings.wt","discards.wt","catch.wt","landings.sel","discards.sel", "m","mat","catch.sel","harvest.spwn","m.spwn"))
                        
-       t. <-FLQuants(mlply(args,function(e1,e2,stk,flb) {#cat(ac(e1),ac(e2),"\n"); 
-                                                         recycle6d(stk[[ac(e1)]][[1]])<-flb[[ac(e2)]][[1]]; return(stk[[ac(e1)]][[1]])},stk=object[,yrs],flb=y))
+             t. <-FLQuants(mlply(args,function(e1,e2,stk,flb) {#cat(ac(e1),ac(e2),"\n"); 
+            recycle6d(slot(stk,ac(e1)))<-FLQuants(flb,ac(e2))[[1]]; 
+            return(slot(stk,ac(e1)))},
+              stk=object[,yrs],flb=y))
+       
        names(t.)<-args[,1]
 
-       args=cbind(args[,1:2],ldply(ac(args[,1]),function(x,a,b)  data.frame("O"=dims(a[[x]][[1]])$iter,"I"=dims(b[[x]])$iter),a=object,b=t.))
+       args=cbind(args[,1:2],ldply(ac(args[,1]),function(x,a,b)  
+         data.frame("O"=dims(slot(a,x))$iter,"I"=dims(b[[x]])$iter),a=object,b=t.))
       
-       t..=FLQuants(mlply(args, function(e1,e2,O,I,x) if (I>O) propagate(x[[ac(e1)]][[1]],I) else x[[ac(e1)]][[1]],x=object))
+       t..=FLQuants(mlply(args, function(e1,e2,O,I,x) if (I>O) propagate(slot(x,ac(e1)),I) else slot(x,ac(e1)),x=object))
        names(t..)<-args[,1]
        object[[ac(args[,1])]]=t..
 

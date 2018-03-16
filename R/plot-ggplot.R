@@ -5,13 +5,13 @@ varBrp<-function() data.frame(x=rep(c("fbar","ssb"),3),y=c("ssb","rec","yield","
 
 getBrp<-function(x,y,pnl,obj) {
   
-    if (x %in% names(getSlots("FLBRP"))) if (dims(obj[[x]][[1]])$iter==1 & dims(obj)$iter>1)
-      obj[[x]][[1]]=propagate(obj[[x]][[1]],dims(obj)$iter)
-    if (y %in% names(getSlots("FLBRP"))) if (dims(obj[[y]][[1]])$iter==1 & dims(obj)$iter>1)
-      obj[[y]][[1]]=propagate(obj[[y]][[1]],dims(obj)$iter)
+    if (x %in% names(getSlots("FLBRP"))) if (dims(FLQuants(obj,x)[[1]])$iter==1 & dims(obj)$iter>1)
+      FLQuants(obj,x)[[1]]=propagate(FLQuants(obj,x)[[1]],dims(obj)$iter)
+    if (y %in% names(getSlots("FLBRP"))) if (dims(FLQuants(obj,y)[[1]])$iter==1 & dims(obj)$iter>1)
+      FLQuants(obj,y)[[1]]=propagate(FLQuants(obj,y)[[1]],dims(obj)$iter)
  
-    dim(obj[[x]])
-    res<-cbind(model.frame(obj[[c(x,y)]]))[,-1]
+    dim(FLQuants(obj,x)[[1]])
+    res<-cbind(model.frame(FLQuants(obj,c(x,y))))[,-1]
     names(res)[6:7]<-c("x","y")
     res}
 
@@ -29,10 +29,11 @@ setMethod("plot", signature(x="FLBRP", y="missing"),
                function(x,y,obs=FALSE,refpts=TRUE,
                         panel=c("SSB v. F",     "Recruitment v. SSB", "Yield v. F", 
                                 "Yield v. SSB", "Profit v. F",        "Profit v. SSB"),...){
+  
   hat.    =mdply(varBrp(),getBrpHat,     obj=x)
   hat.$pnl=factor(paste("Equilibrium",hat.$pnl),levels=paste("Equilibrium",panel))
   hat.=subset(hat., pnl %in% paste("Equilibrium",panel))
- 
+
   obs.=mdply(varBrp(),getBrpObs,     obj=x)
   obs.$pnl=factor(paste("Equilibrium",obs.$pnl),levels=paste("Equilibrium",panel))
   obs.=subset(obs., pnl %in% paste("Equilibrium",panel))
@@ -44,7 +45,7 @@ setMethod("plot", signature(x="FLBRP", y="missing"),
 
   chk=table(subset(ref., !is.na(y))$pnl)
   ref.=subset(ref., pnl %in% names(chk[chk>0]))
-    
+  
   p<-ggplot(subset(hat.,x>=0 & y>=0 & !is.na(x) & !is.na(y))) + 
      geom_line(aes(x,y,group=iter)) +
      facet_wrap(~pnl,ncol=min(length(unique(ref.$pnl)),2),scale="free")
@@ -136,6 +137,7 @@ plotBeer=function(v){
 # '[[' {{{
 setMethod('[[', signature(x='FLComp', i='character'),
 function(x, i, j, ..., drop=FALSE) {
+warning("using a local copy of '[[' which will be removed in later versions of FLCore")
 res <- FLlst()
 args <- list(...)
 # j
@@ -160,6 +162,7 @@ return(new(getPlural(res[[1]]), res))
 # '[[<-' {{{
 setMethod('[[<-', signature(x='FLComp', i='character', value='FLlst'),
 function(x, i, j, ..., value) {
+warning("using a local copy of '[[<-' which will be removed in later versions of FLCore")
 args <- list(...)
 # j
 if(!missing(j))
