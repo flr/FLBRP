@@ -1,66 +1,41 @@
 Package: FLBRP
-Title: Reference Points and Advice
-Version: 2.5.2
-Date: 2017-08-24
+Title: Reference Points for Fisheries Management
+Version: 2.5.3
+Date: 2018-07-12
 Authors@R: c(
   person("Iago", "Mosqueira", email = "iago.mosqueira@ec.europa.eu", role = "cre"),
-  person("Laurence T.", "Kell", email = "laurie.kell@iccat.int", role = "aut"),
+  person("Laurence T.", "Kell", email = "laurie@seaplusplus.co.uk", role = "aut"),
   person("Finlay", "Scott", email = "finlay.scott@ec.europa.eu", role = "aut"))
 Description: Calculates a range of biological reference points based upon yield
-    per recruit and stock recruit based equilibrium calculations. These include F
-    based reference points like F0.1, FMSY and biomass based reference points like
-    BMSY.
-URL: http://flr-project.org
+  per recruit and stock recruit based equilibrium calculations. These include F
+  based reference points like F0.1, FMSY and biomass based reference points like
+  BMSY.
+License: GPL-3
+URL: http://flr-project.org/FLBRP
 Depends:
-    FLCore(>= 2.6.0.20170228),
-    FLash,
-    ggplotFL
+  R (>= 2.10),
+  FLCore (>= 2.6.7),
+  ggplot2
 Imports:
-    methods,
-    plyr,
-    reshape
-Additional_repositories: http://flr-project.org/R
+  methods,
+  ggplotFL
+Suggests:
+  knitr
 Collate:
-    FLBRP-generics.R
-    FLBRP-class.R
-    FLBRP-accessors.R
-    FLBRP-constructors.R
-    FLBRP-coerce.R
-    FLBRP-methods.R
-    FLBRP-setplusgroup.R
-    plot-advice.R
-    plot-ggplot.R
-    plot-kobe.R
-    fwd.R
-    plot-glm.R
-    plot-catches.R
-    plot-beer.R
-    plot-bivariate.R
-    lh.R
-    lh-M.R
-    lh-growth.R
-    lh-leslie.R
-    lh-doIt.R
-    lh-elasticity.R
-    lh-calcR.R
-    fwd-setup.R
-    fwd-stf.R
-    funcs-fbar.R
-    funcs-refpts.R
-    funcs-spr.R
-    funcs-MSE.R
-    funcs.R
-    funcs-indicators.R
-    funcs-aav.R
-    funcs-econ.R
-    funcs-ep.R
-    funcs-sp.R
-    rand-simAR.R
-    rand-noise.R
-    rand-cohortEffect.R
-    io.SS3.R
-License: GPL-2
+  classes.R
+  generics.R
+  accessors.R
+  constructors.R
+  methods.R
+  coerce.R
+  refpts.R
+  utilities.R
+  fwdWindow.R
+  plots.R
+  spr.R
+Additional_repositories: http://flr-project.org/R
+VignetteBuilder: knitr
 LazyLoad: Yes
 LazyData: No
-LinkingTo: FLash
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1

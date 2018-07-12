@@ -4,4 +4,5 @@ man-roxygen/
 .git/
 ^appveyor\.yml$
 ^_pkgdown\.yml$
-Makefile
+data-raw
+^Makefile$

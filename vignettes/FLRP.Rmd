@@ -1,0 +1,32 @@
+---
+title: FLBRP
+author: Iago Mosqueira (EC JRC) <iago.mosqueira@ec.europa.eu>
+date: 2017-09-22
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{FLBRP}
+  %\VignetteEncoding{UTF-8}
+tags: FLR
+license: Creative Commons Attribution-ShareAlike 4.0 International Public License
+---
+
+PLEASE visit the tutorial on [Reference points for fisheries management with FLBRP](http://www.flr-project.org/doc/Reference_points_for_fisheries_management_with_FLBRP.html) at the [FLR website](http://flr-project.org) and substitute the call to
+
+```
+library(FLBRP)
+```
+
+with
+
+```
+library(FLBRP)
+```
+
+# Download
+
+The tutorial is available in various formats:
+
+- [html](http://www.flr-project.org/doc/Reference_points_for_fisheries_management_with_FLBRP.html)
+- [pdf](http://www.flr-project.org/doc/pdf/Reference_points_for_fisheries_management_with_FLBRP.pdf)
+- [R script](http://www.flr-project.org/doc/R/Reference_points_for_fisheries_management_with_FLBRP.R)

@@ -1,20 +1,19 @@
-
 # FLBRP
-- Version: 2.5.2
-- Date: 2017-08-24
-- Author: Laurence T. Kell <laurie.kell@iccat.int>
-- Maintainer: Laurence T. Kell  <laurie.kell@iccat.int>
+- Version: 2.5.3
+- Date: 2018-07-12
+- Author: Laurie Kell <laurie@seaplusplus.co.uk>, Iago Mosqueira <iago.mosqueira@ec.europa.eu>, Finlay Scott <finlay.scott@ec.europa.eu>
+- Maintainer: Iago Mosqueira <iago.mosqueira@ec.europa.eu>
 - Repository: <https://github.com/flr/FLBRP/>
 - Bug reports: <https://github.com/flr/FLBRP/issues>
 
 ## Overview
-FLBRP is used to calculate a range of biological reference points based upon yield per recruit and stock recruit based equilibrium calculations. These include F based reference points like F0.1, FMSY and biomass based reference points like BMSY.
+ONE LINE OVERVIEW, SAME AS IN DESCRIPTION
 
 To install this package, start R and enter:
 
-	install.packages("FLBRP", repos="http://flr-project.org/R")
+	install.packages("FLBRP", repos="http:///flr-project.org/R")
 
-or download from the [FLBRP releases page](https://github.com/flr/FLBRP/releases/latest)
+or download from the [FLBRP releases page](https://github.com/flr/FLBRP/releases/)
 
 ## Documentation
 - [Help pages](http://flr-project.org/FLBRP)
@@ -25,14 +24,14 @@ or download from the [FLBRP releases page](https://github.com/flr/FLBRP/releases
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/flr/FLBRP?branch=master&svg=true)](https://ci.appveyor.com/project/flr/FLBRP)
 
 ## Releases
-- [All releases](https://github.com/flr/FLBRP/releases/)
+- [All release](https://github.com/flr/FLBRP/releases/)
 
 ## License
-Copyright (c) 2004-2015 The FLR Team. Released under the [GPL v2](http://www.gnu.org/licenses/gpl-2.0.html).
+Copyright (c) 2017 FLR Team. Released under the [GPL 3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ## Contact
 You are welcome to:
 
 - Submit suggestions and bug-reports at: <https://github.com/flr/FLBRP/issues>
 - Send a pull request on: <https://github.com/flr/FLBRP/>
-- Compose a friendly e-mail to: <flrteam AT flr-project.org>
+- Compose a friendly e-mail to: Iago Mosqueira <iago.mosqueira@ec.europa.eu>

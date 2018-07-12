@@ -1,5 +1,32 @@
-# -*- Makefile -*-
-#  $Id: Makevars 913 2011-03-22 10:20:01Z imosqueira $
-# PKG_CFLAGS=-Wunused -pedantic
+PKG_CXXFLAGS = -I../inst/include $(CXX11STD)
 
-PKG_LIBS = $(SUBLIBS) $(shell $(R_HOME)/bin/${R_ARCH}/R --slave --no-site-file --no-init-file -e 'cat(system.file("libs", package="FLash"))')/${R_ARCH}/FLash.so
+PKG_CFLAGS = -I../inst/include
+PKG_LIBS = $(SUBLIBS)
+
+MkInclude = $(RHOME)/etc/Makeconf
+
+SOURCES_CPP = FLCoreClasses.cpp FLBRP.cpp
+SOURCES_C = init.c
+
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_CPP:.cpp=.o) 
+
+SUBDIRS = adolc
+SUBLIBS = $(SUBDIRS:=.a)
+
+all: $(SHLIB)
+$(SHLIB): sublibs $(OBJECTS)
+
+sublibs: subclean
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)" MkInclude="$(MkInclude)" $(MAKE) library) || exit 1; \
+	done
+
+clean: subclean
+	@-rm -rf .libs _libs
+	@-rm -f *.o $(SHLIB)
+
+subclean:
+	@-rm -f *.a
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && Mkinclude="$(MKinclude)" $(MAKE) clean) || exit 1; \
+	done
