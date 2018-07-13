@@ -21,9 +21,9 @@ ple4sr <- transform(ple4sr, ssb=ssb*100, rec=rec*100)
 # NO RESCALING
 # ple4sr <- fmle(as.FLSR(ple4, model="bevholt"))
 
-ple4brp <- FLBRP(ple4, sr=ple4sr, fbar=FLQuant(seq(0, 3, length=101)))
+ple4brp <- FLBRP::FLBRP(ple4, sr=ple4sr, fbar=FLQuant(seq(0, 3, length=101)))
 
-ple4brp <- brp(ple4brp)
+ple4brp <- FLBRP::brp(ple4brp)
 
 # ECONOMIC data
 

@@ -9,8 +9,8 @@
 \title{The FLR class for biological and economic reference points}
 \usage{
 \S4method{FLBRP}{missing,missing}(..., model = formula(rec ~ a),
-  params = FLPar(1, params = "a"), fbar = FLQuant(seq(0, 4, 0.04), quant =
-  "age"))
+  params = FLPar(1, params = "a"), fbar = FLQuant(seq(0, 4, length.out =
+  101), quant = "age"))
 }
 \description{
 Estimation of equilibirum reference points on the results obtained from fitting
