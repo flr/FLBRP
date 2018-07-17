@@ -52,16 +52,6 @@ setMethod('propagate', signature(object='FLBRP'),
   
     return(object)}) # }}}
 
-# iter {{{
-setMethod('iter', signature(obj='FLBRP'),
-  function(obj, iter, ...){
-    obj <- callNextMethod(obj, iter, ...)
-    params(obj) <- iter(params(obj), iter)
-    if(dim(refpts(obj))[3] > 1)
-      refpts(obj) <- iter(refpts(obj), iter)
-
-    return(obj)}) # }}}
-
 # summary {{{
 setMethod("summary", signature("FLBRP"),
   function(object) {
