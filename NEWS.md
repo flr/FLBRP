@@ -1,4 +1,4 @@
-# FLBRP 0.0.3
+# FLBRP 2.6.3
 
 ## NEW FEATURES
 - New code for fwdWindow(FLStock, FLBRP)
@@ -6,6 +6,8 @@
 - A bare vignette now points at FLBRP/FLBRP tutorial in http://flr-project.org
 
 ## USER-VISIBLE CHANGES
+
+- Many life history-related functions and methods have been moved to the FLife package.
 
 ## BUG FIXES
 
