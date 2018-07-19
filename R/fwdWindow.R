@@ -31,7 +31,7 @@
 #' psr <- fmle(as.FLSR(ple4, model="bevholt"), control=list(trace=0))
 #' prp <- brp(FLBRP(ple4, sr=psr))
 #'
-#' res <- fwdWindow(ple4, prp, end=2014)
+#' res <- fwdWindow(ple4, prp, end=dims(ple4)$maxyear + 10)
 
 setMethod("fwdWindow", signature(x="FLStock", y="FLBRP"),
   function(x, y, end=dims(x)$maxyear) {
