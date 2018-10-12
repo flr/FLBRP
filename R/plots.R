@@ -34,8 +34,7 @@
 #' plot(ple4brp)
 
 setMethod("plot", signature("FLBRP", "missing"),
-  function(x, refpts=c("msy", "mey", "f0.1", "spr.30", "fmax","crash"),
-    obs=FALSE, ...) {
+  function(x, refpts=dimnames(refpts(x))$refpt, obs=FALSE, ...) {
 
     # EXTRACT metrics
     df <- model.frame(metrics(x,
