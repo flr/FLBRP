@@ -1,4 +1,10 @@
- FLBRP 2.6.3
+ FLBRP 2.5.4
+
+ USER-VISIBLE CHANGES
+
+- plot(FLBRP) will now by default plot all refpts in object@refpts
+
+ FLBRP 2.5.3
 
  NEW FEATURES
 - New code for fwdWindow(FLStock, FLBRP)

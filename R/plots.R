@@ -34,13 +34,13 @@
 #' plot(ple4brp)
 
 setMethod("plot", signature("FLBRP", "missing"),
-  function(x, refpts=dimnames(refpts(x))$refpt, obs=FALSE, ...) {
+  function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, ...) {
 
     # EXTRACT metrics
     df <- model.frame(metrics(x,
       list(ssb=ssb, harvest=fbar, rec=rec, yield=landings, profit=profit)),
       drop=FALSE)
-
+browser()
     # refpts
     drps <- dimnames(refpts(x))$refpt
     rps <- refpts(x)[drps %in% refpts,]
