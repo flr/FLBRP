@@ -16,6 +16,7 @@
    #define SEXPDLLExport SEXP    
 #endif
 
+#include <iostream>
 #include <FLCoreClasses.h>
 #include <adolc/adtl.h>
 typedef adtl::adouble adouble;
