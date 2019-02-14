@@ -3,8 +3,6 @@ PKG_CXXFLAGS = -I../inst/include $(CXX11STD)
 PKG_CFLAGS = -I../inst/include
 PKG_LIBS = $(SUBLIBS)
 
-MkInclude = $(RHOME)/etc/Makeconf
-
 SOURCES_CPP = FLCoreClasses.cpp FLBRP.cpp
 SOURCES_C = init.c
 
@@ -18,7 +16,7 @@ $(SHLIB): sublibs $(OBJECTS)
 
 sublibs: subclean
 	@for d in $(SUBDIRS); do \
-	  (cd $${d} && CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)" MkInclude="$(MkInclude)" $(MAKE) library) || exit 1; \
+	  (cd $${d} && CC="$(CC)" CFLAGS="$(CFLAGS)" CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)" $(MAKE) library) || exit 1; \
 	done
 
 clean: subclean
@@ -28,5 +26,5 @@ clean: subclean
 subclean:
 	@-rm -f *.a
 	@for d in $(SUBDIRS); do \
-	  (cd $${d} && Mkinclude="$(MKinclude)" $(MAKE) clean) || exit 1; \
+	  (cd $${d} && $(MAKE) clean) || exit 1; \
 	done
