@@ -6,9 +6,6 @@ os:
   - linux
   - osx
 
-r:
-  - release
-
 branches:
   only:
   - master
