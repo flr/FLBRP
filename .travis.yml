@@ -1,16 +1,18 @@
-# .travis.yml for R projects.
-#
-# https://travis-ci.org/flr/FLCore
+language: r
 
 warnings_are_errors: false
 
-language: r
+os:
+  - linux
+  - osx
 
-matrix:
-  include:
-    - os: linux
-      r: release
+r:
+  - release
 
+branches:
+  only:
+  - master
+    
 sudo: false
 
 cache: packages
@@ -20,15 +22,27 @@ notifications:
     on_success: change
     on_failure: change
 
-branches:
-  only:
-    - master
+before_deploy:
+  # Get PKGVER
+  - 'export PKGVER=$(sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)'
+  # CHECK version type by counting dots (flaky)
+  - 'export RELEASE=$(grep -o \\. <<< $PKGVER | wc -w)'
+  - "echo $RELEASE"
+  # Build binary and remove the source archive
+  - "R CMD INSTALL --build FLBRP_$PKGVER.tar.gz"
+  - "rm FLBRP_$PKGVER.tar.gz"
+  # Look for packages
+  - "export RELEASE_PKG_FILE=$(ls FLBRP*gz)"
+  - "echo $RELEASE_PKG_FILE"
 
-repos:
-  CRAN: https://cloud.r-project.org
-  flr: http://flr-project.org/R
-
-after_failure:
-  - cat /home/travis/build/flr/FLBRP/FLBRP.Rcheck/00install.out 
-  - cat /home/travis/build/flr/FLBRP/FLBRP.Rcheck/00check.log
-  - ./travis-tool.sh dump_logs
+deploy:
+  provider: releases
+  api_key:
+    secure: XalloAxkcWzqsGamb/BUNxdycRPW0/gkmNp8nRAz3OBmdJAUI2JpEDIgmbBW94OWHGDZqrBaFGT2fbbCo33Gt0/raLWN0345PCPdcXMkuRELXvMn7BQCXMxfj1yDRFxdD8T0G1pZA/BxDVWFdNdu9NkEKo1qP1MI+lNgFpjQWEo=
+  file: $RELEASE_PKG_FILE
+  skip_cleanup: true
+  draft: true
+  on:
+    repo: flr/FLBRP
+    # condition: "$RELEASE=2"
+    # condition: $RELEASE =~ ^[0-9]+\.[0-9]+\.[0-9]+
