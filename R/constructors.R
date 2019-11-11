@@ -15,9 +15,8 @@ setMethod('FLBRP', signature(object='missing', sr='missing'),
   function(..., model=formula(rec~a), params=FLPar(1, params='a'),
     fbar=FLQuant(seq(0, 4, length.out=101), quant='age'))
   {
-
     args <- list(...)
-    
+
     # quant
     if(length(args) > 1)
       qname <- quant(args[[1]])
@@ -107,11 +106,13 @@ setMethod('FLBRP', signature(object='FLStock', sr='FLSR'),
 setMethod('FLBRP', signature(object='FLStock', sr='list'),
   function(object, sr, ...){
 
-  if (!(all(c("model","params") %in% names(sr)))) stop("model and params not in sr list")
+  if (!(all(c("model","params") %in% names(sr))))
+    stop("model and params not in sr list")
   if (is(sr[["model"]],"character"))
-    sr[["model"]]<-do.call("bevholt", list())$model
+    sr[["model"]]<-do.call(sr[["model"]], list())$model
 
-    FLBRP(object=object, model=sr[["model"]], params=sr[["params"]], ...)})
+    FLBRP(object=object, model=sr[["model"]], params=sr[["params"]], ...)
+  })
 # }}}
 
 # FLBRP(object=FLStock, sr=missing) {{{
@@ -272,7 +273,7 @@ setMethod('FLBRP', signature(object='data.frame', sr='FLSR'),
     model(res) =model(sr)
     params(res)=params(sr)
  
-  return(brp(res))}
+  return(res)}
 ) # }}}
 
 # FLBRP(object="FLBRP", sr="mssing") {{{
