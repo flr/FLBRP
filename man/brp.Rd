@@ -11,8 +11,7 @@
 
 \S4method{computeRefpts}{FLBRP}(object)
 
-\S4method{plot}{FLBRP,missing}(x, refpts = c("msy", "mey", "f0.1", "spr.30",
-  "fmax", "crash"), obs = FALSE, ...)
+\S4method{plot}{FLBRP,missing}(x, refpts = dimnames(x@refpts)$refpt, obs = FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{FLBRP}}
@@ -31,11 +30,11 @@ An object of class \link[=gg]{ggplot2}.
 \description{
 This method carries out the necessary calculation to obtain the reference
 points for an object of class \code{FLBRP}. Results of the calculation are stored
-in \code{@refpts} slot of the object, and the object is then returned.
+in \verb{@refpts} slot of the object, and the object is then returned.
 
 To directly obtain the recalculated \code{refpts} slot of an \code{FLBRP} object, the
 \code{computeRefpts} method can be used. This is equivalent to \emph{fitting} the object
-using \code{brp} and then extracting the \code{@refpts} slot.
+using \code{brp} and then extracting the \verb{@refpts} slot.
 
 The plot method for the \code{FLBRP} class will show the relationship between
 equilibrium SSB, Yield and Profit against levels of fishing mortality and

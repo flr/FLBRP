@@ -8,9 +8,12 @@
 \alias{FLBRP-missing,missing-method}
 \title{The FLR class for biological and economic reference points}
 \usage{
-\S4method{FLBRP}{missing,missing}(..., model = formula(rec ~ a),
-  params = FLPar(1, params = "a"), fbar = FLQuant(seq(0, 4, length.out =
-  101), quant = "age"))
+\S4method{FLBRP}{missing,missing}(
+  ...,
+  model = formula(rec ~ a),
+  params = FLPar(1, params = "a"),
+  fbar = FLQuant(seq(0, 4, length.out = 101), quant = "age")
+)
 }
 \description{
 Estimation of equilibirum reference points on the results obtained from fitting
@@ -29,57 +32,57 @@ of an stock assessment model fit, usually provided as two objects of class
 \section{Slots}{
 
 \describe{
-\item{\code{model}}{The formula for the stock-recruitment model, \code{formula,}.}
+\item{\code{model}}{The formula for the stock-recruitment model, \verb{formula,}.}
 
-\item{\code{params}}{Parameters of the stock-recruitment relationship, \code{FLPar,}.}
+\item{\code{params}}{Parameters of the stock-recruitment relationship, \verb{FLPar,}.}
 
-\item{\code{refpts}}{The estimated reference points, \code{FLPar,}.}
+\item{\code{refpts}}{The estimated reference points, \verb{FLPar,}.}
 
-\item{\code{fbar}}{A vector of mean fishing mortality values for calculating the reference points, \code{FLQuant,}.}
+\item{\code{fbar}}{A vector of mean fishing mortality values for calculating the reference points, \verb{FLQuant,}.}
 
-\item{\code{fbar.obs}}{The time series of observed mean fishing mortality, \code{FLQuant,}.}
+\item{\code{fbar.obs}}{The time series of observed mean fishing mortality, \verb{FLQuant,}.}
 
-\item{\code{landings.obs}}{The time series of observed total landings, \code{FLQuant,}.}
+\item{\code{landings.obs}}{The time series of observed total landings, \verb{FLQuant,}.}
 
-\item{\code{discards.obs}}{The time series of observed total discards, \code{FLQuant,}.}
+\item{\code{discards.obs}}{The time series of observed total discards, \verb{FLQuant,}.}
 
-\item{\code{rec.obs}}{The time series of observed recruitment, \code{FLQuant,}.}
+\item{\code{rec.obs}}{The time series of observed recruitment, \verb{FLQuant,}.}
 
-\item{\code{ssb.obs}}{The time series of observed spawning stock biomasses, \code{FLQuant,}.}
+\item{\code{ssb.obs}}{The time series of observed spawning stock biomasses, \verb{FLQuant,}.}
 
-\item{\code{stock.obs}}{The time series of observed total stock abundance, \code{FLQuant,}.}
+\item{\code{stock.obs}}{The time series of observed total stock abundance, \verb{FLQuant,}.}
 
-\item{\code{profit.obs}}{The time series of profits, \code{FLQuant,}.}
+\item{\code{profit.obs}}{The time series of profits, \verb{FLQuant,}.}
 
-\item{\code{landings.sel}}{Selectivity at age for the landings, \code{FLQuant,}.}
+\item{\code{landings.sel}}{Selectivity at age for the landings, \verb{FLQuant,}.}
 
-\item{\code{discards.sel}}{Selectivity at age for the discards, \code{FLQuant,}.}
+\item{\code{discards.sel}}{Selectivity at age for the discards, \verb{FLQuant,}.}
 
-\item{\code{bycatch.harvest}}{X, Fishing mortality at age of bycatch species, \code{FLQuant,}.}
+\item{\code{bycatch.harvest}}{X, Fishing mortality at age of bycatch species, \verb{FLQuant,}.}
 
-\item{\code{stock.wt}}{Mean weight-at-age in the stock to use in calculations, \code{FLQuant,}.}
+\item{\code{stock.wt}}{Mean weight-at-age in the stock to use in calculations, \verb{FLQuant,}.}
 
-\item{\code{landings.wt}}{Mean weight-at-age in the landings to use in calculations, \code{FLQuant,}.}
+\item{\code{landings.wt}}{Mean weight-at-age in the landings to use in calculations, \verb{FLQuant,}.}
 
-\item{\code{discards.wt}}{Mean weight-at-age in the discards to use in calculations, \code{FLQuant,}.}
+\item{\code{discards.wt}}{Mean weight-at-age in the discards to use in calculations, \verb{FLQuant,}.}
 
-\item{\code{bycatch.wt}}{Mean weight-at-age in the bycatch to use in calculations, \code{FLQuant,}.}
+\item{\code{bycatch.wt}}{Mean weight-at-age in the bycatch to use in calculations, \verb{FLQuant,}.}
 
-\item{\code{m}}{Natural mortality at age, \code{FLQuant,}.}
+\item{\code{m}}{Natural mortality at age, \verb{FLQuant,}.}
 
-\item{\code{mat}}{Maturity at age, \code{FLQuant,}.}
+\item{\code{mat}}{Maturity at age, \verb{FLQuant,}.}
 
-\item{\code{harvest.spwn}}{Proportion of harvest/fishing mortality before spawning, \code{FLQuant,}.}
+\item{\code{harvest.spwn}}{Proportion of harvest/fishing mortality before spawning, \verb{FLQuant,}.}
 
-\item{\code{m.spwn}}{Proportion of natural mortality before spawning, \code{FLQuant,}.}
+\item{\code{m.spwn}}{Proportion of natural mortality before spawning, \verb{FLQuant,}.}
 
-\item{\code{availability}}{, \code{FLQuant,}.}
+\item{\code{availability}}{, \verb{FLQuant,}.}
 
-\item{\code{price}}{Price at age, \code{FLQuant,}.}
+\item{\code{price}}{Price at age, \verb{FLQuant,}.}
 
-\item{\code{vcost}}{X, \code{FLQuant,}.}
+\item{\code{vcost}}{X, \verb{FLQuant,}.}
 
-\item{\code{fcost}}{X, \code{FLQuant,}.}
+\item{\code{fcost}}{X, \verb{FLQuant,}.}
 }}
 
 \section{Validity}{
