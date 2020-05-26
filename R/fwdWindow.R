@@ -50,15 +50,15 @@ setMethod("fwdWindow", signature(x="FLStock", y="FLBRP"),
        "m", "mat", "harvest.spwn", "m.spwn")
 
     for(s in slts) {
-      slot(res, s)[,wyrs] <- iter(do.call(s, list(y)), seq(its[s]))
+      slot(res, s)[, wyrs] <- iter(do.call(s, list(y)), seq(its[s]))
     }
 
-    landings.n(res)[,wyrs] <- iter(landings.n(y)[,3], seq(its["landings.n"]))
+    landings.n(res)[, wyrs] <- iter(landings.n(y)[,3], seq(its["landings.n"]))
 
     if(sum(discards(x)) == 0) {
-      discards.n(res)[,wyrs] <- 0
+      discards.n(res)[, wyrs] <- 0
     } else {
-      discards.n(res)[,wyrs] <- iter(discards.n(y)[,3], seq(its["discards.n"]))
+      discards.n(res)[, wyrs] <- iter(discards.n(y)[,3], seq(its["discards.n"]))
     }
 
     harvest(res)[,wyrs] <- iter(harvest(y)[,3], seq(its["discards.n"]))
