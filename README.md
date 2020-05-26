@@ -1,6 +1,6 @@
 # FLBRP
-- Version: 2.5.4
-- Date: 2019-08-30
+- Version: 2.5.5
+- Date: 2020-05-26
 - Author: Laurie Kell <laurie@seaplusplus.co.uk>, Iago Mosqueira <iago.mosqueira@ec.europa.eu>, Finlay Scott <finlay.scott@ec.europa.eu>
 - Maintainer: Iago Mosqueira <iago.mosqueira@ec.europa.eu>
 - Repository: <https://github.com/flr/FLBRP/>
