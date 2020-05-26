@@ -1,17 +1,4 @@
 useDynLib("FLBRP")
-importFrom("ggplot2",
-  "aes_",
-  "facet_wrap",
-  "ggplot",
-  "geom_line",
-  "geom_point",
-  "geom_segment",
-  "geom_text",
-  "scale_shape_manual",
-  "scale_fill_manual",
-  "scale_x_continuous",
-  "xlab",
-  "ylab")
 import("FLCore")	
 import("ggplotFL")
 importFrom("stats", "ave")

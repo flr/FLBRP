@@ -15,10 +15,9 @@ URL: http://flr-project.org/FLBRP
 Depends:
   R (>= 3.5.0),
   FLCore (>= 2.6.7),
-  ggplot2
-Imports:
-  methods,
   ggplotFL
+Imports:
+  methods
 Suggests:
   knitr
 Collate:
