@@ -53,16 +53,16 @@ setMethod("plot", signature("FLBRP", "missing"),
 
     # NO economics
     panels <- list(
-      P1=c(x="harvest", y="ssb", panel="Equilibrium SSB v. F"),
-      P2=c(x="ssb", y="rec", panel="Equilibrium Recruitment v. SSB"),
-      P3=c(x="harvest", y="yield", panel="Equilibrium Yield v. F"),
-      P4=c(x="ssb", y="yield", panel="Equilibrium Yield v. SSB"))
+      P1=c(x="harvest", y="ssb", panel="Equilibrium SSB v. F", pos=1),
+      P2=c(x="ssb", y="rec", panel="Equilibrium Recruitment v. SSB", pos=2),
+      P3=c(x="harvest", y="yield", panel="Equilibrium Yield v. F", pos=3),
+      P4=c(x="ssb", y="yield", panel="Equilibrium Yield v. SSB", pos=4))
 
     # WITH economics
     if(!all(is.na(rps[, 'profit']))) {
       panels <- c(panels, list(
-        P5=c(x="harvest", y="profit", panel="Equilibrium Profit v. F"),
-        P6=c(x="ssb", y="profit", panel="Equilibrium Profit v. SSB")))
+        P5=c(x="harvest", y="profit", panel="Equilibrium Profit v. F", pos=5),
+        P6=c(x="ssb", y="profit", panel="Equilibrium Profit v. SSB", pos=6)))
     } else {
       dms <- dimnames(rps)
       rps <- rps[!dms$refpt %in% "mey",
@@ -72,15 +72,18 @@ setMethod("plot", signature("FLBRP", "missing"),
     # APPLY over panels to extract x, y and panel for each element
     dat <- lapply(panels, function(p) {
       data.frame(x=df[,p['x']], y=df[,p['y']], iter=df[,'iter'],
-        panel=p['panel'], row.names=NULL)
+        panel=p['panel'], pos=p['pos'], row.names=NULL)
     })
 
     # RBIND into single df
     dat <- do.call(rbind, c(dat, list(make.row.names = FALSE)))
 
+    # CREATE facet labels vector
+    facl <- setNames(unique(dat$panel), nm=unique(dat$pos))
+
     # PLOT
     p <- ggplot(dat, aes_(x=~x, y=~y, group=~iter)) + geom_line() +
-      facet_wrap(~panel, scales="free", ncol=2) +
+      facet_wrap(~pos, scales="free", ncol=2, labeller=labeller(pos=facl)) +
       xlab("") + ylab("") + 
       scale_x_continuous(labels=human_numbers, limits=c(0,NA))
 
@@ -90,12 +93,12 @@ setMethod("plot", signature("FLBRP", "missing"),
         # CBIND x, + refpt, iter ...
         cbind(as(rps[, p['x']], 'data.frame')[, -2],
         # ... y, panel
-        y=c(rps[,p['y']]), panel=unname(p['panel']))
+        y=c(rps[,p['y']]), pos=unname(p['pos']))
       })
       rpdat <- do.call(rbind, c(rpdat, list(make.row.names = FALSE)))
       
       # CALCULATE ymin per panel
-      rpdat$ymin <- ave(rpdat$y, rpdat$panel, FUN=function(x) pmin(min(x), 0))
+      rpdat$ymin <- ave(rpdat$y, rpdat$pos, FUN=function(x) pmin(min(x), 0))
       
       # ADD rps points
       p <- p + geom_point(data=rpdat, size=2.5,
@@ -111,7 +114,7 @@ setMethod("plot", signature("FLBRP", "missing"),
       
         # CALCULATE limits of lines
         rpdat$yend <- rpdat$y * 0.95
-        rpdat$ymax <- ave(rpdat$y, rpdat$panel, FUN=max)
+        rpdat$ymax <- ave(rpdat$y, rpdat$pos, FUN=max)
         rpdat$ystart <- rpdat$ymin + (rpdat$ymax * 0.05)
         
         # LABEL
@@ -133,7 +136,7 @@ setMethod("plot", signature("FLBRP", "missing"),
       # APPLY over panels to extract x, y and panel for each element
       dato <- lapply(panels[1:4], function(p)
         data.frame(x=dfo[,p['x']], y=dfo[,p['y']], iter=dfo[,'iter'],
-        panel=p['panel'], row.names=NULL))
+        pos=p['pos'], row.names=NULL))
       
       dato <- do.call(rbind, c(dato, list(make.row.names = FALSE)))
 
