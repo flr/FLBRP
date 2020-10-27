@@ -57,9 +57,6 @@ setGeneric("profit.obs<-", function(object, ..., value)
 setGeneric("rec.obs<-", function(object, ..., value)
 		standardGeneric("rec.obs<-"))
 
-setGeneric("refpts<-", function(object, ..., value)
-		standardGeneric("refpts<-"))
-
 setGeneric("ssb.obs", function(object, ...)
 		standardGeneric("ssb.obs"))
 setGeneric("ssb.obs<-", function(object, ..., value)
