@@ -67,6 +67,6 @@ setMethod("fwdWindow", signature(x="FLStock", y="FLBRP"),
   }
 ) # }}}
 
-# TODO fwdwindow (FLBiol, FLBRP) {{{
+# TODO fwdWindow (FLBiol, FLBRP) {{{
 
 # }}}

@@ -81,7 +81,7 @@ setMethod('FLBRP', signature(object='missing', sr='missing'),
 
     for(i in slots[empty])
       args[[i]] <- FLQuant(dimnames=dnames)
-
+    
     res <- do.call(new, c(list('FLBRP'), args))
     return(res)
   }
@@ -154,6 +154,7 @@ setMethod('FLBRP', signature(object='FLStock', sr='missing'),
     scaling <- apply(scaling, c(1,3:6), foo)
     
     # NEW FLBRP
+    
     res <- new('FLBRP',
       # range
       range=object@range[c('min', 'max', 'plusgroup', 'minfbar', 'maxfbar')],
@@ -217,12 +218,19 @@ setMethod('FLBRP', signature(object='FLStock', sr='missing'),
       params = params
     )
 
+
     # LIMIT to Fcrash
     if(missing(fbar)) {
       fcrash <- max(computeRefpts(res)["crash","harvest"])
       if(!is.na(fcrash))
         fbar(res)[] <- seq(0, fcrash, length.out=101)
     }
+
+    # DEBUG FIX *.sel dimnames
+    discards.sel(res) <- scaling * apply(object@discards.n[,syears] /
+        (object@discards.n[,syears] + object@landings.n[,syears]), c(1,3:6), foo)
+    landings.sel(res) <- scaling * apply(object@landings.n[,syears] /
+        (object@discards.n[,syears] + object@landings.n[,syears]), c(1,3:6), foo)
 
     # extra args
     args <- list(...)
@@ -276,7 +284,7 @@ setMethod('FLBRP', signature(object='data.frame', sr='FLSR'),
   return(res)}
 ) # }}}
 
-# FLBRP(object="FLBRP", sr="mssing") {{{
+# FLBRP(object="FLBRP", sr="missing") {{{
 setMethod('FLBRP', signature(object='FLBRP', sr='missing'),
   function(object, sr, ...){
 
