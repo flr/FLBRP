@@ -34,7 +34,8 @@
 #' plot(ple4brp)
 
 setMethod("plot", signature("FLBRP", "missing"),
-  function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, ...) {
+  function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, labels=TRUE,
+    shapes="missing", colours="missing", ...) {
 
     # EXTRACT metrics
     df <- model.frame(metrics(x,
@@ -99,13 +100,19 @@ setMethod("plot", signature("FLBRP", "missing"),
       
       # CALCULATE ymin per panel
       rpdat$ymin <- ave(rpdat$y, rpdat$pos, FUN=function(x) pmin(min(x), 0))
+
+      # SET shapes and colors
+      if(missing(shapes))
+        shapes <- rep(c(21, 24, 22, 23), each=3)
+      if(missing(colours))
+        colours <- c(c("white", "#009e73", "#000000"), rep(c("#e69f00",
+          "#56b4e9", "#f0e442", "#0072b2", "#d55e00", "#cc79a7"), 4))
       
       # ADD rps points
       p <- p + geom_point(data=rpdat, size=2.5,
         aes_(x=~data, y=~y, group=~refpt, fill=~refpt, shape=~refpt)) +
-        scale_shape_manual(values=c(21, 21, 21, 24, 24, 24, 21)) +
-        scale_fill_manual(values=c("white", "#4dac26", "black", "#f1b6da",
-          "#f7f7f7", "#b8e186", "#d01c8b")) 
+        scale_shape_manual(values=shapes) +
+        scale_fill_manual(values=colours) 
 
       # ADD refpts labels and text
       if(length(refpts) > 0 & is.character(refpts)){
@@ -118,11 +125,13 @@ setMethod("plot", signature("FLBRP", "missing"),
         rpdat$ystart <- rpdat$ymin + (rpdat$ymax * 0.05)
         
         # LABEL
-        p <- p + geom_text(data=rpdat,
-          aes_(x=~data, y=~ymin, label=~refpt), angle = 90, size=3, vjust="left") +
-          # LINES
-          geom_segment(data=rpdat, aes_(x=~data, y=~ystart, xend=~data, yend=~yend),
-          colour="grey")
+        if(labels) {
+          p <- p + geom_text(data=rpdat,
+            aes_(x=~data, y=~ymin, label=~refpt), angle = 90, size=3, vjust="left") +
+            # LINES
+            geom_segment(data=rpdat, aes_(x=~data, y=~ystart, xend=~data, yend=~yend),
+            colour="grey")
+        }
       }
     }
 
