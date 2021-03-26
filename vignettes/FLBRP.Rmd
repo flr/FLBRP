@@ -12,6 +12,7 @@ license: Creative Commons Attribution-ShareAlike 4.0 International Public Licens
 ---
 
 ```{r}
+library(knitr)
 opts_chunk$set(tidy = FALSE)
 ```
 
