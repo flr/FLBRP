@@ -20,7 +20,8 @@ Imports:
   methods,
   ggplot2
 Suggests:
-  knitr
+  knitr,
+  rmarkdown
 Collate:
   classes.R
   generics.R
