@@ -11,6 +11,11 @@ tags: FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
 
+```{r}
+opts_chunk$set(tidy = FALSE)
+```
+
+
 PLEASE visit the tutorial on [Reference points for fisheries management with FLBRP](http://www.flr-project.org/doc/Reference_points_for_fisheries_management_with_FLBRP.html) at the [FLR website](http://flr-project.org).
 
 # Download
