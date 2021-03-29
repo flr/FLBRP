@@ -42,7 +42,7 @@ setMethod("fwdWindow", signature(x="FLStock", y="FLBRP"),
     # NEW window years
     wyrs <- seq(dim(m(x))[2] + 1, dim(m(res))[2])
       
-    # CHECKS
+    # GET iters by slot, might be different
     its <- unlist(lapply(qapply(x, dim), '[', 6))
 
     # COMPLETE *.wt, landings.n, discards.n, mat, m, harvest, *.spwn
@@ -55,11 +55,7 @@ setMethod("fwdWindow", signature(x="FLStock", y="FLBRP"),
 
     landings.n(res)[, wyrs] <- iter(landings.n(y)[,3], seq(its["landings.n"]))
 
-    if(sum(discards(x)) == 0) {
-      discards.n(res)[, wyrs] <- 0
-    } else {
-      discards.n(res)[, wyrs] <- iter(discards.n(y)[,3], seq(its["discards.n"]))
-    }
+    discards.n(res)[, wyrs] <- iter(discards.n(y)[,3], seq(its["discards.n"]))
 
     harvest(res)[,wyrs] <- iter(harvest(y)[,3], seq(its["discards.n"]))
     
