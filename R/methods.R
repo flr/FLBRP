@@ -55,6 +55,11 @@ setMethod('brp', signature(object='FLBRP'),
         stop('iter in FLQuant slots and params do not match, ',
           paste(iter, collapse=' vs. '))
 
+    # check harvest.spwn if m.spwn == 0
+    if(any(m.spwn(object) == 0 & harvest.spwn(object) > 0))
+      stop("harvest.spwn > 0 while m.spwn = 0, cannot solve as no time for fishing
+        to take place. Set a small value for m.spwn, e.g. m.spwn(brp) <- 1e-6.")
+
     # extend refpts as needed
     iter <- max(iter)
     if(iter > 1 && dims(refpts(object))$iter == 1)
