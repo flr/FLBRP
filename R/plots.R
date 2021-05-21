@@ -38,7 +38,7 @@
 
 setMethod("plot", signature("FLBRP", "missing"),
   function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, labels=TRUE,
-    shapes="missing", colours="missing", panels=NULL, ...) {
+    shapes="missing", colours="missing", panels=NULL, ncol=2, ...) {
 
     # EXTRACT metrics
     df <- model.frame(metrics(x,
@@ -91,9 +91,10 @@ setMethod("plot", signature("FLBRP", "missing"),
 
     # PLOT
     p <- ggplot(dat, aes_(x=~x, y=~y, group=~iter)) + geom_line() +
-      facet_wrap(~pos, scales="free", ncol=2, labeller=labeller(pos=facl)) +
+      facet_wrap(~pos, scales="free", ncol=ncol, labeller=labeller(pos=facl)) +
       xlab("") + ylab("") + 
-      scale_x_continuous(labels=human_numbers, limits=c(0,NA))
+      scale_x_continuous(labels=human_numbers, limits=c(0, NA)) +       
+      scale_y_continuous(limits=c(0, NA))
 
     # PLOT refpts
     if(rpf) {
@@ -130,6 +131,9 @@ setMethod("plot", signature("FLBRP", "missing"),
         rpdat$yend <- rpdat$y * 0.95
         rpdat$ymax <- ave(rpdat$y, rpdat$pos, FUN=max)
         rpdat$ystart <- rpdat$ymin + (rpdat$ymax * 0.05)
+
+        rpdat$ymin <- 0
+        rpdat$ystart <- 0
         
         # LABEL
         if(labels) {
