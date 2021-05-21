@@ -38,7 +38,7 @@
 
 setMethod("plot", signature("FLBRP", "missing"),
   function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, labels=TRUE,
-    shapes="missing", colours="missing", ...) {
+    shapes="missing", colours="missing", panels=NULL, ...) {
 
     # EXTRACT metrics
     df <- model.frame(metrics(x,
@@ -56,7 +56,7 @@ setMethod("plot", signature("FLBRP", "missing"),
       df <- df[df$harvest <= c(rps['crash', 'harvest']),]
 
     # NO economics
-    panels <- list(
+    plots <- list(
       P1=c(x="harvest", y="ssb", panel="Equilibrium SSB v. F", pos=1),
       P2=c(x="ssb", y="rec", panel="Equilibrium Recruitment v. SSB", pos=2),
       P3=c(x="harvest", y="yield", panel="Equilibrium Yield v. F", pos=3),
@@ -64,7 +64,7 @@ setMethod("plot", signature("FLBRP", "missing"),
 
     # WITH economics
     if(!all(is.na(rps[, 'profit']))) {
-      panels <- c(panels, list(
+      plots <- c(plots, list(
         P5=c(x="harvest", y="profit", panel="Equilibrium Profit v. F", pos=5),
         P6=c(x="ssb", y="profit", panel="Equilibrium Profit v. SSB", pos=6)))
     } else {
@@ -72,9 +72,13 @@ setMethod("plot", signature("FLBRP", "missing"),
       rps <- rps[!dms$refpt %in% "mey",
         !dms$quant %in% c("revenue", "cost", "profit")]
     }
-                             
-    # APPLY over panels to extract x, y and panel for each element
-    dat <- lapply(panels, function(p) {
+  
+    # SUBSET panels if not NULL
+    if(!is.null(panels))
+      plots <- plots[panels]
+
+    # APPLY over plots to extract x, y and panel for each element
+    dat <- lapply(plots, function(p) {
       data.frame(x=df[,p['x']], y=df[,p['y']], iter=df[,'iter'],
         panel=p['panel'], pos=p['pos'], row.names=NULL)
     })
@@ -93,7 +97,7 @@ setMethod("plot", signature("FLBRP", "missing"),
 
     # PLOT refpts
     if(rpf) {
-      rpdat <- lapply(panels, function(p) {
+      rpdat <- lapply(plots, function(p) {
         # CBIND x, + refpt, iter ...
         cbind(as(rps[, p['x']], 'data.frame')[, -2],
         # ... y, panel
@@ -140,18 +144,21 @@ setMethod("plot", signature("FLBRP", "missing"),
 
     # PLOT observations
     if(obs) {
-
+      
       dfo <- model.frame(metrics(x,
-        list(ssb=ssb.obs, harvest=fbar.obs, rec=rec.obs, yield=landings.obs)),
-        drop=FALSE)
+        list(ssb=ssb.obs, harvest=fbar.obs, rec=rec.obs, yield=landings.obs,
+        profit=profit.obs)), drop=FALSE)
     
-      # APPLY over panels to extract x, y and panel for each element
-      dato <- lapply(panels[1:4], function(p)
+      # APPLY over plots to extract x, y and panel for each element
+      dato <- lapply(plots, function(p)
         data.frame(x=dfo[,p['x']], y=dfo[,p['y']], iter=dfo[,'iter'],
         pos=p['pos'], row.names=NULL))
-      
-      dato <- do.call(rbind, c(dato, list(make.row.names = FALSE)))
 
+      # REMOVE if NA
+      idx <- unlist(lapply(dato, function(x) all(is.na(x$y))))
+      
+      dato <- do.call(rbind, c(dato[!idx], list(make.row.names = FALSE)))
+      
       p <- p + geom_point(data=dato)
     }
 
