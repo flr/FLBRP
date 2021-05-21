@@ -86,15 +86,17 @@ setMethod("plot", signature("FLBRP", "missing"),
     # RBIND into single df
     dat <- do.call(rbind, c(dat, list(make.row.names = FALSE)))
 
+    # Limit y to 0 in panels 1:4
+    dat[dat$pos %in% 1:4 & dat$y<0, "y"] <- 0
+
     # CREATE facet labels vector
     facl <- setNames(unique(dat$panel), nm=unique(dat$pos))
 
     # PLOT
     p <- ggplot(dat, aes_(x=~x, y=~y, group=~iter)) + geom_line() +
       facet_wrap(~pos, scales="free", ncol=ncol, labeller=labeller(pos=facl)) +
-      xlab("") + ylab("") + 
-      scale_x_continuous(labels=human_numbers, limits=c(0, NA)) +       
-      scale_y_continuous(limits=c(0, NA))
+      xlab("") + ylab("") +
+      scale_x_continuous(labels=human_numbers, limits=c(0, NA))
 
     # PLOT refpts
     if(rpf) {
