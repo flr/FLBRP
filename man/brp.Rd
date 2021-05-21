@@ -11,7 +11,17 @@
 
 \S4method{computeRefpts}{FLBRP}(object)
 
-\S4method{plot}{FLBRP,missing}(x, refpts = dimnames(x@refpts)$refpt, obs = FALSE, ...)
+\S4method{plot}{FLBRP,missing}(
+  x,
+  refpts = dimnames(x@refpts)$refpt,
+  obs = FALSE,
+  labels = TRUE,
+  shapes = "missing",
+  colours = "missing",
+  panels = NULL,
+  ncol = 2,
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class \code{FLBRP}}
@@ -53,9 +63,16 @@ plot(ple4brp)
 plot(ple4brp, obs=TRUE)
 # SELECT which refpts to plot
 plot(ple4brp, refpts=c("msy", "crash", "f0.1"))
+plot(ple4brp, refpts=c("msy", "crash", "f0.1"), colours=c("green", "red", "blue"))
+plot(ple4brp, refpts=c("msy", "crash", "f0.1"),
+  colours=c("green", "red", "blue"), shapes=c(21, 22, 23))
 # method will only plot existing referenced points
 refpts(ple4brp) <- refpts(ple4brp)[c("msy", "fmax", "spr.30"),]
 plot(ple4brp)
+# Select which panels to plot
+plot(ple4brp, panels=1:4)
+# and in which format
+plot(ple4brp, panels=1:3, ncol=1)
 }
 \seealso{
 \link{FLBRP}

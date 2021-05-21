@@ -35,6 +35,10 @@
 #' # method will only plot existing referenced points
 #' refpts(ple4brp) <- refpts(ple4brp)[c("msy", "fmax", "spr.30"),]
 #' plot(ple4brp)
+#' # Select which panels to plot
+#' plot(ple4brp, panels=1:4)
+#' # and in which format
+#' plot(ple4brp, panels=1:3, ncol=1)
 
 setMethod("plot", signature("FLBRP", "missing"),
   function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, labels=TRUE,
