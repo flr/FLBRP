@@ -87,6 +87,7 @@ exportMethods(
   "mat<-",
   "price",
   "price<-",
+  "production",
   "profit.obs",
   "profit.obs<-",
   "rec.obs",

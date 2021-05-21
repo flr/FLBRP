@@ -449,3 +449,22 @@ setMethod('computeRefpts', signature(object='FLBRP'), function(object){
 	refpts(brp(object))})
 
 # }}}
+
+# production {{{ 
+
+setMethod("production", signature(object="FLBRP"),
+  function(object, what="ssb", ...) {
+
+    miny <- dims(object)$minyear
+    maxy <- dims(object)$maxyear
+
+    switch(tolower(substr(what, 1, 1)),
+      # ssb
+      s = catch.obs(object) + window(ssb.obs(object), start=miny+1, end=maxy+1) -
+        ssb.obs(object),
+      # biomass
+      b = catch.obs(object) + window(stock.obs(object), start=miny+1, end=maxy+1) -
+        stock.obs(object),
+    )
+  }
+)
