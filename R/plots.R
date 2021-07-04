@@ -134,7 +134,7 @@ setMethod("plot", signature("FLBRP", "missing"),
         rpdat <- rpdat[rpdat$refpt %in% refpts,]
       
         # CALCULATE limits of lines
-        rpdat$yend <- rpdat$y * 0.95
+        rpdat$yend <- rpdat$y * 0.99
         rpdat$ymax <- ave(rpdat$y, rpdat$pos, FUN=max)
         rpdat$ystart <- rpdat$ymin + (rpdat$ymax * 0.05)
 
