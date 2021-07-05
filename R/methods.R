@@ -468,3 +468,70 @@ setMethod("production", signature(object="FLBRP"),
     )
   }
 )
+# }}}
+
+# + FLBRP, FLPar {{{
+
+#' Add external reference points to an FLBRP object
+#'
+#' Reference points computed outside of `FLBRP` can be added to the *@refpts*
+#' slot of an `FLBRP` object. A subsequent call to `brp()` will compute all
+#' other quantities related to this reference point.
+#'
+#' The reference points to be added are passed as an `FLPar` object. Names of
+#' these reference points need to follow this convention:
+#' - For SSB reference points, name should strat with "B", e.g. "Blim".
+#' - For F reference points, first letter must be "F", e.g. "Fmsy".
+#' - Yield reference points should start with "C", e.g. "Cpa".
+#' - For recruitment reference points, use "R" as starting letter, e.g. "R0".
+#'
+#' @param e1 A **FLBRP** object
+#' @param e2 A **FLPar** containing a set of reference points.
+#'
+#' @return A **FLBRP** object with the added and calculated reference points.
+#'
+#' @rdname addFLBRP
+#'
+#' @author The FLR Team
+#' @seealso [FLBRP::brp]
+#' @keywords methods
+#' @md
+#' @examples
+#' data(ple4brp)
+#' refs <- FLPar(Fmsy=0.21, Blim=207288, Bpa=290203)
+#' plot(ple4brp + refs)
+
+setMethod("+", signature(e1="FLBRP", e2="FLPar"),
+  function(e1, e2) {
+
+    # CHECK & PLACE e2 names
+
+    id1 <- c(F="harvest", C="yield", R="rec", B="ssb")
+    id2 <- substr(dimnames(e2)$params, 1, 1)
+    idc <- match(id2, names(id1))
+
+    if(any(is.na(idc)))
+      stop(cat("Name of new refpt (", dimnames(e2)[[1]][is.na(idc)],
+        ") cannot be assigned to refpts columns"))
+
+    # EXPAND refpts
+    rps <- FLPar(NA,
+      dimnames=list(refpt=c(dimnames(refpts(e1))$refpt, dimnames(e2)$params),
+      quant=c("harvest","yield","rec","ssb","biomass","revenue","cost","profit"),
+      iter=dims(e1)$iter))
+
+    idr <- match(dimnames(e2)[[1]], dimnames(rps)$refpt)
+
+    # ASSIGN e2 TODO MAKE iter-proof
+    rps@.Data[idr + (idc - 1L) * dim(rps)[1]] <- e2
+
+    # RECALCULATE brp
+
+    refpts(e1) <- rps
+    e1 <- brp(e1)
+
+    return(e1)
+  }
+)
+
+# }}}
