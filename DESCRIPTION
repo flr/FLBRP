@@ -1,7 +1,7 @@
 Package: FLBRP
 Title: Reference Points for Fisheries Management
-Version: 2.5.6
-Date: 2021-03-26
+Version: 2.5.7
+Date: 2021-07-05
 Authors@R: c(
   person("Iago", "Mosqueira", email = "iago.mosqueira@wur.nl", role = "cre"),
   person("Laurence T.", "Kell", email = "laurie@seaplusplus.co.uk", role = "aut"),

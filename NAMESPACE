@@ -52,6 +52,7 @@ exportClasses(
   "FLBRPs")
 
 exportMethods(
+  "+",
   "availability",
   "availability<-",
   "bycatch.harvest",
