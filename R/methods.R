@@ -470,7 +470,7 @@ setMethod("production", signature(object="FLBRP"),
 )
 # }}}
 
-# + FLBRP, FLPar {{{
+# FLBRP + FLPar {{{
 
 #' Add external reference points to an FLBRP object
 #'
@@ -512,7 +512,7 @@ setMethod("+", signature(e1="FLBRP", e2="FLPar"),
 
     if(any(is.na(idc)))
       stop(cat("Name of new refpt (", dimnames(e2)[[1]][is.na(idc)],
-        ") cannot be assigned to refpts columns"))
+        ") cannot be assigned to refpts columns\n"))
 
     # EXPAND refpts
     rps <- FLPar(NA,
