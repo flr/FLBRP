@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • FLBRP</title>
+<title>Add external reference points to an FLBRP object — +,FLBRP,FLPar-method • FLBRP</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Add external reference points to an FLBRP object — +,FLBRP,FLPar-method" />
+<meta property="og:description" content="Reference points computed outside of FLBRP can be added to the @refpts
+slot of an FLBRP object. A subsequent call to brp() will compute all
+other quantities related to this reference point." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -108,81 +111,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      
+    <h1>Add external reference points to an FLBRP object</h1>
+    
+    <div class="hidden name"><code>addFLBRP.Rd</code></div>
     </div>
 
-    <div id="flbrp-257" class="section level1">
-<h1 class="page-header" data-toc-text="2.5.7">
-<a href="#flbrp-257" class="anchor"></a>FLBRP 2.5.7</h1>
-<div id="new-features" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
-<ul>
-<li>Method “+” to add new reference points to an FLBRP.</li>
-</ul>
-</div>
-</div>
-    <div id="flbrp-254" class="section level1">
-<h1 class="page-header" data-toc-text="2.5.4">
-<a href="#flbrp-254" class="anchor"></a>FLBRP 2.5.4</h1>
-<div id="user-visible-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#user-visible-changes" class="anchor"></a>USER-VISIBLE CHANGES</h2>
-<ul>
-<li>plot(FLBRP) will now by default plot all refpts in <a href="mailto:object@refpts" class="email">object@refpts</a>
-</li>
-</ul>
-</div>
-</div>
-    <div id="flbrp-253" class="section level1">
-<h1 class="page-header" data-toc-text="2.5.3">
-<a href="#flbrp-253" class="anchor"></a>FLBRP 2.5.3</h1>
-<div id="new-features-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
-<ul>
-<li>New code for fwdWindow(FLStock, FLBRP)</li>
-<li>spr(FLBRP) and spr0(FLBRP) are now implemented</li>
-<li>A bare vignette now points at FLBRP/FLBRP tutorial in <a href="http://flr-project.org" class="uri">http://flr-project.org</a>
-</li>
-</ul>
-</div>
-<div id="user-visible-changes-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#user-visible-changes-1" class="anchor"></a>USER-VISIBLE CHANGES</h2>
-<ul>
-<li>Many life history-related functions and methods have been moved to the FLife package.</li>
-</ul>
-</div>
-<div id="bug-fixes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>BUG FIXES</h2>
-</div>
-<div id="utilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#utilities" class="anchor"></a>UTILITIES</h2>
-</div>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>DOCUMENTATION</h2>
-</div>
-<div id="deprecated--defunct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#deprecated--defunct" class="anchor"></a>DEPRECATED &amp; DEFUNCT</h2>
-<ul>
-<li>fwdwindow(FLStock, FLBRP) only has ‘end’ argument for call to window(FLStock) as ‘start’ and ‘frequency’ are set to the first year of the FLStock object and 1 respectively.</li>
-</ul>
-</div>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Reference points computed outside of <code>FLBRP</code> can be added to the <em>@refpts</em>
+slot of an <code>FLBRP</code> object. A subsequent call to <code>brp()</code> will compute all
+other quantities related to this reference point.</p>
+    </div>
 
+    <pre class="usage"># S4 method for FLBRP,FLPar
++(e1, e2)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>e1</th>
+      <td><p>A <strong>FLBRP</strong> object</p></td>
+    </tr>
+    <tr>
+      <th>e2</th>
+      <td><p>A <strong>FLPar</strong> containing a set of reference points.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <strong>FLBRP</strong> object with the added and calculated reference points.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The reference points to be added are passed as an <code>FLPar</code> object. Names of
+these reference points need to follow this convention:</p><ul>
+<li><p>For SSB reference points, name should strat with "B", e.g. "Blim".</p></li>
+<li><p>For F reference points, first letter must be "F", e.g. "Fmsy".</p></li>
+<li><p>Yield reference points should start with "C", e.g. "Cpa".</p></li>
+<li><p>For recruitment reference points, use "R" as starting letter, e.g. "R0".</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>brp</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>The FLR Team</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span>
+<span class='va'>refs</span> <span class='op'>&lt;-</span> <span class='fu'>FLPar</span><span class='op'>(</span>Fmsy<span class='op'>=</span><span class='fl'>0.21</span>, Blim<span class='op'>=</span><span class='fl'>207288</span>, Bpa<span class='op'>=</span><span class='fl'>290203</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ple4brp</span> <span class='op'>+</span> <span class='va'>refs</span><span class='op'>)</span>
+</div><div class='img'><img src='addFLBRP-1.png' alt='' width='700' height='433' /></div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

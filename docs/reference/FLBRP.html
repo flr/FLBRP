@@ -78,7 +78,7 @@ be calculated." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FLBRP</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.7</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ be calculated." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -131,12 +131,12 @@ be calculated.</p>
     </div>
 
     <pre class="usage"><span class='co'># S4 method for missing,missing</span>
-<span class='fu'>FLBRP</span>(
-  <span class='no'>...</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='no'>rec</span> ~ <span class='no'>a</span>),
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'>FLPar</span>(<span class='fl'>1</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='st'>"a"</span>),
-  <span class='kw'>fbar</span> <span class='kw'>=</span> <span class='fu'>FLQuant</span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>4</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>101</span>), <span class='kw'>quant</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-)</pre>
+<span class='fu'>FLBRP</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  model <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>rec</span> <span class='op'>~</span> <span class='va'>a</span><span class='op'>)</span>,
+  params <span class='op'>=</span> <span class='fu'>FLPar</span><span class='op'>(</span><span class='fl'>1</span>, params <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>,
+  fbar <span class='op'>=</span> <span class='fu'>FLQuant</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>4</span>, length.out <span class='op'>=</span> <span class='fl'>101</span><span class='op'>)</span>, quant <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -148,7 +148,7 @@ of an stock assessment model fit, usually provided as two objects of class
 
     
 
-<dl'>
+<dl>
 <dt><code>model</code></dt><dd><p>The formula for the stock-recruitment model, <code>formula,</code>.</p></dd>
 
 <dt><code>params</code></dt><dd><p>Parameters of the stock-recruitment relationship, <code>FLPar,</code>.</p></dd>
@@ -207,7 +207,7 @@ of an stock assessment model fit, usually provided as two objects of class
     
 
 
-<dl'>
+<dl>
 <dt><code>.obs</code> slots dims 1:5</dt><dd><p>Slots containing observations, named
 <code>*.obs</code>, must share dimensions 1 to 5</p></dd>
 <dt>by-age slots dims 1:5</dt><dd><p>Slots containing vectors of values at age,
@@ -245,7 +245,7 @@ of class <code>formula</code>.</p>
     
 
 <p>Methods exist for various calculations based on values stored in the class:</p>
-<dl'>
+<dl>
 <dt>METHOD</dt><dd><p>Neque porro quisquam est qui dolorem ipsum.</p></dd>
 
 </dl>
@@ -253,16 +253,20 @@ of class <code>formula</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>FLComp FLStock FLSR brp</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>The FLR Team</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ple4</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4</span><span class='op'>)</span>
 
 <span class='co'># Create the FLSR and FLBRP objects</span>
-<span class='no'>psr</span> <span class='kw'>&lt;-</span> <span class='fu'>fmle</span>(<span class='fu'>as.FLSR</span>(<span class='no'>ple4</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='st'>"bevholt"</span>), <span class='kw'>control</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>trace</span><span class='kw'>=</span><span class='fl'>0</span>))
-<span class='no'>prp</span> <span class='kw'>&lt;-</span> <span class='fu'>brp</span>(<span class='fu'>FLBRP</span>(<span class='no'>ple4</span>, <span class='kw'>sr</span><span class='kw'>=</span><span class='no'>psr</span>))
+<span class='va'>psr</span> <span class='op'>&lt;-</span> <span class='fu'>fmle</span><span class='op'>(</span><span class='fu'>as.FLSR</span><span class='op'>(</span><span class='va'>ple4</span>, model<span class='op'>=</span><span class='st'>"bevholt"</span><span class='op'>)</span>, control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>trace<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>prp</span> <span class='op'>&lt;-</span> <span class='fu'>brp</span><span class='op'>(</span><span class='fu'>FLBRP</span><span class='op'>(</span><span class='va'>ple4</span>, sr<span class='op'>=</span><span class='va'>psr</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>prp</span>)</div><div class='output co'>#&gt; An object of class "FLBRP"
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>prp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; An object of class "FLBRP"
 #&gt; 
 #&gt; Name:  
 #&gt; Description:  
@@ -298,12 +302,12 @@ of class <code>formula</code>.</p>
 #&gt; fcost         : [ 1 1 1 1 1 1 ], units =  NA 
 #&gt; 
 #&gt; Model: 	rec ~ a * ssb/(b + ssb)
-#&gt; Parameters: 
 #&gt;     params
 #&gt; iter       a     b
 #&gt;    1 1263310 93995
 #&gt; 
-#&gt; refpts:  calculated </div><div class='input'><span class='fu'>refpts</span>(<span class='no'>prp</span>)</div><div class='output co'>#&gt; An object of class "FLPar"
+#&gt; refpts:  calculated </div><div class='input'><span class='fu'>refpts</span><span class='op'>(</span><span class='va'>prp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; An object of class "FLPar"
 #&gt;         quant
 #&gt; refpt    harvest  yield    rec      ssb      biomass  revenue  cost    
 #&gt;   virgin 0.00e+00 0.00e+00 1.24e+06 4.22e+06 4.36e+06       NA       NA
@@ -338,7 +342,7 @@ of class <code>formula</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
