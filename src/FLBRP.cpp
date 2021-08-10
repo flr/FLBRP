@@ -1579,9 +1579,35 @@ SEXP FLBRP::brp(SEXP Object)
 
          D[iRef][RP_harvest][iIter] = x;
          }
-      
+       
+       //yield  
+       else if (R_IsNA(D[iRef][RP_biomass][iIter]) && 
+                R_IsNA(D[iRef][RP_rec    ][iIter]) && 
+                R_IsNA(D[iRef][RP_ssb    ][iIter]) && 
+                R_IsNA(D[iRef][RP_revenue][iIter]) && 
+                R_IsNA(D[iRef][RP_cost   ][iIter]) && 
+                R_IsNA(D[iRef][RP_profit ][iIter]) && !R_IsNA(D[iRef][RP_yield][iIter]) && !R_IsNA(D[iRef][RP_harvest][iIter]))
+       {
+         int Iters=0;
+         double x=0.1,f,dgdx;
+         x=D[iRef][RP_harvest][iIter];
+         do
+         {
+           Iters++;
+           //do Newton Raphson to estimate N
+           
+           f    = pow(D[iRef][RP_yield][iIter]-yield(x,iIter+1),2);
+           dgdx = -2*(D[iRef][RP_yield][iIter]-yield(x,iIter+1))*YieldGrad(x,iIter+1);
+           
+           x = x - f / dgdx;
+         }
+         while (fabs(f) >= QS_TOL && Iters <= QS_ITS);
+         
+         D[iRef][RP_harvest][iIter] = x;
+       }
+       
       if (!R_IsNA(D[iRef][RP_harvest][iIter])){
-	      D[iRef][RP_yield  ][iIter] = yield(   D[iRef][RP_harvest][iIter],iIter+1);
+	        D[iRef][RP_yield  ][iIter] = yield(   D[iRef][RP_harvest][iIter],iIter+1);
           D[iRef][RP_rec    ][iIter] = Recruits(D[iRef][RP_harvest][iIter],iIter+1);
           D[iRef][RP_ssb    ][iIter] = SSB(     D[iRef][RP_harvest][iIter],iIter+1);
           D[iRef][RP_biomass][iIter] = Biomass( D[iRef][RP_harvest][iIter],iIter+1);
@@ -2083,4 +2109,4 @@ extern "C" SEXPDLLExport InitialCond(SEXP xStk, SEXP xSRModel, SEXP xSRPar, SEXP
 
    //brp.brp(SEXP Object);
 
-   return(stock.Return());}
+   return(stock.Return());}
