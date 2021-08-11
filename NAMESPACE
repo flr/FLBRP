@@ -91,6 +91,7 @@ exportMethods(
   "production",
   "profit.obs",
   "profit.obs<-",
+  "properties",
   "rec.obs",
   "rec.obs<-",
   "refpts",
