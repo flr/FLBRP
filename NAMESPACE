@@ -116,6 +116,7 @@ exportMethods(
   "cost",
   "discards.n",
   "FLBRP",
+  "FLBRPs",
   "fmsy",
   "fwdWindow",
   "landings.n",
