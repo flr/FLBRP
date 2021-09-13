@@ -88,8 +88,11 @@ setMethod('landings.n', signature(object='FLBRP'),
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
-    .Call('landings_n', object, SRNameCode(SRModelName(object@model)),
+    res <- .Call('landings_n', object, SRNameCode(SRModelName(object@model)),
               FLQuant(c(params(object)),dimnames=dimnames(params(object))))
+    res[res < 0] <- 0
+
+    return(res)
   }
 ) # }}}
 
@@ -101,8 +104,11 @@ setMethod('discards.n', signature(object='FLBRP'),
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
-   .Call('discards_n', object, SRNameCode(SRModelName(object@model)),
+    res <- .Call('discards_n', object, SRNameCode(SRModelName(object@model)),
               FLQuant(c(params(object)),dimnames=dimnames(params(object))))
+    res[res < 0] <- 0
+
+    return(res)
   }
 ) # }}}
 
@@ -115,8 +121,11 @@ setMethod('stock.n', signature(object='FLBRP'),
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
-    .Call('stock_n', object, SRNameCode(SRModelName(object@model)),
+    res <- .Call('stock_n', object, SRNameCode(SRModelName(object@model)),
               FLQuant(c(params(object)),dimnames=dimnames(params(object))))
+    res[res < 0] <- 0
+
+    return(res)
   }
 ) # }}}
 
@@ -219,9 +228,10 @@ setMethod('ypr', signature(object='FLBRP'),
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
-    res<-.Call("ypr", object, SRNameCode(SRModelName(object@model)),
+    res <- .Call("ypr", object, SRNameCode(SRModelName(object@model)),
       FLQuant(c(params(object)),dimnames=dimnames(params(object))),
       PACKAGE = "FLBRP")
+    res[res < 0] <- 0
 
     return(res)
   }) # }}}
@@ -248,7 +258,8 @@ setMethod('hcrYield', signature(object='FLBRP', fbar='FLQuant'),
     res <- .Call("hcrYield", object, SRNameCode(SRModelName(object@model)),
       FLQuant(c(params(object)),dimnames=dimnames(params(object))),
       fbar, PACKAGE = "FLBRP")
-    
+    res[res < 0] <- 0
+
     # propagate landings.wt
     if(dims(res)$iter != dims(landings.wt(object))$iter)
       landings.wt(object) <- propagate(landings.wt(object), dims(res)$iter)
@@ -259,6 +270,7 @@ setMethod('hcrYield', signature(object='FLBRP', fbar='FLQuant'),
 setMethod('hcrYield', signature(object='FLBRP', fbar='numeric'),
   function(object, fbar)
     hcrYield(object, FLQuant(fbar)))
+
 # }}}
 
 # ssb {{{

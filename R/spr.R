@@ -37,6 +37,7 @@ setMethod('spr', signature(object='FLBRP'),
     res <- .Call("spr", object, SRNameCode(SRModelName(object@model)),
       FLQuant(c(params(object)), dimnames=dimnames(params(object))), 
       PACKAGE = "FLBRP")
+    res[res < 0] <- 0
 
     return(res)
   }
@@ -64,6 +65,7 @@ setMethod('spr0', signature(ssb='FLBRP', rec='missing', fbar='missing'),
     res <- .Call("spr", ssb, SRNameCode(SRModelName(ssb@model)),
       FLQuant(c(params(ssb)),dimnames=dimnames(params(ssb))),
       PACKAGE = "FLBRP")
+    res[res < 0] <- 0
 
     return(res)
   }
