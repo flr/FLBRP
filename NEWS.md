@@ -1,3 +1,14 @@
+# FLBRP 2.5.8
+
+## BUG FIXES
+
+- set outputs if <0 in case -ve RPs.
+
+## NEW FEATURES
+
+- New properties method.
+- Able to field refpts if yield is available.
+
 # FLBRP 2.5.7
 
 ## NEW FEATURES
