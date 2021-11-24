@@ -258,75 +258,77 @@ of class <code>formula</code>.</p>
     <p>The FLR Team</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4</span><span class='op'>)</span>
-
-<span class='co'># Create the FLSR and FLBRP objects</span>
-<span class='va'>psr</span> <span class='op'>&lt;-</span> <span class='fu'>fmle</span><span class='op'>(</span><span class='fu'>as.FLSR</span><span class='op'>(</span><span class='va'>ple4</span>, model<span class='op'>=</span><span class='st'>"bevholt"</span><span class='op'>)</span>, control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>trace<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>prp</span> <span class='op'>&lt;-</span> <span class='fu'>brp</span><span class='op'>(</span><span class='fu'>FLBRP</span><span class='op'>(</span><span class='va'>ple4</span>, sr<span class='op'>=</span><span class='va'>psr</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>prp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; An object of class "FLBRP"
-#&gt; 
-#&gt; Name:  
-#&gt; Description:  
-#&gt; Quant: age 
-#&gt; Dims:  age 	year	unit	season	area	iter
-#&gt; 	10	101	1	1	1	1	
-#&gt; 
-#&gt; Range:  min	max	pgroup	minfbar	maxfbar 
-#&gt; 	1	10	10	2	6	
-#&gt; 
-#&gt; fbar          : [ 1 101 1 1 1 1 ], units =  f 
-#&gt; fbar.obs      : [ 1 61 1 1 1 1 ], units =  f 
-#&gt; landings.obs  : [ 1 61 1 1 1 1 ], units =  t 
-#&gt; discards.obs  : [ 1 61 1 1 1 1 ], units =  t 
-#&gt; rec.obs       : [ 1 61 1 1 1 1 ], units =  1000 
-#&gt; ssb.obs       : [ 1 61 1 1 1 1 ], units =  t 
-#&gt; stock.obs     : [ 1 61 1 1 1 1 ], units =  t 
-#&gt; profit.obs    : [ 1 61 1 1 1 1 ], units =  NA 
-#&gt; landings.sel  : [ 10 1 1 1 1 1 ], units =  NA 
-#&gt; discards.sel  : [ 10 1 1 1 1 1 ], units =  NA 
-#&gt; bycatch.harv  : [ 10 1 1 1 1 1 ], units =  f 
-#&gt; stock.wt      : [ 10 1 1 1 1 1 ], units =  kg 
-#&gt; landings.wt   : [ 10 1 1 1 1 1 ], units =  kg 
-#&gt; discards.wt   : [ 10 1 1 1 1 1 ], units =  kg 
-#&gt; bycatch.wt    : [ 10 1 1 1 1 1 ], units =  NA 
-#&gt; m             : [ 10 1 1 1 1 1 ], units =  m 
-#&gt; mat           : [ 10 1 1 1 1 1 ], units =   
-#&gt; harvest.spwn  : [ 10 1 1 1 1 1 ], units =   
-#&gt; m.spwn        : [ 10 1 1 1 1 1 ], units =   
-#&gt; availability  : [ 10 1 1 1 1 1 ], units =  NA 
-#&gt; price         : [ 10 1 1 1 1 1 ], units =  NA 
-#&gt; vcost         : [ 1 1 1 1 1 1 ], units =  NA 
-#&gt; fcost         : [ 1 1 1 1 1 1 ], units =  NA 
-#&gt; 
-#&gt; Model: 	rec ~ a * ssb/(b + ssb)
-#&gt;     params
-#&gt; iter       a     b
-#&gt;    1 1263310 93995
-#&gt; 
-#&gt; refpts:  calculated </div><div class='input'><span class='fu'>refpts</span><span class='op'>(</span><span class='va'>prp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; An object of class "FLPar"
-#&gt;         quant
-#&gt; refpt    harvest  yield    rec      ssb      biomass  revenue  cost    
-#&gt;   virgin 0.00e+00 0.00e+00 1.24e+06 4.22e+06 4.36e+06       NA       NA
-#&gt;   msy    1.88e-01 8.78e+04 1.17e+06 1.24e+06 1.35e+06       NA       NA
-#&gt;   crash  7.98e-01 1.88e-06 6.70e-05 4.98e-06 9.18e-06       NA       NA
-#&gt;   f0.1   1.55e-01 8.63e+04 1.19e+06 1.53e+06 1.65e+06       NA       NA
-#&gt;   fmax   2.08e-01 8.73e+04 1.16e+06 1.10e+06 1.21e+06       NA       NA
-#&gt;   spr.30 1.94e-01 8.77e+04 1.17e+06 1.20e+06 1.31e+06       NA       NA
-#&gt;   mey          NA       NA       NA       NA       NA       NA       NA
-#&gt;         quant
-#&gt; refpt    profit  
-#&gt;   virgin       NA
-#&gt;   msy          NA
-#&gt;   crash        NA
-#&gt;   f0.1         NA
-#&gt;   fmax         NA
-#&gt;   spr.30       NA
-#&gt;   mey          NA
-#&gt; units:  NA </div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create the FLSR and FLBRP objects</span></span>
+<span class='r-in'><span class='va'>psr</span> <span class='op'>&lt;-</span> <span class='fu'>fmle</span><span class='op'>(</span><span class='fu'>as.FLSR</span><span class='op'>(</span><span class='va'>ple4</span>, model<span class='op'>=</span><span class='st'>"bevholt"</span><span class='op'>)</span>, control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>trace<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>prp</span> <span class='op'>&lt;-</span> <span class='fu'>brp</span><span class='op'>(</span><span class='fu'>FLBRP</span><span class='op'>(</span><span class='va'>ple4</span>, sr<span class='op'>=</span><span class='va'>psr</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>prp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> An object of class "FLBRP"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Quant: age </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dims:  age 	year	unit	season	area	iter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	10	101	1	1	1	1	</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Range:  min	max	pgroup	minfbar	maxfbar </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	1	10	10	2	6	</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> fbar          : [ 1 101 1 1 1 1 ], units =  f </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> fbar.obs      : [ 1 61 1 1 1 1 ], units =  f </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> landings.obs  : [ 1 61 1 1 1 1 ], units =  t </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> discards.obs  : [ 1 61 1 1 1 1 ], units =  t </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> rec.obs       : [ 1 61 1 1 1 1 ], units =  1000 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ssb.obs       : [ 1 61 1 1 1 1 ], units =  t </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> stock.obs     : [ 1 61 1 1 1 1 ], units =  t </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> profit.obs    : [ 1 61 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> landings.sel  : [ 10 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> discards.sel  : [ 10 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bycatch.harv  : [ 10 1 1 1 1 1 ], units =  f </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> stock.wt      : [ 10 1 1 1 1 1 ], units =  kg </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> landings.wt   : [ 10 1 1 1 1 1 ], units =  kg </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> discards.wt   : [ 10 1 1 1 1 1 ], units =  kg </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bycatch.wt    : [ 10 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m             : [ 10 1 1 1 1 1 ], units =  m </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mat           : [ 10 1 1 1 1 1 ], units =   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> harvest.spwn  : [ 10 1 1 1 1 1 ], units =   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.spwn        : [ 10 1 1 1 1 1 ], units =   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> availability  : [ 10 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> price         : [ 10 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> vcost         : [ 1 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> fcost         : [ 1 1 1 1 1 1 ], units =  NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Model: 	rec ~ a * ssb/(b + ssb)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     params</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> iter       a     b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1 1263310 93995</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> refpts:  calculated </span>
+<span class='r-in'><span class='fu'>refpts</span><span class='op'>(</span><span class='va'>prp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> An object of class "FLPar"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         quant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> refpt    harvest  yield    rec      ssb      biomass  revenue  cost    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   virgin 0.00e+00 0.00e+00 1.24e+06 4.22e+06 4.36e+06       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   msy    1.88e-01 8.78e+04 1.17e+06 1.24e+06 1.35e+06       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   crash  7.98e-01 1.88e-06 6.70e-05 4.98e-06 9.18e-06       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   f0.1   1.55e-01 8.63e+04 1.19e+06 1.53e+06 1.65e+06       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fmax   2.08e-01 8.73e+04 1.16e+06 1.10e+06 1.21e+06       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   spr.30 1.94e-01 8.77e+04 1.17e+06 1.20e+06 1.31e+06       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mey          NA       NA       NA       NA       NA       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         quant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> refpt    profit  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   virgin       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   msy          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   crash        NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   f0.1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fmax         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   spr.30       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mey          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> units:  NA </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -140,77 +140,80 @@ in the <code>fbar</code> slot, or the spawners per recruit when F=0 (<code>spr0<
     <p>An object of class <code>FLQuant</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span>
-
-<span class='fu'>spr</span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; An object of class "FLQuant"
-#&gt; , , unit = unique, season = all, area = unique
-#&gt; 
-#&gt;    year
-#&gt; age 1         2         3         4         5         6         7        
-#&gt;   1 3.4180492 2.8109780 2.3192358 1.9198591 1.5946551 1.3291671 1.1118743
-#&gt;    year
-#&gt; age 8         9         10        11        12        13        14       
-#&gt;   1 0.9335715 0.7868848 0.6658928 0.5658301 0.4828525 0.4138525 0.3563131
-#&gt;    year
-#&gt; age 15        16        17        18        19        20        21       
-#&gt;   1 0.3081908 0.2678240 0.2338584 0.2051881 0.1809085 0.1602781 0.1426878
-#&gt;    year
-#&gt; age 22        23        24        25        26        27        28       
-#&gt;   1 0.1276366 0.1147113 0.1035705 0.0939317 0.0855604 0.0782620 0.0718741
-#&gt;    year
-#&gt; age 29        30        31        32        33        34        35       
-#&gt;   1 0.0662612 0.0613100 0.0569255 0.0530277 0.0495494 0.0464337 0.0436326
-#&gt;    year
-#&gt; age 36        37        38        39        40        41        42       
-#&gt;   1 0.0411050 0.0388164 0.0367370 0.0348414 0.0331078 0.0315176 0.0300545
-#&gt;    year
-#&gt; age 43        44        45        46        47        48        49       
-#&gt;   1 0.0287046 0.0274557 0.0262973 0.0252202 0.0242163 0.0232785 0.0224007
-#&gt;    year
-#&gt; age 50        51        52        53        54        55        56       
-#&gt;   1 0.0215772 0.0208033 0.0200746 0.0193874 0.0187380 0.0181236 0.0175414
-#&gt;    year
-#&gt; age 57        58        59        60        61        62        63       
-#&gt;   1 0.0169888 0.0164637 0.0159641 0.0154881 0.0150341 0.0146006 0.0141862
-#&gt;    year
-#&gt; age 64        65        66        67        68        69        70       
-#&gt;   1 0.0137896 0.0134098 0.0130457 0.0126964 0.0123608 0.0120384 0.0117282
-#&gt;    year
-#&gt; age 71        72        73        74        75        76        77       
-#&gt;   1 0.0114296 0.0111419 0.0108647 0.0105972 0.0103391 0.0100898 0.0098489
-#&gt;    year
-#&gt; age 78        79        80        81        82        83        84       
-#&gt;   1 0.0096159 0.0093906 0.0091725 0.0089613 0.0087566 0.0085583 0.0083659
-#&gt;    year
-#&gt; age 85        86        87        88        89        90        91       
-#&gt;   1 0.0081793 0.0079982 0.0078223 0.0076515 0.0074855 0.0073242 0.0071673
-#&gt;    year
-#&gt; age 92        93        94        95        96        97        98       
-#&gt;   1 0.0070148 0.0068663 0.0067219 0.0065812 0.0064442 0.0063108 0.0061808
-#&gt;    year
-#&gt; age 99        100       101      
-#&gt;   1 0.0060541 0.0059305 0.0058101
-#&gt; 
-#&gt; units:  NA </div><div class='input'><span class='fu'>spr0</span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; An object of class "FLQuant"
-#&gt; , , unit = unique, season = all, area = unique
-#&gt; 
-#&gt;    year
-#&gt; age 1    
-#&gt;   1 3.418
-#&gt; 
-#&gt; units:  NA </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span>
-
-<span class='fu'>spr0</span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; An object of class "FLQuant"
-#&gt; , , unit = unique, season = all, area = unique
-#&gt; 
-#&gt;    year
-#&gt; age 1    
-#&gt;   1 3.418
-#&gt; 
-#&gt; units:  NA </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>spr</span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> An object of class "FLQuant"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> , , unit = unique, season = all, area = unique</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 1         2         3         4         5         6         7        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 3.4180492 2.8109780 2.3192358 1.9198591 1.5946551 1.3291671 1.1118743</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 8         9         10        11        12        13        14       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.9335715 0.7868848 0.6658928 0.5658301 0.4828525 0.4138525 0.3563131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 15        16        17        18        19        20        21       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.3081908 0.2678240 0.2338584 0.2051881 0.1809085 0.1602781 0.1426878</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 22        23        24        25        26        27        28       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.1276366 0.1147113 0.1035705 0.0939317 0.0855604 0.0782620 0.0718741</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 29        30        31        32        33        34        35       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0662612 0.0613100 0.0569255 0.0530277 0.0495494 0.0464337 0.0436326</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 36        37        38        39        40        41        42       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0411050 0.0388164 0.0367370 0.0348414 0.0331078 0.0315176 0.0300545</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 43        44        45        46        47        48        49       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0287046 0.0274557 0.0262973 0.0252202 0.0242163 0.0232785 0.0224007</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 50        51        52        53        54        55        56       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0215772 0.0208033 0.0200746 0.0193874 0.0187380 0.0181236 0.0175414</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 57        58        59        60        61        62        63       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0169888 0.0164637 0.0159641 0.0154881 0.0150341 0.0146006 0.0141862</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 64        65        66        67        68        69        70       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0137896 0.0134098 0.0130457 0.0126964 0.0123608 0.0120384 0.0117282</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 71        72        73        74        75        76        77       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0114296 0.0111419 0.0108647 0.0105972 0.0103391 0.0100898 0.0098489</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 78        79        80        81        82        83        84       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0096159 0.0093906 0.0091725 0.0089613 0.0087566 0.0085583 0.0083659</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 85        86        87        88        89        90        91       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0081793 0.0079982 0.0078223 0.0076515 0.0074855 0.0073242 0.0071673</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 92        93        94        95        96        97        98       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0070148 0.0068663 0.0067219 0.0065812 0.0064442 0.0063108 0.0061808</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 99        100       101      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 0.0060541 0.0059305 0.0058101</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> units:  NA </span>
+<span class='r-in'><span class='fu'>spr0</span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> An object of class "FLQuant"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> , , unit = unique, season = all, area = unique</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 1    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 3.418</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> units:  NA </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>spr0</span><span class='op'>(</span><span class='va'>ple4brp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> An object of class "FLQuant"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> , , unit = unique, season = all, area = unique</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    year</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age 1    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1 3.418</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> units:  NA </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

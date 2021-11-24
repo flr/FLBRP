@@ -1,37 +1,36 @@
-# FLBRP
-- Version: 2.5.8
-- Date: 14-10-2021
-- Author: Laurie Kell <laurie@seaplusplus.co.uk>, Iago Mosqueira <iago.mosqueira@ec.europa.eu>, Finlay Scott <finlay.scott@ec.europa.eu>
-- Maintainer: Iago Mosqueira <iago.mosqueira@ec.europa.eu>
-- Repository: <https://github.com/flr/FLBRP/>
-- Bug reports: <https://github.com/flr/FLBRP/issues>
+# FLBRP <img src="man/figures/flbrp.png" align="right" width="120" />
+
+[![R-CMD-check](https://github.com/flr/FLBRP/workflows/R-CMD-check/badge.svg)](https://github.com/flr/FLBRP/actions)
+[![License](https://eddelbuettel.github.io/badges/GPL2+.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+
 
 ## Overview
-ONE LINE OVERVIEW, SAME AS IN DESCRIPTION
+Calculates a range of biological reference points based upon yield per recruit and stock recruit based equilibrium calculations. These include F based reference points like F0.1, FMSY and biomass based reference points like BMSY.
 
+## Installation
 To install this package, start R and enter:
 
-	install.packages("FLBRP", repos="http:///flr-project.org/R")
+```
+  install.packages("FLBRP", repos="http://flr-project.org/R")
+```
 
-or download from the [FLBRP releases page](https://github.com/flr/FLBRP/releases/)
+or directly from the github repository by using:
+
+```
+  remotes::install_github("flr/FLBRP")
+```
 
 ## Documentation
-- [Help pages](http://flr-project.org/FLBRP)
-- Vignette
-
-## Build Status
-[![Travis Build Status](https://travis-ci.org/flr/FLBRP.svg?branch=master)](https://travis-ci.org/flr/FLBRP)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/flr/FLBRP?branch=master&svg=true)](https://ci.appveyor.com/project/flr/FLBRP)
-
-## Releases
-- [All release](https://github.com/flr/FLBRP/releases/)
+-[Reference points for fisheries management with FLBRP](https://flr-project.org/doc/Reference_points_for_fisheries_management_with_FLBRP.html)
+- [Help pages](http://flr-project.org/FLBRP/reference/index.html)
 
 ## License
-Copyright (c) 2017 FLR Team. Released under the [GPL 3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+Copyright (c) 2017-2021 FLR Team. Released under the [GPL 3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ## Contact
 You are welcome to:
 
 - Submit suggestions and bug-reports at: <https://github.com/flr/FLBRP/issues>
 - Send a pull request on: <https://github.com/flr/FLBRP/>
-- Compose a friendly e-mail to: Iago Mosqueira <iago.mosqueira@ec.europa.eu>
+- Author: Laurie Kell (Sea++), Iago Mosqueira (WMR), Finlay Scott (SPC)
+- Maintainer: Iago Mosqueira <iago.mosqueira@wur.nl>

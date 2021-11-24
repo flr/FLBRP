@@ -1,5 +1,5 @@
 # utilities.R - DESC
-# /utilities.R
+# FLBRP/R/utilities.R
 
 # Copyright FLR Team, 2017
 # Authors: Laurie Kell <laurie@seaplusplus.co.uk>
