@@ -1,15 +1,16 @@
 Package: FLBRP
 Title: Reference Points for Fisheries Management
-Version: 2.5.8
+Version: 2.5.8.9001
 Date: 2021-10-10
 Authors@R: c(
   person("Iago", "Mosqueira", email = "iago.mosqueira@wur.nl", role = "cre"),
   person("Laurence T.", "Kell", email = "laurie@seaplusplus.co.uk", role = "aut"),
   person("Finlay", "Scott", email = "finlays@spc.int", role = "aut"))
-Description: Calculates a range of biological reference points based upon yield
-  per recruit and stock recruit based equilibrium calculations. These include F
-  based reference points like F0.1, FMSY and biomass based reference points like
-  BMSY.
+Description: Calculates a range of biological reference points based upon
+  yield per recruit and stock recruit based equilibrium calculations. These 
+  include F based reference points like F0.1, FMSY and biomass based 
+  reference points like BMSY.
+X-schema.org-keywords: reference points, fisheries, flr, R
 License: GPL-3
 URL: http://flr-project.org/FLBRP
 Depends:
