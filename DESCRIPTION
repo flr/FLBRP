@@ -10,7 +10,7 @@ Description: Calculates a range of biological reference points based upon
   yield per recruit and stock recruit based equilibrium calculations. These 
   include F based reference points like F0.1, FMSY and biomass based 
   reference points like BMSY.
-X-schema.org-keywords: reference points, fisheries, flr, R
+X-schema.org-keywords: reference points, fisheries, flr, R, c++
 License: GPL-3
 URL: http://flr-project.org/FLBRP
 Depends:

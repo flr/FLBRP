@@ -1,4 +1,4 @@
-# FLBRP <img src="man/figures/flbrp.png" align="right" width="120" />
+# FLBRP <img src="man/figures/logo.png" align="right" width="120" />
 
 [![R-CMD-check](https://github.com/flr/FLBRP/workflows/R-CMD-check/badge.svg)](https://github.com/flr/FLBRP/actions)
 [![License](https://eddelbuettel.github.io/badges/GPL2+.svg)](https://www.gnu.org/licenses/gpl-2.0.html)

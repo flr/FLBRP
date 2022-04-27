@@ -48,6 +48,7 @@ setMethod("plot", signature("FLBRP", "missing"),
     df <- model.frame(metrics(x,
       list(ssb=ssb, harvest=fbar, rec=rec, yield=landings, profit=profit)),
       drop=FALSE)
+    
     # refpts
     drps <- dimnames(refpts(x))$refpt
     rps <- refpts(x)[drps %in% refpts,]
