@@ -3,7 +3,6 @@
 [![R-CMD-check](https://github.com/flr/FLBRP/workflows/R-CMD-check/badge.svg)](https://github.com/flr/FLBRP/actions)
 [![License](https://eddelbuettel.github.io/badges/GPL2+.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-
 ## Overview
 Calculates a range of biological reference points based upon yield per recruit and stock recruit based equilibrium calculations. These include F based reference points like F0.1, FMSY and biomass based reference points like BMSY.
 
