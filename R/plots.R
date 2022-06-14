@@ -211,15 +211,13 @@ setMethod("plot", signature(x="FLStock", y="FLBRP"),
 #'   geom_hline(yintercept=1, linetype=2)
 
 setMethod("plot", signature(x="FLStocks", y="FLBRP"),
-  function(x, y, metrics=list(`SSB/SSB[MSY]`=function(x, y) ssb(x) / sbmsy(y),
-    `F/F[MSY]`=function(x, y) fbar(x) / fmsy(y),
-    `C/MSY`=function(x, y) catch(x) / msy(y))) {
+  function(x, y, ...) {
 
     # CREATE FLBRPs
     y <- FLBRPs(lapply(setNames(nm=names(x)), function(i) y))
 
     # PLOT
-    plot(x, y)
+    plot(x, y, ...)
   }
 )
 # }}}
