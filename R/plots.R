@@ -178,3 +178,73 @@ setMethod("plot", signature("FLBRP", "missing"),
 ) # }}}
 
 # TODO plot(FLBRPs)
+
+# plot(FLStock, FLBRP) {{{
+
+#' @examples
+#' data(ple4)
+#' data(ple4brp)
+#' plot(ple4, ple4brp) +
+#'   geom_hline(yintercept=1, linetype=2)
+
+setMethod("plot", signature(x="FLStock", y="FLBRP"),
+  function(x, y, metrics=list(`SSB/SSB[MSY]`=function(x, y) ssb(x) / sbmsy(y),
+    `F/F[MSY]`=function(x, y) fbar(x) / fmsy(y),
+    `C/MSY`=function(x, y) catch(x) / msy(y))) {
+
+    # EXTRACT metrics
+    fqs <- FLQuants(lapply(metrics, function(m) m(x, y)))
+
+    # PLOT
+    plot(fqs) + ylim(c(0, NA)) + facet_grid(qname~., labeller=label_parsed)
+  }
+)
+# }}}
+
+# plot(FLStocks, FLBRP) {{{
+
+#' @examples
+#' data(ple4)
+#' data(ple4brp)
+#' stks <- FLStocks(A=ple4, B=qapply(ple4, `*`, 0.87))
+#' plot(stks, ple4brp) +
+#'   geom_hline(yintercept=1, linetype=2)
+
+setMethod("plot", signature(x="FLStocks", y="FLBRP"),
+  function(x, y, metrics=list(`SSB/SSB[MSY]`=function(x, y) ssb(x) / sbmsy(y),
+    `F/F[MSY]`=function(x, y) fbar(x) / fmsy(y),
+    `C/MSY`=function(x, y) catch(x) / msy(y))) {
+
+    # CREATE FLBRPs
+    y <- FLBRPs(lapply(setNames(nm=names(x)), function(i) y))
+
+    # PLOT
+    plot(x, y)
+  }
+)
+# }}}
+
+# plot(FLStocks, FLBRPs) {{{
+
+#' @examples
+#' data(ple4)
+#' data(ple4brp)
+#' stks <- FLStocks(A=ple4, B=qapply(ple4, `*`, 0.87))
+#' brps <- FLBRPs(A=ple4brp, B=ple4brp)
+#' plot(stks, brps) +
+#'   geom_hline(yintercept=1, linetype=2)
+
+setMethod("plot", signature(x="FLStocks", y="FLBRPs"),
+  function(x, y, metrics=list(`SSB/SSB[MSY]`=function(x, y) ssb(x) / sbmsy(y),
+    `F/F[MSY]`=function(x, y) fbar(x) / fmsy(y),
+    `C/MSY`=function(x, y) catch(x) / msy(y))) {
+
+    # EXTRACT metrics
+    fqs <- FLQuants(lapply(metrics, function(m)
+      dbind(FLQuants(Map(function(x, y) m(x, y), x=x, y=y)), dim=3)))
+
+    # PLOT
+    plot(fqs) + ylim(c(0, NA)) + facet_grid(qname~., labeller=label_parsed)
+  }
+)
+# }}}
