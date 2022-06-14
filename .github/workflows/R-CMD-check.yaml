@@ -66,7 +66,6 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_github(c("flr/FLCore", "flr/ggplotFL"))
           remotes::install_cran("rcmdcheck")
-          # remotes::install_github("r-lib/rcmdcheck")
         shell: Rscript {0}
 
       - name: Check
