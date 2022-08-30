@@ -23,9 +23,9 @@ future using the assumed equilibirum values used in the calculation of
 reference points
 }
 \details{
-\preformatted{slts <- c("stock.wt", "landings.wt", "discards.wt", "catch.wt",
+\if{html}{\out{<div class="sourceCode">}}\preformatted{slts <- c("stock.wt", "landings.wt", "discards.wt", "catch.wt",
    "m", "mat", "harvest.spwn", "m.spwn")
-}
+}\if{html}{\out{</div>}}
 }
 \examples{
 data(ple4)

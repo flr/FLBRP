@@ -24,7 +24,7 @@ or directly from the github repository by using:
 - [Help pages](http://flr-project.org/FLBRP/reference/index.html)
 
 ## License
-Copyright (c) 2017-2021 FLR Team. Released under the [GPL 3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+Copyright (c) 2017-2022 FLR Team. Released under the [GPL 3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ## Contact
 You are welcome to:
