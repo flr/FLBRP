@@ -203,7 +203,7 @@ setMethod("harvest", signature(object="FLBRP", catch="missing"),
     
     # selectivity
     sel <- expand(landings.sel(object) + discards.sel(object),
-      year=dims(discards.sel(object))$minyear+(1:dim(fbar(object))[2]) - 1)
+      year=dimnames(fbar(object))$year)
     dmns <- dimnames(sel)
     dmns$year <- dimnames(fbar(object))$year
     sel <- FLQuant(sel, dimnames=dmns)
