@@ -47,12 +47,16 @@ importFrom("utils",
   "read.csv",
   "unstack")
 
+export(
+  "procerr")
+
 exportClasses(
   "FLBRP",
   "FLBRPs")
 
 exportMethods(
   "+",
+  "ageopt",
   "availability",
   "availability<-",
   "bycatch.harvest",
@@ -96,6 +100,7 @@ exportMethods(
   "rec.obs<-",
   "refpts",
   "refpts<-",
+  "sp",
   "ssb.obs",
   "ssb.obs<-",
   "stock",

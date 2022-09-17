@@ -547,3 +547,72 @@ setMethod("+", signature(e1="FLBRP", e2="FLPar"),
 )
 
 # }}}
+
+# sp(FLStock, FLBRP) {{{
+
+#' @examples
+#' sp(ple4, ple4brp)
+#' sp(ple4, ple4brp, metric="stock")
+
+setMethod('sp', signature(stock='FLStock', catch='FLBRP'),
+	function(stock, catch, metric="ssb") {
+    
+    # SET fbar (0, 1)
+    fbar(catch) <- FLQuant(seq(0, 1, length.out=201)) * 
+      refpts(catch)["crash","harvest"]
+
+    # EVAL metric on FLStock
+    xout <- do.call(metric, list(stock))
+
+    # CALL approx with metric + catch on FLBRP
+    dat <- with(model.frame(FLQuants(catch,
+      "stock"=function(x) do.call(metric, list(x)), "catch"=function(x) catch(x)),
+      drop=TRUE), approx(stock, catch, xout=c(xout)))
+
+    return(FLQuant(dat$y, dimnames=dimnames(xout)))
+  }
+)
+# }}}
+
+# Process Error {{{
+
+#' @examples
+#' procerr(ple4, ple4brp)
+#' procerr(ple4, ple4brp, metric="stock")
+
+procerr <- function(stock, brp, metric=ssb) {
+
+  # EVAL metric
+  metric <- do.call(metric, list(stock))
+
+  # 
+  res <- (ssb(stock) - window(metric[,-1], end=dims(stock)$maxyear + 1) -
+    catch(stock) + sp(stock, brp)) %/% metric
+
+  return(res)
+
+}
+# }}}
+
+# ageopt {{{
+
+#' @examples
+#' ageopt(ple4brp)
+
+setMethod("ageopt", signature(object="FLBRP"),
+  function(object) {
+  
+  fbar(object) <- FLQuant(0)
+  
+  res <- stock.wt(object)[, 1] * stock.n(object)[, 1]
+  
+  if (is.na(range(object)["plusgroup"])) {
+    return(FLPar(aopt=apply(res, c(3,6), function(x)
+      as.numeric(dimnames(x)[[1]][x==max(x)]))))
+  } else {
+    return(FLPar(aopt=apply(res[-dim(res)[1]], c(3, 6), function(x)
+      as.numeric(dimnames(x)[[1]][x==max(x)]))))
+  }
+})
+
+# }}}
