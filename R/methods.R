@@ -566,7 +566,8 @@ setMethod('sp', signature(stock='FLStock', catch='FLBRP'),
 
     # CALL approx with metric + catch on FLBRP
     dat <- with(model.frame(FLQuants(catch,
-      "stock"=function(x) do.call(metric, list(x)), "catch"=function(x) catch(x)),
+      "stock"=function(x) do.call(metric, list(x)),
+      "catch"=function(x) catch(x)),
       drop=TRUE), approx(stock, catch, xout=c(xout)))
 
     return(FLQuant(dat$y, dimnames=dimnames(xout)))
@@ -574,20 +575,23 @@ setMethod('sp', signature(stock='FLStock', catch='FLBRP'),
 )
 # }}}
 
-# Process Error {{{
+# process error {{{
 
 #' @examples
 #' procerr(ple4, ple4brp)
 #' procerr(ple4, ple4brp, metric="stock")
+#' procerr(ple4, ple4brp, metric=rec)
 
 procerr <- function(stock, brp, metric=ssb) {
 
   # EVAL metric
-  metric <- do.call(metric, list(stock))
+  met <- do.call(metric, list(stock))
 
   # 
-  res <- (ssb(stock) - window(metric[,-1], end=dims(stock)$maxyear + 1) -
-    catch(stock) + sp(stock, brp)) %/% metric
+  res <- (met - window(met[,-1], end=dims(stock)$maxyear + 1) -
+    catch(stock) + sp(stock, brp, metric)) %/% met
+
+  units(res) <- ""
 
   return(res)
 
