@@ -289,6 +289,18 @@ setMethod('ssb', signature(object='FLBRP'),
   }
 )# }}}
 
+# vb {{{
+setMethod("vb", signature(x="FLBRP"),
+  function(x) {
+
+    vb <- quantSums(stock.n(x) %*% stock.wt(x) %*% catch.sel(x))
+    units(vb) <- units(stock(x))
+
+    return(vb)
+  }
+)
+# }}}
+
 # landings {{{
 setMethod('landings', signature(object='FLBRP'),
   function(object){
@@ -556,11 +568,11 @@ setMethod("+", signature(e1="FLBRP", e2="FLPar"),
 
 setMethod('sp', signature(stock='FLStock', catch='FLBRP'),
 	function(stock, catch, metric="ssb") {
-    
+
     # SET fbar (0, 1)
     fbar(catch) <- FLQuant(seq(0, 1, length.out=201)) * 
       refpts(catch)["crash","harvest"]
-
+    
     # EVAL metric on FLStock
     xout <- do.call(metric, list(stock))
 
@@ -580,16 +592,16 @@ setMethod('sp', signature(stock='FLStock', catch='FLBRP'),
 #' @examples
 #' procerr(ple4, ple4brp)
 #' procerr(ple4, ple4brp, metric="stock")
-#' procerr(ple4, ple4brp, metric=rec)
+#' procerr(ple4, ple4brp, metric=vb)
 
-procerr <- function(stock, brp, metric=ssb) {
+procerr <- function(stock, brp, metric="ssb") {
 
   # EVAL metric
   met <- do.call(metric, list(stock))
 
-  # 
-  res <- (met - window(met[,-1], end=dims(stock)$maxyear + 1) -
-    catch(stock) + sp(stock, brp, metric)) %/% met
+  # log(B[t+1]/(Bt-Ct+SP(Bt))
+  res <- log(met[, -1] / window(met - catch(stock) +
+    sp(stock, brp, metric=metric), end=dims(stock)$maxyear - 1))
 
   units(res) <- ""
 

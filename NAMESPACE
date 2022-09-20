@@ -137,6 +137,7 @@ exportMethods(
   "ssb",
   "stock.n",
   "summary",
+  "vb",
   "yield.obs",
   "ypr"
 )
