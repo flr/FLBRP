@@ -603,6 +603,9 @@ procerr <- function(stock, brp, metric="ssb") {
   res <- log(met[, -1] / window(met - catch(stock) +
     sp(stock, brp, metric=metric), end=dims(stock)$maxyear - 1))
 
+  res <- log(window(met - catch(stock) + sp(stock, 
+    brp, metric = metric), end = dims(stock)$maxyear - 1)) / met[, -1]
+  
   units(res) <- ""
 
   return(res)
