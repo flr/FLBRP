@@ -598,11 +598,11 @@ procerr <- function(stock, brp, metric="ssb") {
 
   # EVAL metric
   met <- do.call(metric, list(stock))
-
-  # log(B[t+1] / (Bt-Ct+SP(Bt))
+  
+  #
   res <- log(window(met - catch(stock) + (1 / dim(stock)[4] * 
     sp(stock, brp, metric=metric)), end=dims(stock)$maxyear - 1) %/% met[, -1])
-  
+
   units(res) <- ""
 
   return(res)
