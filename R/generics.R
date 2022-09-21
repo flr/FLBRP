@@ -97,3 +97,5 @@ setGeneric("yield.obs", function(object, ...)
 setGeneric("ypr", function(object, ...)
 		standardGeneric("ypr"))
 # }}}
+
+setGeneric("fcrash", function(x, ...) standardGeneric("fcrash")) 

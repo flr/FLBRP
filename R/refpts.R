@@ -66,6 +66,13 @@ setMethod("sbmsy", signature(x="FLBRP"),
     return(refpts(x, "msy", "ssb"))
   }) # }}}
 
+# fcrash {{{
+setMethod("fcrash", signature(x="FLBRP"),
+  function(x) {
+    return(FLPar(Fcrash=c(refpts(x, "crash", "harvest")), units="f"))
+  })
+# }}}
+
 # properties {{{
 setMethod("properties", signature(object="FLBRP"),
 

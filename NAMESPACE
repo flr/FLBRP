@@ -120,6 +120,7 @@ exportMethods(
   "coerce",
   "cost",
   "discards.n",
+  "fcrash",
   "FLBRP",
   "FLBRPs",
   "fmsy",
