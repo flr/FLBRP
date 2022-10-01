@@ -529,8 +529,7 @@ setMethod("+", signature(e1="FLBRP", e2="FLPar"),
   function(e1, e2) {
 
     # CHECK & PLACE e2 names
-
-    id1 <- c(F="harvest", C="yield", R="rec", B="ssb")
+    id1 <- c(F="harvest", C="yield", R="rec", B="ssb", T="biomass")
     id2 <- substr(dimnames(e2)$params, 1, 1)
     idc <- match(id2, names(id1))
 
@@ -542,15 +541,15 @@ setMethod("+", signature(e1="FLBRP", e2="FLPar"),
     rps <- FLPar(NA,
       dimnames=list(refpt=c(dimnames(refpts(e1))$refpt, dimnames(e2)$params),
       quant=c("harvest","yield","rec","ssb","biomass","revenue","cost","profit"),
-      iter=dims(e1)$iter))
+      iter=seq(dims(e1)$iter)))
 
     idr <- match(dimnames(e2)[[1]], dimnames(rps)$refpt)
-
+    
     # ASSIGN e2 TODO MAKE iter-proof
-    rps@.Data[idr + (idc - 1L) * dim(rps)[1]] <- e2
+    # rps@.Data[idr + (idc - 1L) * dim(rps)[1]] <- c(e2)
+    rps@.Data[idr, idc, ] <- c(e2)
 
     # RECALCULATE brp
-
     refpts(e1) <- rps
     e1 <- brp(e1)
 

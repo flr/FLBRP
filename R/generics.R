@@ -98,4 +98,7 @@ setGeneric("ypr", function(object, ...)
 		standardGeneric("ypr"))
 # }}}
 
-setGeneric("fcrash", function(x, ...) standardGeneric("fcrash")) 
+# refpts {{{
+setGeneric("fcrash", function(x, ...)
+		standardGeneric("fcrash"))
+# }}}

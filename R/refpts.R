@@ -38,12 +38,42 @@ setMethod("refpts", signature(object="FLBRP"),
 setReplaceMethod("refpts", signature(object="FLBRP", value="FLPar"),
   function(object, ..., value) {
 
-  slot(object, "refpts") <- value
+    slot(object, "refpts") <- value
 
-  return(object)
-
+    return(object)
   }
-) # }}}
+)
+
+setReplaceMethod("refpts", signature(object="FLBRP", value="numeric"),
+  function(object, ..., value) {
+
+  dms <- dimnames(refpts(object))
+
+  args <- list(...)
+
+  # ACCEPT only two arguments
+  if(length(args) > 2)
+    stop("Values can only be assigned on rows and columns.")
+
+  i <- args[[1]]
+  j <- args[[2]]
+  
+  if(!j %in% dms[[2]])
+    stop(paste0("column '", j, "' does not exist"))
+
+  if(!i %in% dms[[1]]) {
+    refpts(object) <- expand(refpts(object), refpt=c(dms[[1]], i))
+  }
+
+  refpts(object)[i,] <- as.numeric(NA)
+
+  refpts(object)[i, j] <- value
+
+  return(brp(object))
+  }
+)
+
+# }}}
 
 # msy et al {{{
 setMethod("msy", signature(x="FLBRP"),
