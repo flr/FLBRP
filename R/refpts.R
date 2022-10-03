@@ -35,6 +35,8 @@ setMethod("refpts", signature(object="FLBRP"),
   }) # }}}
 
 # refpts<- {{{
+
+
 setReplaceMethod("refpts", signature(object="FLBRP", value="FLPar"),
   function(object, ..., value) {
 
@@ -51,7 +53,7 @@ setReplaceMethod("refpts", signature(object="FLBRP", value="numeric"),
 
   args <- list(...)
 
-  # ACCEPT only two arguments
+  # ACCEPT only two position arguments
   if(length(args) > 2)
     stop("Values can only be assigned on rows and columns.")
 
@@ -65,10 +67,13 @@ setReplaceMethod("refpts", signature(object="FLBRP", value="numeric"),
     refpts(object) <- expand(refpts(object), refpt=c(dms[[1]], i))
   }
 
+  # EMPTY row so values are recomputed
   refpts(object)[i,] <- as.numeric(NA)
 
+  # ASSIGN giv en value
   refpts(object)[i, j] <- value
 
+  # RECOMPUTE and return
   return(brp(object))
   }
 )
