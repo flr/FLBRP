@@ -218,7 +218,6 @@ setMethod('FLBRP', signature(object='FLStock', sr='missing'),
       params = params
     )
 
-
     # LIMIT to Fcrash
     if(missing(fbar)) {
       fcrash <- max(computeRefpts(res)["crash","harvest"])

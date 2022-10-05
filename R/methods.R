@@ -546,8 +546,7 @@ setMethod("+", signature(e1="FLBRP", e2="FLPar"),
     idr <- match(dimnames(e2)[[1]], dimnames(rps)$refpt)
     
     # ASSIGN e2 TODO MAKE iter-proof
-    # rps@.Data[idr + (idc - 1L) * dim(rps)[1]] <- c(e2)
-    rps@.Data[idr, idc, ] <- c(e2)
+    rps@.Data[idr + (idc - 1L) * dim(rps)[1]] <- c(e2)
 
     # RECALCULATE brp
     refpts(e1) <- rps
