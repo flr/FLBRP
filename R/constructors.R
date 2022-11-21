@@ -366,3 +366,55 @@ setMethod("pa<-", signature(object="FLBRP", value="data.frame"),
  
 setMethod("obs<-", signature(object="FLBRP", value="data.frame"),
   function(object, value) setObs(object,value))
+
+# }}}
+
+# FLBRP(FLBiol, missing) {{{
+
+setMethod('FLBRP', signature(object='FLBiol', sr='missing'),
+  function(object, sel, ...) {
+
+  # GET dims
+  dm <- dim(n(object))
+  myr <- dims(object)$minyear
+  mag <- dims(object)$max
+
+  # EXTRACT slots
+  waa <- wt(object)
+  maa <- m(object)
+  mat <- mat(object)
+  msp <- spwn(object)
+  sr <- sr(object)
+
+  # USE only first year of sel
+  sel <- sel
+
+  # FLBRP
+  brp <- FLBRP(stock.wt=waa, landings.wt=waa, discards.wt=waa, bycatch.wt=waa,
+    mat=mat, landings.sel=sel, m=maa,
+    discards.sel=sel %=% 0, bycatch.harvest=sel %=% 0,
+    harvest.spwn=maa %=% 0, m.spwn=maa %=% 0,
+    availability=maa %=% 1,
+    range=c(minfbar=0, maxfbar=mag, plusgroup=mag))
+ 
+  # ADD sr
+  
+  psr <- params(sr)
+  # TODO: GENERALIZE conversion to other SRRs
+  npsr <- abPars("bevholt", spr0=psr$v / psr$R0, s=psr$s, v=psr$v)
+  model(brp) <- bevholt()$model
+  params(brp) <- FLPar(a=npsr$a, b=npsr$b)
+
+  # SET finer fbar range on Fcrash
+  fmax <- max(computeRefpts(brp)['crash', 'harvest'])
+  # or fmax
+  if(is.na(fmax))
+    fmax <- max(refpts(brp)['fmax', 'harvest']) * 1.25
+  fbar(brp) <- FLQuant(seq(0, fmax, length=101))
+
+  refpts(brp) <- computeRefpts(brp)
+
+  return(brp)
+  }
+)
+# }}}

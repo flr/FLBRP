@@ -6,9 +6,6 @@
 #
 # Distributed under the terms of the GNU Public License v 3.0
 
-# refpts(object, FMSY=c('msy', 'harvest'), BMSY=c('msy', 'biomass'))
-
-# refpts(object, FMSY=c('msy', 'harvest'), BMSY=c('msy', 'biomass'), MSY=msy)
 
 # refpts {{{
 setMethod("refpts", signature(object="FLBRP"),

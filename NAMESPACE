@@ -48,7 +48,8 @@ importFrom("utils",
   "unstack")
 
 export(
-  "procerr")
+  "procerr",
+  "remap")
 
 exportClasses(
   "FLBRP",

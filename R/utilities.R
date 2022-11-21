@@ -72,3 +72,60 @@ setMethod("summary", signature("FLBRP"),
     cat("refpts: ", ifelse(flag, "calculated", "NA"), "\n")
   }
 ) # }}}
+
+# remap {{{
+
+#' A function to reshape the refpts slot of an FLBRP object.
+#'
+#' The FLPar containing all estimated reference points in the 'refpts' slot
+#' of an object of class 'FLBRP' can be converted into a simpler format with
+#' a selection of relevant points. This makes it easier to use the object for
+#' plotting and computation. Individual reference points, for example, can be
+#' accessed using the '$' operator. The examples below show the difference
+#' between both formats.
+#'
+#' A series of basic reference poiunts are extracted by default with the following names:
+#' - FMSY: fishing mortality at MSY, c("msy", "harvest").
+#' - SBMSY: spawning biomass at MSY, c("msy", "ssb").
+#' - BMSY: total biomass at MSY, c("msy", "biomass").
+#' - B0: virgin biomass, c("virgin", "biomass").
+#' - SB0: virgin spawning biomass, c("virgin", "ssb").
+#'
+#' @param object An FLPar with dimensions 'refpt', 'quant' and 'iter'.
+#' @param map A names list of dimnames to extract each reference point from.
+#' @param ... Extra reference points to be extracted.
+#'
+#' @return An FLPar object with dimensions 'params' and 'iter'.
+#'
+#' @name remap
+#' @rdname remap
+#'
+#' @author Iago Mosqueira (WMR)
+#' @seealso \link{FLBRP} \link{refpts}
+#' @keywords classes
+#' @examples
+#' data(ple4brp)
+#' Inout is refpts slot in FLBRP
+#' refpts(ple4brp)
+#' # Call with default map
+#' remap(refpts(ple4brp))
+#' # Additional refpts can be extracted
+#' remap(refpts(ple4brp), FMEY=c("mey", "harvest"))
+
+remap <- function(object, map=list(FMSY=c("msy", "harvest"),
+  SBMSY=c("msy", "ssb"), BMSY=c("msy", "biomass"),
+  B0=c("virgin", "biomass"), SB0=c("virgin", "ssb")), ...) {
+
+  # ADD extra
+  map <- c(map, list(...))
+
+  if(!all(unique(unlist(map)) %in%
+    unlist(dimnames(object)[c("refpt", "quant")])))
+    stop("Some 'refpt' or 'quant' cannot be found in object")
+
+  Reduce(rbind, 
+  Map(function(x, y) FLPar(c(object[x[1], x[2]]),
+    dimnames=list(param=y, iter=seq(dim(object)[3]))),
+  x=map, y=names(map)))
+}
+# }}}
