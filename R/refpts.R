@@ -37,6 +37,8 @@ setMethod("refpts", signature(object="FLBRP"),
 setReplaceMethod("refpts", signature(object="FLBRP", value="FLPar"),
   function(object, ..., value) {
 
+    # TODO: HANDLE position args and treat as numeric, check dims
+
     slot(object, "refpts") <- value
 
     return(object)
@@ -67,7 +69,7 @@ setReplaceMethod("refpts", signature(object="FLBRP", value="numeric"),
   # EMPTY row so values are recomputed
   refpts(object)[i,] <- as.numeric(NA)
 
-  # ASSIGN giv en value
+  # ASSIGN given value
   refpts(object)[i, j] <- value
 
   # RECOMPUTE and return

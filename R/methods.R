@@ -68,10 +68,27 @@ setMethod('brp', signature(object='FLBRP'),
       stop("iters in refpts and object slots do not match")
     else
       refpts <- refpts(object)
-
+    
     if ("virgin" %in% dimnames(refpts)$refpt){
       refpts@.Data["virgin",,         ] <- as.numeric(NA)
-      refpts@.Data["virgin", "harvest",] <- 0}
+      refpts@.Data["virgin", "harvest",] <- 0
+    }
+
+    # RUN over 500 iter blocks
+    bls <- split(seq(iter), ceiling(seq_along(seq(iter)) / 500))
+ 
+    res <- lapply(bls, function(i) {
+      srpars <- iter(params(object), i)
+      .Call("brp", iter(object, i), 
+        iter(refpts, i), SRNameCode(SRModelName(object@model)),
+        FLQuant(c(srpars), dimnames=dimnames(srpars)),
+        PACKAGE = "FLBRP")
+      }
+    )
+
+    res <- Reduce(combine, res)
+
+    return(res)
 
     res <- .Call("brp", object, refpts, SRNameCode(SRModelName(object@model)),
       FLQuant(c(params(object)),dimnames=dimnames(params(object))),

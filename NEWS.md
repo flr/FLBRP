@@ -1,3 +1,9 @@
+# FLBRP 2.6.0
+
+## NEW FEATURES
+
+- FLBRP(FLStockR) and FLBNRP(FLStock, predictModel) added to methods list.
+
 # FLBRP 2.5.8
 
 ## BUG FIXES

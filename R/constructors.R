@@ -8,6 +8,8 @@
 #
 # Distributed under the terms of the GNU Public License v 3.0
 
+# TODO: FLBRP(FLStockR)
+
 # FLBRP(object='missing', sr='missing') {{{
 #' @rdname FLBRP
 #' @aliases FLBRP-missing,missing-method
@@ -112,6 +114,21 @@ setMethod('FLBRP', signature(object='FLStock', sr='list'),
     sr[["model"]]<-do.call(sr[["model"]], list())$model
 
     FLBRP(object=object, model=sr[["model"]], params=sr[["params"]], ...)
+  })
+# }}}
+
+# FLBRP(object="FLStock", sr="predictModel") {{{
+setMethod('FLBRP', signature(object='FLStock', sr='predictModel'),
+  function(object, sr, ...){
+    FLBRP(object=object, model=sr@model, params=sr@params, ...)
+  })
+# }}}
+
+# FLBRP(object="FLStockR", sr="missing") {{{
+setMethod('FLBRP', signature(object='FLStockR', sr='missing'),
+  function(object, ...){
+    FLBRP(object=as(object, "FLStock"), model=object@sr@model,
+      params=object@sr@params, ...)
   })
 # }}}
 

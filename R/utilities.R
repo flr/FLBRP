@@ -27,30 +27,39 @@ setMethod("window", signature(x="FLBRP"),
 
 # propagate {{{
 setMethod('propagate', signature(object='FLBRP'),
-  function(object, iter, fill.iter=TRUE, obs=FALSE, params=FALSE){
+  function(object, iter, fill.iter=TRUE, obs=TRUE, params=TRUE) {
+
     # obs FLQuants
-    if(obs)
-    {
-      obs <- c('fbar.obs', 'landings.obs', 'discards.obs', 'rec.obs', 'profit.obs')
+    if(obs) {
+      obs <- c('fbar.obs', 'landings.obs', 'discards.obs', 'rec.obs',
+      'profit.obs', 'ssb.obs', 'stock.obs')
+
       for(i in obs)
-        slot(object, i) <- propagate(slot(object, i), iter=iter, fill.iter=fill.iter)
+        slot(object, i) <- propagate(slot(object, i), iter=iter,
+          fill.iter=fill.iter)
     }
 
     # other FLQuants
-    quants <- c("fbar", "landings.sel", "discards.sel", "bycatch.harvest", "stock.wt",
-      "landings.wt", "discards.wt", "bycatch.wt", "m", "mat", "harvest.spwn", "m.spwn", 
-      "availability", "price", "vcost", "fcost")
+    quants <- c("fbar", "landings.sel", "discards.sel", "bycatch.harvest",
+      "stock.wt", "landings.wt", "discards.wt", "bycatch.wt", "m", "mat",
+      "harvest.spwn", "m.spwn", "availability", "price", "vcost", "fcost")
+
     for(i in quants)
-        slot(object, i) <- propagate(slot(object, i), iter=iter, fill.iter=fill.iter)
+      slot(object, i) <- propagate(slot(object, i), iter=iter,
+        fill.iter=fill.iter)
 
     # refpts
-    refpts(object) <- propagate(refpts(object), iter=iter, fill.iter=fill.iter)
+    refpts(object) <- propagate(refpts(object), iter=iter,
+      fill.iter=fill.iter)
 
     # params
     if(params)
-      params(object) <- propagate(params(object), iter=iter, fill.iter=fill.iter)
+      params(object) <- propagate(params(object), iter=iter,
+        fill.iter=fill.iter)
   
-    return(object)}) # }}}
+    return(object)
+  }
+) # }}}
 
 # summary {{{
 setMethod("summary", signature("FLBRP"),
@@ -105,7 +114,7 @@ setMethod("summary", signature("FLBRP"),
 #' @keywords classes
 #' @examples
 #' data(ple4brp)
-#' Inout is refpts slot in FLBRP
+#' # Input is refpts slot in FLBRP
 #' refpts(ple4brp)
 #' # Call with default map
 #' remap(refpts(ple4brp))
@@ -123,9 +132,8 @@ remap <- function(object, map=list(FMSY=c("msy", "harvest"),
     unlist(dimnames(object)[c("refpt", "quant")])))
     stop("Some 'refpt' or 'quant' cannot be found in object")
 
-  Reduce(rbind, 
-  Map(function(x, y) FLPar(c(object[x[1], x[2]]),
-    dimnames=list(param=y, iter=seq(dim(object)[3]))),
+  Reduce(rbind, Map(function(x, y) FLPar(c(object[x[1], x[2]]),
+    dimnames=list(params=y, iter=seq(dim(object)[3]))),
   x=map, y=names(map)))
 }
 # }}}
