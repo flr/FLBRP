@@ -132,6 +132,13 @@ setMethod('FLBRP', signature(object='FLStockR', sr='missing'),
   })
 # }}}
 
+# FLBRP(object="FLStockR", sr="ANY") {{{
+setMethod('FLBRP', signature(object='FLStockR', sr='ANY'),
+  function(object, ...){
+    FLBRP(object=as(object, "FLStock"), sr=sr, ...)
+  })
+# }}}
+
 # FLBRP(object=FLStock, sr=missing) {{{
 setMethod('FLBRP', signature(object='FLStock', sr='missing'),
   function(object, model=formula(rec~a), params=FLPar(1, params='a'),
