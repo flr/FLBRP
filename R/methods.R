@@ -647,3 +647,17 @@ setMethod("ageopt", signature(object="FLBRP"),
 })
 
 # }}}
+
+# z {{{
+setMethod("z", "FLBRP", function(object, ...) {
+
+   f <- harvest(object)
+
+   # CHECK harvest is in 'f'
+   if(units(f) != 'f')
+     stop("Your exploitation rate is not defined as F, cannot be added 
+to M")
+   else
+     return(m(object) %+% f)
+   }
+) # }}}

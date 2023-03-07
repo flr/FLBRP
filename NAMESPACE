@@ -141,5 +141,6 @@ exportMethods(
   "summary",
   "vb",
   "yield.obs",
-  "ypr"
+  "ypr",
+  "z"
 )
