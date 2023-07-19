@@ -661,3 +661,26 @@ to M")
      return(m(object) %+% f)
    }
 ) # }}}
+
+# leslie {{{
+setMethod("leslie", signature(object="FLBRP",  fec="missing"),  
+  function(object, fbar=refpts(object)["crash", "harvest"]) {
+
+    # need to coerce to FLQuant and keep iters      
+    fbar(object) <- as.FLQuant(fbar[drop=T])
+    
+    survivors <- exp(-m(object) - harvest(object))
+
+    fec <- stock.n(object) %*% exp(-(harvest(object) %*% 
+      (harvest.spwn(object)) %+% m(object) %*% (m.spwn(object)))) %*%
+      stock.wt(object) %*% mat(object)
+    
+    L <- array(0, c(dim(fec)[1], dim(fec)[1], dim(fec)[6]))
+
+    for (i in seq(dims(object)$iter))
+      L[,, i] <- .leslie(iter(survivors, i)[drop=TRUE], iter(fec, i)[drop=TRUE])
+    
+    return(L)
+  }
+)
+# }}}

@@ -85,6 +85,7 @@ exportMethods(
   "landings.sel<-",
   "landings.wt",
   "landings.wt<-",
+  "leslie",
   "m",
   "m<-",
   "m.spwn",

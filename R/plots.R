@@ -145,10 +145,11 @@ setMethod("plot", signature("FLBRP", "missing"),
         # LABEL
         if(labels) {
           p <- p + geom_text(data=rpdat,
-            aes_(x=~data, y=~ymin, label=~refpt), angle = 90, size=3, vjust="left") +
+            aes_(x=~data, y=~ymin, label=~refpt),
+            angle = 90, size=3, vjust="left") +
             # LINES
-            geom_segment(data=rpdat, aes_(x=~data, y=~ystart, xend=~data, yend=~yend),
-            colour="grey")
+            geom_segment(data=rpdat,
+            aes_(x=~data, y=~ystart, xend=~data, yend=~yend), colour="grey")
         }
       }
     }
