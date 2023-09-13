@@ -75,7 +75,7 @@ setMethod('brp', signature(object='FLBRP'),
     }
 
     # RUN over 500 iter blocks
-    bls <- split(seq(iter), ceiling(seq_along(seq(iter)) / 500))
+    bls <- split(seq(iter), ceiling(seq_along(seq(iter)) / 250))
  
     res <- lapply(bls, function(i) {
       srpars <- iter(params(object), i)
