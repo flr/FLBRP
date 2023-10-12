@@ -48,6 +48,7 @@ importFrom("utils",
   "unstack")
 
 export(
+  "abiF",
   "procerr",
   "remap")
 
@@ -64,6 +65,7 @@ exportMethods(
   "bycatch.harvest<-",
   "bycatch.wt",
   "bycatch.wt<-",
+  "combine",
   "computeRefpts",
   "discards.obs",
   "discards.obs<-",

@@ -66,7 +66,8 @@ setAs('FLBRP', 'FLStock',
     })
 
     # CREATE FLStock
-    res <- do.call("FLStock", c(full, shor, list(name=name(from), desc=desc(from))))
+    res <- do.call("FLStock", c(full, shor,
+      list(name=name(from), desc=desc(from))))
 
     # COMPUTE totals
     landings(res) <- computeLandings(res)

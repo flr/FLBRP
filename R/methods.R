@@ -74,9 +74,9 @@ setMethod('brp', signature(object='FLBRP'),
       refpts@.Data["virgin", "harvest",] <- 0
     }
 
-    # RUN over 500 iter blocks
+    # RUN over 250 iter blocks
     bls <- split(seq(iter), ceiling(seq_along(seq(iter)) / 250))
- 
+
     res <- lapply(bls, function(i) {
       srpars <- iter(params(object), i)
       .Call("brp", iter(object, i), 
@@ -85,10 +85,10 @@ setMethod('brp', signature(object='FLBRP'),
         PACKAGE = "FLBRP")
       }
     )
+    
+    out <- Reduce(combine, res)
 
-    res <- Reduce(combine, res)
-
-    return(res)
+    return(out)
 
     res <- .Call("brp", object, refpts, SRNameCode(SRModelName(object@model)),
       FLQuant(c(params(object)),dimnames=dimnames(params(object))),
@@ -682,5 +682,20 @@ setMethod("leslie", signature(object="FLBRP",  fec="missing"),
     
     return(L)
   }
+)
+# }}}
+
+# combine {{{
+setMethod('combine', signature(x='FLBRP', y='FLBRP'),
+  function(x, y, ..., check=FALSE) {
+
+    res <- callNextMethod()
+
+    params(res) <- Reduce(combine, lapply(c(list(x,y), list(...)), params))
+    
+    refpts(res) <- Reduce(combine, lapply(c(list(x,y), list(...)), refpts))
+
+    return(res)
+ }
 )
 # }}}
