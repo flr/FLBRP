@@ -36,7 +36,7 @@ setMethod('brp', signature(object='FLBRP'),
   function(object)
   {
     # check model is supported by brp
-    if(!SRNameCode(SRModelName(model(object))) %in% seq(1,6))
+    if(!SRNameCode(SRModelName(model(object))) %in% c(seq(1,6), 21))
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ") in FLBRP object can not be used by brp. See ?ab"))
 
@@ -101,7 +101,7 @@ setMethod('brp', signature(object='FLBRP'),
 setMethod('landings.n', signature(object='FLBRP'),
   function(object) {
     # check model is supported by brp
-    if(!SRNameCode(SRModelName(model(object))) %in% seq(1,6))
+    if(!SRNameCode(SRModelName(model(object))) %in% c(seq(1,6), 21))
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
@@ -117,7 +117,7 @@ setMethod('landings.n', signature(object='FLBRP'),
 setMethod('discards.n', signature(object='FLBRP'),
   function(object) {
     # check model is supported by brp
-    if(!SRNameCode(SRModelName(model(object))) %in% seq(1,6))
+    if(!SRNameCode(SRModelName(model(object))) %in% c(seq(1,6), 21))
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
@@ -134,7 +134,7 @@ setMethod('stock.n', signature(object='FLBRP'),
   function(object)
   {
     # check model is supported by brp
-    if(!SRNameCode(SRModelName(model(object))) %in% seq(1,6))
+    if(!SRNameCode(SRModelName(model(object))) %in% c(seq(1,6), 21))
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
@@ -241,7 +241,7 @@ setMethod('ypr', signature(object='FLBRP'),
     model( object)<-formula(rec~a)
     
     # check model is supported by brp
-    if(!SRNameCode(SRModelName(model(object))) %in% seq(1,6))
+    if(!SRNameCode(SRModelName(model(object))) %in% c(seq(1,6), 21))
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 
@@ -258,7 +258,7 @@ setMethod('hcrYield', signature(object='FLBRP', fbar='FLQuant'),
   function(object, fbar)
   {
     # check model is supported by brp
-    if(!SRNameCode(SRModelName(model(object))) %in% seq(1,6))
+    if(!SRNameCode(SRModelName(model(object))) %in% c(seq(1,6), 21))
       stop(paste("FLSR model (", SRNameCode(SRModelName(model(object))),
         ")in FLBRP object can not be used by brp. See ?ab"))
 

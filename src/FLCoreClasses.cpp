@@ -42,6 +42,8 @@ FLRConstSRR getSRType(SEXP v)
          return FLRConst_Mean;
       else  if (strcmp(t, "b")==1)
          return FLRConst_BevHolt;
+      else  if (strcmp(t, "d")==1)
+         return FLRConst_BevHoltDa;
       else  if (strcmp(t, "r")==1)
          return FLRConst_Ricker;
       else  if (strcmp(t, "s")==1)
