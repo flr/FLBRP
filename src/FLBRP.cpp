@@ -435,12 +435,6 @@ double FLBRP::Recruits(double FMult, int iUnit, int iIter)
          recruits = sr_params(1,1,iUnit,1,1,iIter)*ssb/(ssb+sr_params(2,1,iUnit,1,1,iIter));
       break;
       
-      // rec = a / (1 + (b / srp) ^ d)
-      case FLRConst_BevHoltDa:
-         ssb      = spr*sr_params(1,1,iUnit,1,1,iIter)-sr_params(2,1,iUnit,1,1,iIter);
-         recruits = sr_params(1,1,iUnit,1,1,iIter) / (1.0 + pow(sr_params(2,1,iUnit,1,1,iIter) / ssb, sr_params(3,1,iUnit,1,1,iIter)));
-      break;
-      
       case FLRConst_Ricker:
          ssb      = log(spr*sr_params(1,1,iUnit,1,1,iIter))/sr_params(2,1,iUnit,1,1,iIter);
          recruits = sr_params(1,1,iUnit,1,1,iIter)*ssb*exp(-sr_params(2,1,iUnit,1,1,iIter)*ssb);
@@ -1879,11 +1873,6 @@ adouble FLBRP::Recruits(adouble FMult, int iUnit, int iIter)
       case FLRConst_BevHolt: 
          ssb      = spr*sr_params(1,1,iUnit,1,1,iIter)-sr_params(2,1,iUnit,1,1,iIter);
          recruits = sr_params(1,1,iUnit,1,1,iIter)*ssb/(ssb+sr_params(2,1,iUnit,1,1,iIter));
-      break;
-      // rec = a / (1 + (b / srp) ^ d)
-      case FLRConst_BevHoltDa:
-         ssb      = spr*sr_params(1,1,iUnit,1,1,iIter)-sr_params(2,1,iUnit,1,1,iIter);
-         recruits = sr_params(1,1,iUnit,1,1,iIter) / (1.0 + pow(sr_params(2,1,iUnit,1,1,iIter) / ssb, sr_params(3,1,iUnit,1,1,iIter)));
       break;
          
       case FLRConst_Ricker:
