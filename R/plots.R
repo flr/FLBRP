@@ -57,7 +57,7 @@ setMethod("plot", signature("FLBRP", "missing"),
     rpf <- !all(is.na(rps))
 
     # SUBSET df IF rpf
-    if(rpf && "crash" %in% dimnames(rps)$refpt)
+    if(rpf && "crash" %in% dimnames(rps)$refpt && !is.na(c(rps['crash', 'harvest'])))
       df <- df[df$harvest <= c(rps['crash', 'harvest']),]
 
     # NO economics
