@@ -699,3 +699,32 @@ setMethod('combine', signature(x='FLBRP', y='FLBRP'),
  }
 )
 # }}}
+
+# sr {{{
+
+setMethod("sr", "FLBRP",
+  function(object, model=NULL) {
+
+    res <- as(object, 'FLSR')
+    
+    # RESET model
+    if(!is.null(model))
+      model(res) <- model
+
+    return(res)
+  }
+)
+
+setReplaceMethod("sr", signature("FLBRP", "FLSR"),
+  function(object, value){
+
+    # FIT if needed
+    if(all(is.na(params(value))))
+      value <- fmle(value)
+
+    # ASSIGN model and params
+    model(object) <- model(value)
+    params(object) <- params(value)
+	
+  	return(object)
+})

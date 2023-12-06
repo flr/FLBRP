@@ -137,3 +137,48 @@ remap <- function(object, map=list(FMSY=c("msy", "harvest"),
   x=map, y=names(map)))
 }
 # }}}
+
+# segRef {{{
+
+#' Reference points associated with inflection point of a segmented regression
+#'
+#' Segmented regression (a.k.a. hockey-stick) stock-recruitment relationships 
+#' are often used in short-term forecasts and when other SRRs can not be 
+#' applied. This function assigns the 'b' parameter of the relationship as an 
+#' SSB-related reference point and then calculates all other related ones at e
+#' equilibrium. The functions returns an FLBRP object with the new refpts, 
+#' called 'segreg'.
+#' The object must be set with a fitted 'segreg' stock-recruit relationship.
+#'
+#' @param x An object of class FLBRP.
+#' @param ssb The SSB value of the inflection point, defaults to the 'b' parameter of the 'params' slot.
+#'
+#' @return An object of class 'FLBRP' with a new 'segreg' row in 'refpts'.
+#'
+#' @author The FLR Team
+#' @seealso [FLBRP-class] [FLCore::segreg()]
+#' @keywords classes
+#' @examples
+#' data(ple4brp)
+#' sr(ple4brp) <- sr(ple4brp, model='segreg')
+#' refpts(segRef(ple4brp))
+
+segRef<-function(x, ssb=params(x)["b"]) {
+
+  # CHECK model
+  if(SRModelName(model(x)) != "segreg")
+    stop("FLBRP object must have model 'segreg'")
+
+  # ADD extra row
+  dmns <- dimnames(refpts(x))
+  dmns$refpt <- c(dmns$refpt, "segreg")
+  refpts(x) <- FLPar(NA, dimnames=dmns)
+  refpts(x)["segreg", "ssb"] <- ssb
+
+  # COMPUte refpts
+  refpts(x)=computeRefpts(x)
+  
+  return(x)
+}
+
+# }}}
