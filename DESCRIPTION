@@ -1,6 +1,6 @@
 Package: FLBRP
 Title: Reference Points for Fisheries Management
-Version: 2.5.9.9022
+Version: 2.5.9.9023
 Authors@R: c(
   person("Iago", "Mosqueira", email = "iago.mosqueira@wur.nl", role = "cre"),
   person("Laurence T.", "Kell", email = "laurie@seaplusplus.co.uk", role = "aut"),
@@ -35,7 +35,7 @@ Collate:
   plots.R
   spr.R
   statistics.R
-Additional_repositories: http://flr-project.org/R
+Additional_repositories: https://flr.r-universe.dev
 VignetteBuilder: knitr
 LazyLoad: Yes
 LazyData: No
