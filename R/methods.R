@@ -384,45 +384,49 @@ setMethod('profit', signature(object='FLBRP'),
 #' msyRange(ple4brp)
 
 setMethod("msyRange", signature(object="FLBRP"),
-  function(object, range=0.10) {
+  function(object, Ftarget="msy", range=0.10) {
+
+    dmns <- dimnames(refpts(object))
 
     refpts(object) <- FLPar(NA,
-      dimnames=list(refpt=c("msy","min","max"),
-      quantity=c("harvest","yield","rec","ssb","biomass","revenue","cost","profit"),
-      iter=1))
+      dimnames=list(refpt=c(Ftarget, "min", "max"),
+      quantity=c("harvest", "yield", "rec", "ssb", "biomass", "revenue",
+        "cost", "profit"), 
+      iter=dmns$iter))
 
     object <- brp(object)
 
-    refpts(object)["min","yield"] <- refpts(object)["msy","yield"] * (1-range)
+    refpts(object)["min","yield"] <- refpts(object)[Ftarget,"yield"] * (1-range)
     
-    refpts(object)["max","yield"] <- refpts(object)["msy","yield"] * (1-range)
+    refpts(object)["max","yield"] <- refpts(object)[Ftarget,"yield"] * (1-range)
      
-    fn <- function(f,target,obj) {
-      
-      refpts(obj) <- FLPar(c(f, rep(NA,7)),
+    fn <- function(f, target, obj) {
+      refpts(obj) <- FLPar(c(f, rep(NA, 7)),
         dimnames=list(refpt=c("f"),
-        quantity=c("harvest","yield","rec","ssb","biomass","revenue","cost","profit"),
+        quantity=c("harvest", "yield", "rec", "ssb", "biomass", "revenue",
+          "cost", "profit"), 
         iter =1))
      
      return((refpts(brp(obj))[,"yield"]- target) ^ 2)
     }
      
-    for (i in dimnames(refpts(object))$iter) {
+    for (i in dmns$iter) {
 
-      refpts(object)["min", "harvest", i] <- optimise(fn,
-        c(0.01, refpts(object)["msy", "harvest",i]),
-        target=refpts(object)["min", "yield"],
-        obj=object, tol=.Machine$double.eps^0.5)$minimum
+      iter(refpts(object)["min", "harvest"], i) <- optimise(fn,
+        c(0.01, iter(refpts(object)[Ftarget, "harvest"], i)),
+        target=iter(refpts(object)["min", "yield"], 1),
+        obj=iter(object, i), tol=.Machine$double.eps^0.5)$minimum
 
-      refpts(object)["max", "harvest", i] <- optimise(fn,
-        c(1, 10) * c(refpts(object)["msy", "harvest",i]),
-        target=refpts(object)["max", "yield"], obj=object,
+      iter(refpts(object)["max", "harvest"], i) <- optimise(fn,
+        c(1, 10) * c(iter(refpts(object)[Ftarget, "harvest"], i)),
+        target=iter(refpts(object)["max", "yield"], i), obj=iter(object, i),
         tol=.Machine$double.eps^0.5)$minimum
     }
   
     refpts(brp(object))
   }
-) # }}}
+)
+# }}}
 
 # r {{{
 
