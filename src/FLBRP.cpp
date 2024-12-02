@@ -26,7 +26,7 @@ int RP_harvest=0,
 extern "C" SEXPDLLExport Adolc_gr_tapeless(SEXP xX)
    {
    // Rosenbrock Banana function   
-   if (!isVector(xX) || !isNumeric(xX)) 
+   if (!Rf_isVector(xX) || !Rf_isNumeric(xX)) 
       return R_NilValue;
 
    SEXP Grad = R_NilValue;
@@ -138,7 +138,7 @@ extern "C" SEXPDLLExport brp(SEXP xbrp, SEXP xref, SEXP xSR, SEXP xPar)
    
    SEXP RtnVal = brp.Return(xbrp);
 
-   SET_SLOT(RtnVal, install("refpts"), brp.brp(xref));       
+   SET_SLOT(RtnVal, Rf_install("refpts"), brp.brp(xref));       
 
    return RtnVal; 
    }
@@ -171,10 +171,10 @@ void FLBRP::Init(SEXP x)
    {
    if (!isFLBRP(x)) return; 
                          
-   SEXP      range = GET_SLOT(x, install("range"));
+   SEXP      range = GET_SLOT(x, Rf_install("range"));
    SEXP RangeNames = GET_NAMES(range);
 	  
-   int n = length(RangeNames);
+   int n = Rf_length(RangeNames);
 
    nunits   = 
    nseasons = 
@@ -208,23 +208,23 @@ void FLBRP::Init(SEXP x)
       }
       }
 
-   fbar.Init(           GET_SLOT(x, install("fbar")));       
+   fbar.Init(           GET_SLOT(x, Rf_install("fbar")));       
 
-   landings_sel.Init(   GET_SLOT(x, install("landings.sel")));  
-   discards_sel.Init(   GET_SLOT(x, install("discards.sel")));  
-   bycatch_harvest.Init(GET_SLOT(x, install("bycatch.harvest")));
-   stock_wt.Init(       GET_SLOT(x, install("stock.wt")));      
-   landings_wt.Init(    GET_SLOT(x, install("landings.wt")));   
-   discards_wt.Init(    GET_SLOT(x, install("discards.wt")));   
-   bycatch_wt.Init(     GET_SLOT(x, install("bycatch.wt")));    
-   m.Init(              GET_SLOT(x, install("m")));             
-   mat.Init(            GET_SLOT(x, install("mat")));           
-   harvest_spwn.Init(   GET_SLOT(x, install("harvest.spwn")));  
-   m_spwn.Init(         GET_SLOT(x, install("m.spwn")));        
-   availability.Init(   GET_SLOT(x, install("availability")));         
-   cost_var.Init(       GET_SLOT(x, install("vcost")));         
-   cost_fix.Init(       GET_SLOT(x, install("fcost")));         
-   price.Init(          GET_SLOT(x, install("price")));         
+   landings_sel.Init(   GET_SLOT(x, Rf_install("landings.sel")));  
+   discards_sel.Init(   GET_SLOT(x, Rf_install("discards.sel")));  
+   bycatch_harvest.Init(GET_SLOT(x, Rf_install("bycatch.harvest")));
+   stock_wt.Init(       GET_SLOT(x, Rf_install("stock.wt")));      
+   landings_wt.Init(    GET_SLOT(x, Rf_install("landings.wt")));   
+   discards_wt.Init(    GET_SLOT(x, Rf_install("discards.wt")));   
+   bycatch_wt.Init(     GET_SLOT(x, Rf_install("bycatch.wt")));    
+   m.Init(              GET_SLOT(x, Rf_install("m")));             
+   mat.Init(            GET_SLOT(x, Rf_install("mat")));           
+   harvest_spwn.Init(   GET_SLOT(x, Rf_install("harvest.spwn")));  
+   m_spwn.Init(         GET_SLOT(x, Rf_install("m.spwn")));        
+   availability.Init(   GET_SLOT(x, Rf_install("availability")));         
+   cost_var.Init(       GET_SLOT(x, Rf_install("vcost")));         
+   cost_fix.Init(       GET_SLOT(x, Rf_install("fcost")));         
+   price.Init(          GET_SLOT(x, Rf_install("price")));         
 
    minage   = m.minquant();
    maxage   = m.maxquant();
@@ -469,30 +469,30 @@ double FLBRP::Recruits(double FMult, int iUnit, int iIter)
 
 SEXP FLBRP::Return(SEXP x)
    {       
-   SET_SLOT(x, install("stock.n"),      stock_n.Return());       
-   SET_SLOT(x, install("landings.n"),   landings_n.Return());    
-   SET_SLOT(x, install("discards.n"),   discards_n.Return());    
-   SET_SLOT(x, install("landings.sel"), landings_sel.Return());  
-   SET_SLOT(x, install("discards.sel"), discards_sel.Return());  
-   SET_SLOT(x, install("harvest"),      harvest.Return());       
+   SET_SLOT(x, Rf_install("stock.n"),      stock_n.Return());       
+   SET_SLOT(x, Rf_install("landings.n"),   landings_n.Return());    
+   SET_SLOT(x, Rf_install("discards.n"),   discards_n.Return());    
+   SET_SLOT(x, Rf_install("landings.sel"), landings_sel.Return());  
+   SET_SLOT(x, Rf_install("discards.sel"), discards_sel.Return());  
+   SET_SLOT(x, Rf_install("harvest"),      harvest.Return());       
   
    return x;
    }
 
 SEXP FLBRP::ReturnStk(SEXP x)
    { 
-   FLQuant _stock(   GET_SLOT(x, install("stock")));
-   FLQuant _catch(   GET_SLOT(x, install("catch")));
-   FLQuant _landings(GET_SLOT(x, install("landings")));
-   FLQuant _discards(GET_SLOT(x, install("discards")));
-   FLQuant _catch_wt(GET_SLOT(x, install("catch.wt")));
+   FLQuant _stock(   GET_SLOT(x, Rf_install("stock")));
+   FLQuant _catch(   GET_SLOT(x, Rf_install("catch")));
+   FLQuant _landings(GET_SLOT(x, Rf_install("landings")));
+   FLQuant _discards(GET_SLOT(x, Rf_install("discards")));
+   FLQuant _catch_wt(GET_SLOT(x, Rf_install("catch.wt")));
    FLQuant catch_n(minage,maxage,fbar.minyr(),fbar.maxyr(),nunits,nseasons,nareas,niters,0);
       
-   SET_SLOT(x, install("stock.n"),    stock_n.Return());       
-   SET_SLOT(x, install("landings.n"), landings_n.Return());    
-   SET_SLOT(x, install("discards.n"), discards_n.Return());    
-   SET_SLOT(x, install("catch.n"),    catch_n.Return());    
-   SET_SLOT(x, install("harvest"),    harvest.Return());       
+   SET_SLOT(x, Rf_install("stock.n"),    stock_n.Return());       
+   SET_SLOT(x, Rf_install("landings.n"), landings_n.Return());    
+   SET_SLOT(x, Rf_install("discards.n"), discards_n.Return());    
+   SET_SLOT(x, Rf_install("catch.n"),    catch_n.Return());    
+   SET_SLOT(x, Rf_install("harvest"),    harvest.Return());       
   
    for (int iIter=1; iIter<=niters; iIter++)
      for (int iUnit=1; iUnit<=nunits; iUnit++)
@@ -1381,7 +1381,7 @@ double  FLBRP::FMEY(int iIter)
 
 SEXP FLBRP::brp(SEXP Object)
    {
-   SEXP v        = PROTECT(duplicate(GET_SLOT(Object, install(".Data")))),
+   SEXP v        = PROTECT(Rf_duplicate(GET_SLOT(Object, Rf_install(".Data")))),
         dims     = GET_DIM(v),
         dimnames = GET_DIMNAMES(v),
         v3;
@@ -1392,20 +1392,20 @@ SEXP FLBRP::brp(SEXP Object)
 
    double ***D;
 
-   short dim[3], n = length(dims);
+   short dim[3], n = Rf_length(dims);
 
    if (n != 3)
       {
       UNPROTECT(1);
   
-			return ScalarLogical(FALSE);
+			return Rf_ScalarLogical(FALSE);
       }
 
    if (INTEGER(dims)[1] != 8)
       {
       UNPROTECT(1);
   
-			return ScalarLogical(FALSE);
+			return Rf_ScalarLogical(FALSE);
       }
 
    dim[0] = INTEGER(dims)[0];
@@ -1620,7 +1620,7 @@ SEXP FLBRP::brp(SEXP Object)
     PROTECT(v3 = Rf_allocArray(REALSXP, dims)); 
     
     //Create names for dimensions
-    setAttrib(v3, R_DimNamesSymbol, dimnames);
+    Rf_setAttrib(v3, R_DimNamesSymbol, dimnames);
 
    l = 0;
    for (k = 0; k < dim[2]; k++)
@@ -1641,7 +1641,7 @@ SEXP FLBRP::brp(SEXP Object)
 
    PROTECT(refpts = NEW_OBJECT(MAKE_CLASS("FLPar")));
 
-   refpts = R_do_slot_assign(refpts, install(".Data"), v3);
+   refpts = R_do_slot_assign(refpts, Rf_install(".Data"), v3);
    
    UNPROTECT(3);
 
@@ -1651,7 +1651,7 @@ SEXP FLBRP::brp(SEXP Object)
 
 void FLBRP::setSR(SEXP xModel, SEXP xPar)
    {
-   if (!isVector(xModel) || !isNumeric(xModel))
+   if (!Rf_isVector(xModel) || !Rf_isNumeric(xModel))
       return;
 
    sr_model    = new FLRConstSRR [nunits]-1;
