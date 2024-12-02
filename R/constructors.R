@@ -8,8 +8,6 @@
 #
 # Distributed under the terms of the GNU Public License v 3.0
 
-# TODO: FLBRP(FLStockR)
-
 # FLBRP(object='missing', sr='missing') {{{
 #' @rdname FLBRP
 #' @aliases FLBRP-missing,missing-method
