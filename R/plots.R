@@ -25,6 +25,7 @@
 #' @examples
 #' data(ple4brp)
 #' plot(ple4brp)
+#' plot(ple4brp, catch=TRUE)
 #' # ADD observations
 #' plot(ple4brp, obs=TRUE)
 #' # SELECT which refpts to plot
@@ -42,11 +43,18 @@
 
 setMethod("plot", signature("FLBRP", "missing"),
   function(x, refpts=dimnames(x@refpts)$refpt, obs=FALSE, labels=TRUE,
-    shapes="missing", colours="missing", panels=NULL, ncol=2, ...) {
+    shapes="missing", colours="missing", panels=NULL, ncol=2,
+    removals=FALSE, ...) {
+
+    # SELECT yield
+    if(removals)
+      yield <- 'catch'
+    else
+      yield <- 'landings'
 
     # EXTRACT metrics
     df <- model.frame(metrics(x,
-      list(ssb=ssb, harvest=fbar, rec=rec, yield=landings, profit=profit)),
+      list(ssb=ssb, harvest=fbar, rec=rec, yield=yield, profit=profit)),
       drop=FALSE)
     
     # refpts
