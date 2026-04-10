@@ -292,17 +292,20 @@ setMethod('hcrYield', signature(object='FLBRP', fbar='numeric'),
 
 # ssb {{{
 setMethod('ssb', signature(object='FLBRP'),
-  function(object) {
+  function(object, byage=FALSE, ...) {
 
-    f <- harvest(object) %*% harvest.spwn(object)
-    m <- m(object) %*% m.spwn(object)
-    
-    expZ <- exp(-f %-% m)
+    # PARSE extra arguments
+    args <- list(...)
+    for(i in names(args))
+      slot(object, i)[] <- c(args[[i]])
 
-    res <- quantSums(stock.n(object) %*% expZ %*% stock.wt(object) %*%
-      mat(object))
+    flq <- harvest(object)
 
-    return(res)
+    # CALL .biomass with mat as sel
+    return(FLCore:::.biomass(n=stock.n(object), wt=flq %=% stock.wt(object),
+      h=flq %=% harvest(object), m=flq %=% m(object),
+      th=flq %=% harvest.spwn(object), tm=flq %=% m.spwn(object),
+      time=flq %=% m.spwn(object), sel=flq %=% mat(object), byage=byage))
   }
 )# }}}
 
@@ -311,6 +314,17 @@ setMethod("vb", signature(x="FLBRP"),
   function(x) {
 
     vb <- quantSums(stock.n(x) %*% stock.wt(x) %*% catch.sel(x))
+    units(vb) <- units(stock(x))
+
+    return(vb)
+  }
+)
+
+# exb {{{
+setMethod("exb", signature(x="FLBRP"),
+  function(x) {
+
+    vb <- quantSums(stock.n(x) %*% catch.wt(x) %*% catch.sel(x))
     units(vb) <- units(stock(x))
 
     return(vb)

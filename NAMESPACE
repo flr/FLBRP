@@ -127,6 +127,7 @@ exportMethods(
   "coerce",
   "cost",
   "discards.n",
+  "exb",
   "fcrash",
   "FLBRP",
   "FLBRPs",

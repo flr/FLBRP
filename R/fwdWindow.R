@@ -6,7 +6,7 @@
 #
 # Distributed under the terms of the European Union Public Licence (EUPL) V.1.1.
 
-# fwdwindow (FLStock, FLBRP) {{{
+# fwdWindow (FLStock, FLBRP) {{{
 
 #' @title fwdWindow
 #'
@@ -49,9 +49,12 @@ setMethod("fwdWindow", signature(x="FLStock", y="FLBRP"),
     slts <- c("stock.wt", "landings.wt", "discards.wt", "catch.wt",
        "m", "mat", "harvest.spwn", "m.spwn")
 
+    # TAKE equilibrium vectors
     for(s in slts) {
       slot(res, s)[, wyrs] <- iter(do.call(s, list(y)), seq(its[s]))
     }
+
+    # TAKE
 
     landings.n(res)[, wyrs] <- iter(landings.n(y)[,3], seq(its["landings.n"]))
 
