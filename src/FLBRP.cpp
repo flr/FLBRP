@@ -9,6 +9,19 @@ double t1,t2;
  *
  */
 #include <FLBRP.h>
+#include <math.h>
+
+namespace {
+/* Step size for finite-difference gradients of F (fishing mortality multiplier). */
+static double fd_step_F(double x) {
+   return __max(1e-8, 1e-6 * (1.0 + fabs(x)));
+   }
+
+static double rosenbrock(double x1, double x2) {
+   double t = x2 - x1 * x1;
+   return 100.0 * t * t + (1.0 - x1) * (1.0 - x1);
+   }
+}
 
 int RP_harvest=0,                
     RP_yield  =1,                
@@ -25,31 +38,19 @@ int RP_harvest=0,
                                 
 extern "C" SEXPDLLExport Adolc_gr_tapeless(SEXP xX)
    {
-   // Rosenbrock Banana function   
+   /* Rosenbrock banana: f(x,y)=100*(y-x^2)^2+(1-x)^2; gradient via central differences. */
    if (!Rf_isVector(xX) || !Rf_isNumeric(xX)) 
       return R_NilValue;
 
    SEXP Grad = R_NilValue;
-    
-   adouble x1, x2;    
-   adouble  val_ad = 0.0;
-
    PROTECT(Grad = Rf_duplicate(xX)); 
 
-   x1 = REAL(xX)[0];
-   x2 = REAL(xX)[1];
-   double seed1=1.0;
-   double seed0=0.0;
-   double seed12=1.0;
-
-   x1.setADValue(&seed1);
-   val_ad = 100.0*(x2-x1*x1)*(x2-x1*x1)+(1.0-x1)*(1.0-x1);
-   REAL(Grad)[0] = *(val_ad.getADValue());
-
-   x1.setADValue(&seed0);
-   x2.setADValue(&seed12);
-   val_ad = 100.0*(x2-x1*x1)*(x2-x1*x1)+(1.0-x1)*(1.0-x1);
-   REAL(Grad)[1] = *(val_ad.getADValue());
+   double x1 = REAL(xX)[0];
+   double x2 = REAL(xX)[1];
+   double h1 = __max(1e-8, 1e-7 * (1.0 + fabs(x1)));
+   double h2 = __max(1e-8, 1e-7 * (1.0 + fabs(x2)));
+   REAL(Grad)[0] = (rosenbrock(x1 + h1, x2) - rosenbrock(x1 - h1, x2)) / (2.0 * h1);
+   REAL(Grad)[1] = (rosenbrock(x1, x2 + h2) - rosenbrock(x1, x2 - h2)) / (2.0 * h2);
  
    UNPROTECT(1);
 
@@ -926,48 +927,6 @@ double FLBRP::YPR(double FMult, int iUnit, int iIter)
    return ReturnValue;
    }
 
-adouble FLBRP::YPR(adouble FMult, int iUnit, int iIter)
-   {
-   adouble ReturnValue = 0.0;
-
-   int iAge, iSeason, iArea;     
-   adouble N = 1.0;
-
-   for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-        {
-        adouble F          = 0.0,
-                Z          = 0.0,
-                expZ       = 0.0,
-                catch_n    = 0.0,
-                catch_sel  = 0.0,
-                landings_n = 0.0;
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          F     += FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          expZ   = adtl::exp(-Z);
-          }
-              
-       if (iAge == plusgrp && iSeason==nseasons)
-          N  *= (-1.0/(expZ-1.0));
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          catch_n      = N*(F/Z)*(1-expZ);
-          landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/(landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          ReturnValue += landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter); 
-          }    
-
-      N *= expZ;
-      }
-    }
-
-   return ReturnValue;
-   }
-
 double FLBRP::RPR(double FMult, int iUnit, int iIter)
    {
    double ReturnValue = 0.0;
@@ -1006,51 +965,6 @@ double FLBRP::RPR(double FMult, int iUnit, int iIter)
 		  landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/catch_sel;
 
 		  ReturnValue += price(iAge,minyr,iUnit,iSeason,iArea,iIter)*landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter); 
-          }
-
-      N *= expZ;
-      }
-    }
-
-   return ReturnValue;
-   }
-
-adouble FLBRP::RPR(adouble FMult, int iUnit, int iIter)
-   {
-   adouble ReturnValue = 0.0;
-
-   int iAge, iSeason, iArea;     
-   adouble N = 1.0;
-
-   for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-        {
-        adouble F          = 0.0,
-                Z          = 0.0,
-                expZ       = 0.0,
-                catch_sel  = 0.0,
-                catch_n    = 0.0,
-                landings_n = 0.0;
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          F     += FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          expZ   = adtl::exp(-Z);
-          }
-              
-       if (iAge == plusgrp && iSeason==nseasons)
-          N  *= (-1.0/(expZ-1.0));
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          catch_n      = N*(F/Z)*(1-expZ);
-		  catch_sel    = (landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-		  if (catch_sel==0.0) catch_sel=1.0;
-
-		  landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/catch_sel;
-          ReturnValue += price(iAge,minyr,iUnit,iSeason,iArea,iIter)*landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter); 
           }
 
       N *= expZ;
@@ -1105,208 +1019,32 @@ double FLBRP::PPR(double FMult, int iUnit, int iIter)
    return ReturnValue;
    }
 
-adouble FLBRP::PPR(adouble FMult, int iUnit, int iIter)
-   {
-   adouble ReturnValue = 0.0;
-
-   int iAge, iSeason, iArea;     
-   adouble N = 1.0;
-
-   for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-        {
-        adouble F          = 0.0,
-                Z          = 0.0,
-                expZ       = 0.0,
-                catch_sel  = 0.0,
-                catch_n    = 0.0,
-                landings_n = 0.0;
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          F     += FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          expZ   = adtl::exp(-Z);
-          }
-              
-       if (iAge == plusgrp && iSeason==nseasons)
-          N  *= (-1.0/(expZ-1.0));
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          catch_n      = N*(F/Z)*(1-expZ);
-          catch_sel    = (landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-		  if (catch_sel==0.0) catch_sel=1.0;
-
-		  landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/catch_sel;
-          ReturnValue += price(iAge,minyr,iUnit,iSeason,iArea,iIter)*landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter) - FMult*cost_var(1,minyr,iUnit,iSeason,iArea,iIter) - cost_fix(1,minyr,iUnit,iSeason,iArea,iIter); 
-          }
-    
-      N *= expZ;
-      }
-    }
-
-   return ReturnValue;
-   }
-
 double FLBRP::YPRGrad(double FMult, int iIter)
   {
-  adouble ReturnValue=0.0;
-  adouble FMult_ad;
-  FMult_ad = FMult;
-  double seed=1.0;
-  FMult_ad.setADValue(&seed);
-
-  int iAge, iUnit, iSeason, iArea;
-  for (iUnit=1; iUnit<=nunits; iUnit++)
-    {
-    adouble N = 1.0;
-    for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-        {
-        adouble F          = 0.0,
-                Z          = 0.0,
-                expZ       = 0.0,
-                catch_n    = 0.0,
-                catch_sel  = 0.0,
-                landings_n = 0.0;
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          F     += FMult_ad*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          expZ   = adtl::exp(-Z);
-          }
-
-       if (iAge == plusgrp && iSeason==nseasons)
-          N  *= (-1.0/(expZ-1.0));
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          catch_n      = N*(F/Z)*(1-expZ);
-          catch_sel    = (landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-		  if (catch_sel==0.0) catch_sel=1.0;
-
-		  landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/catch_sel;
-          ReturnValue += landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          }
-
-
-       N *= expZ;
-       }
-     }
-   }
-
-   double RtnVal = *(ReturnValue.getADValue());
-
-   return RtnVal;
-   }
+  double h = fd_step_F(FMult);
+  double yp = YPR(FMult + h, iIter);
+  if (FMult > h)
+     return (yp - YPR(FMult - h, iIter)) / (2.0 * h);
+  return (yp - YPR(FMult, iIter)) / h;
+  }
 
 double FLBRP::RPRGrad(double FMult, int iIter)
   {
-  adouble ReturnValue = 0.0;
-  adouble FMult_ad;
-  FMult_ad = FMult;
-  double seed=1.0;
-  FMult_ad.setADValue(&seed);
-
-  int iAge, iUnit, iSeason, iArea;
-  for (iUnit=1; iUnit<=nunits; iUnit++)
-    {
-    adouble N = 1.0;
-    for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-        {
-        adouble F          = 0.0,
-                Z          = 0.0,
-                expZ       = 0.0,
-                catch_sel  = 0.0,
-                catch_n    = 0.0,
-                landings_n = 0.0;
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          F     += FMult_ad*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          expZ   = adtl::exp(-Z);
-          }
-
-       if (iAge == plusgrp && iSeason==nseasons)
-          N  *= (-1.0/(expZ-1.0));
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          catch_n      = N*(F/Z)*(1-expZ);
-          catch_sel    =(landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-		  landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/catch_sel;
-          ReturnValue += price(iAge,minyr,iUnit,iSeason,iArea,iIter)*landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          }
-
-       N *= expZ;
-       }
-     }
-   }
-
-   double RtnVal = *(ReturnValue.getADValue());
-
-   return RtnVal;
-   }
+  double h = fd_step_F(FMult);
+  double yp = RPR(FMult + h, iIter);
+  if (FMult > h)
+     return (yp - RPR(FMult - h, iIter)) / (2.0 * h);
+  return (yp - RPR(FMult, iIter)) / h;
+  }
 
 double FLBRP::PPRGrad(double FMult, int iIter)
   {
-  adouble ReturnValue = 0.0;
-  adouble FMult_ad;
-  FMult_ad = FMult;
-  double seed=1.0;
-  FMult_ad.setADValue(&seed);
-
-  int iAge, iUnit, iSeason, iArea;
-  for (iUnit=1; iUnit<=nunits; iUnit++)
-    {
-    adouble N = 1.0;
-    for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-        {
-        adouble F          = 0.0,
-                Z          = 0.0,
-                expZ       = 0.0,
-                catch_sel  = 0.0,
-                catch_n    = 0.0,
-                landings_n = 0.0;
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          F     += FMult_ad*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-          Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          expZ   = adtl::exp(-Z);
-          }
-
-       if (iAge == plusgrp && iSeason==nseasons)
-          N  *= (-1.0/(expZ-1.0));
-
-       for (iArea=1; iArea<=nareas; iArea++)
-          {
-          catch_n      = N*(F/Z)*(1-expZ);
-          catch_sel    = (landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter));
-		  if (catch_sel==0.0) catch_sel=1.0;
-
-		  landings_n   = catch_n*landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)/catch_sel;
-          ReturnValue += price(iAge,minyr,iUnit,iSeason,iArea,iIter)*landings_n*landings_wt(iAge,minyr,iUnit,iSeason,iArea,iIter) - FMult*cost_var(iAge,minyr,iUnit,iSeason,iArea,iIter) - cost_fix(iAge,minyr,iUnit,iSeason,iArea,iIter);
-          }
-
-       N *= expZ;
-       }
-     }
-   }
-
-   double RtnVal = *(ReturnValue.getADValue());
-
-   return RtnVal;
-   }
+  double h = fd_step_F(FMult);
+  double yp = PPR(FMult + h, iIter);
+  if (FMult > h)
+     return (yp - PPR(FMult - h, iIter)) / (2.0 * h);
+  return (yp - PPR(FMult, iIter)) / h;
+  }
 
 double  FLBRP::F0pt1(int iIter)
    {
@@ -1776,238 +1514,50 @@ double FLBRP::Recruits(double FMult, int iIter)
    return result;
    }
 
-adouble FLBRP::SPR(adouble FMult, int iUnit, int iIter)
-   {
-   adouble ReturnValue = 0.0;
-
-   int iAge, iSeason, iArea;  
-   
-   adouble N = 1.0;
-   for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-         {
-         adouble F         = 0.0,
-                Z         = 0.0,
-                expZ      = 0.0;
-
-         for (iArea=1; iArea<=nareas; iArea++)
-            {
-            F     += FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter))*
-                            availability(iAge,minyr,iUnit,iSeason,iArea,iIter);
-            Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-            expZ   = adtl::exp(-Z);
-            }
-             
-         if (iAge == plusgrp && iSeason==nseasons)
-            N  *= (-1.0/(expZ-1.0));
-      
-         for (iArea=1; iArea<=nareas; iArea++)
-           {
-            ReturnValue +=  availability(  iAge,minyr,iUnit,iSeason,iArea,iIter)*
-                            N*adtl::exp(-m(      iAge,minyr,iUnit,iSeason,iArea,iIter)*m_spwn(      iAge,minyr,iUnit,iSeason,iArea,iIter)     
-                      -FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter))*
-                              harvest_spwn(iAge,minyr,iUnit,iSeason,iArea,iIter))*
-                                  stock_wt(iAge,minyr,iUnit,iSeason,iArea,iIter)*mat(          iAge,minyr,iUnit,iSeason,iArea,iIter);
-            }
-         
-         N *= expZ;
-         }
-      }
-
-   return ReturnValue;
-   }
-
-adouble FLBRP::BPR(adouble FMult, int iUnit, int iIter)
-   {
-   adouble ReturnValue = 0.0;
-
-   int iAge, iSeason, iArea;  
-   
-   adouble N = 1.0;
-   for (iAge=minage; iAge<=maxage; iAge++)
-      {
-      for (iSeason=1; iSeason<=nseasons; iSeason++)
-         {
-         adouble F         = 0.0,
-                Z         = 0.0,
-                expZ      = 0.0;
-
-         for (iArea=1; iArea<=nareas; iArea++)
-            {
-            F     += FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter))*
-                            availability(iAge,minyr,iUnit,iSeason,iArea,iIter);
-            Z     += F+m( iAge,minyr,iUnit,iSeason,iArea,iIter)+bycatch_harvest(iAge,minyr,iUnit,iSeason,iArea,iIter);
-            expZ   = adtl::exp(-Z);
-            }
-             
-         if (iAge == plusgrp && iSeason==nseasons)
-            N  *= (-1.0/(expZ-1.0));
-      
-         for (iArea=1; iArea<=nareas; iArea++)
-           {
-            ReturnValue +=  availability(  iAge,minyr,iUnit,iSeason,iArea,iIter)*
-                            N*adtl::exp(-m(      iAge,minyr,iUnit,iSeason,iArea,iIter)*m_spwn(      iAge,minyr,iUnit,iSeason,iArea,iIter)     
-                      -FMult*(discards_sel(iAge,minyr,iUnit,iSeason,iArea,iIter)+landings_sel(iAge,minyr,iUnit,iSeason,iArea,iIter))*
-                              harvest_spwn(iAge,minyr,iUnit,iSeason,iArea,iIter))*
-                                  stock_wt(iAge,minyr,iUnit,iSeason,iArea,iIter);
-            }
-         
-         N *= expZ;
-         }
-      }
-
-   return ReturnValue;
-   }
-
-adouble FLBRP::Recruits(adouble FMult, int iUnit, int iIter)
-   {
-   adouble spr     = SPR(FMult,iUnit,iIter),
-          recruits = 1;
-
-   //SSB as a function of SPR
-   adouble ssb=1.0;
-   switch(sr_model[iUnit]) 
-      {
-      // rec = a * srp / (b + srp)
-      case FLRConst_BevHolt: 
-         ssb      = spr*sr_params(1,1,iUnit,1,1,iIter)-sr_params(2,1,iUnit,1,1,iIter);
-         recruits = sr_params(1,1,iUnit,1,1,iIter)*ssb/(ssb+sr_params(2,1,iUnit,1,1,iIter));
-      break;
-         
-      case FLRConst_Ricker:
-         ssb      = adtl::log(spr*sr_params(1,1,iUnit,1,1,iIter))/sr_params(2,1,iUnit,1,1,iIter);
-         recruits = sr_params(1,1,iUnit,1,1,iIter)*ssb*adtl::exp(-sr_params(2,1,iUnit,1,1,iIter)*ssb);
-      break;
-      
-  	  case FLRConst_Cushing:
-         ssb      =pow(1.0/(sr_params(1,1,iUnit,1,1,iIter)*spr),(1.0/(sr_params(2,1,iUnit,1,1,iIter)-1.0)));
-         recruits =sr_params(1,1,iUnit,1,1,iIter)*pow(ssb,sr_params(2,1,iUnit,1,1,iIter));
-      break;
-      
-      case FLRConst_Shepherd:
-         ssb      =sr_params(2,1,iUnit,1,1,iIter)*pow(sr_params(1,1,iUnit,1,1,iIter)*spr-1.0,1/sr_params(3,1,iUnit,1,1,iIter));
-         recruits = sr_params(1,1,iUnit,1,1,iIter)*ssb/(1.0+pow(ssb/sr_params(2,1,iUnit,1,1,iIter),sr_params(3,1,iUnit,1,1,iIter)));
-      break;
-              
-      case FLRConst_SegReg:
-	   if (1/spr > sr_params(1,1,iUnit,1,1,iIter)) 
-	      recruits = 0.0; 
-	   else 
-		   recruits = sr_params(1,1,iUnit,1,1,iIter)*sr_params(2,1,iUnit,1,1,iIter);
-       break;
-  
-      case FLRConst_Mean: default:
-         recruits = sr_params(1,1,iUnit,1,1,iIter);
-      break;
-      }
-
-   return recruits;
-   }
-
 double FLBRP::YieldGrad(double FMult, int iIter)
    {
-   adouble FMult_ad;
-   FMult_ad = FMult;
-   double seed=1.0;
-   FMult_ad.setADValue(&seed);
-
-   adouble ReturnValue = YPR(FMult_ad, 1, iIter)*Recruits(FMult_ad, 1, iIter);
-
-   double RtnVal = *(ReturnValue.getADValue());
-   double t      = ReturnValue.getValue();
-   return RtnVal;
+   double h = fd_step_F(FMult);
+   double yp = YPR(FMult + h, 1, iIter) * Recruits(FMult + h, 1, iIter);
+   if (FMult > h)
+      return (yp - YPR(FMult - h, 1, iIter) * Recruits(FMult - h, 1, iIter)) / (2.0 * h);
+   return (yp - YPR(FMult, 1, iIter) * Recruits(FMult, 1, iIter)) / h;
    }
 
 double FLBRP::ProfitGrad(double FMult, int iIter)
    {
-   adouble FMult_ad;
-   FMult_ad = FMult;
-    double seed=1.0;
-   FMult_ad.setADValue(&seed);
-
-   adouble ReturnValue = RPR(FMult_ad, 1, iIter)*Recruits(FMult_ad, 1, iIter);
-
-   int iAge, iUnit, iSeason, iArea;
-   for (iUnit=1; iUnit<=nunits; iUnit++)
-       for (iSeason=1; iSeason<=nseasons; iSeason++)
-         for (iArea=1; iArea<=nareas; iArea++)
-            ReturnValue += FMult_ad*cost_var(1,minyr,iUnit,iSeason,iArea,iIter)-cost_fix(1,minyr,iUnit,iSeason,iArea,iIter);
-
-   double RtnVal = *(ReturnValue.getADValue());
-   double t      = ReturnValue.getValue();
-   return RtnVal;
+   double h = fd_step_F(FMult);
+   double yp = Profit(FMult + h, iIter);
+   if (FMult > h)
+      return (yp - Profit(FMult - h, iIter)) / (2.0 * h);
+   return (yp - Profit(FMult, iIter)) / h;
    }
 
 double FLBRP::SSBGrad(double FMult, int iIter)
   {
-  adouble result=0.0;
-  adouble FMult_ad;
-  FMult_ad = FMult;
-  double seed=1.0;
-  FMult_ad.setADValue(&seed);
-
-   for (int iUnit=1; iUnit<=nunits; iUnit++)
-      result += SPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
-
-   double RtnVal = *(result.getADValue());
-
-   return RtnVal;
-   }
+  double h = fd_step_F(FMult);
+  double yp = SSB(FMult + h, iIter);
+  if (FMult > h)
+     return (yp - SSB(FMult - h, iIter)) / (2.0 * h);
+  return (yp - SSB(FMult, iIter)) / h;
+  }
 
 double FLBRP::RecGrad(double FMult, int iIter)
   {
-  adouble result=0.0;
-  adouble FMult_ad;
-  FMult_ad = FMult;
-  double seed=1.0;
-  FMult_ad.setADValue(&seed);
-
-   for (int iUnit=1; iUnit<=nunits; iUnit++)
-      result += Recruits(FMult_ad,iUnit,iIter);
-
-   double RtnVal = *(result.getADValue());
-
-   return RtnVal;
-   }
+  double h = fd_step_F(FMult);
+  double yp = Recruits(FMult + h, iIter);
+  if (FMult > h)
+     return (yp - Recruits(FMult - h, iIter)) / (2.0 * h);
+  return (yp - Recruits(FMult, iIter)) / h;
+  }
 
 double FLBRP::BiomassGrad(double FMult, int iIter)
   {
-  adouble
-  result=0.0;
-  adouble FMult_ad;
-  FMult_ad = FMult;
-  double seed=1.0;
-  FMult_ad.setADValue(&seed);
-
-   for (int iUnit=1; iUnit<=nunits; iUnit++)
-      result += BPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
-
-   double RtnVal = *(result.getADValue());
-
-   return RtnVal;
-   }
-
-double FLBRP::ad_SSB(double FMult, int iIter)
-   {
-   adouble result = 0.0;
-   adouble FMult_ad;
-   FMult_ad = FMult;
-   for (int iUnit=1; iUnit<=nunits; iUnit++)
-      result += SPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
-
-   return *(result.getADValue());
-   }
-
-double FLBRP::ad_Biomass(double FMult, int iIter)
-   {
-   adouble result = 0.0;
-   adouble FMult_ad;
-   FMult_ad = FMult;
-   for (int iUnit=1; iUnit<=nunits; iUnit++)
-      result += BPR(FMult_ad,iUnit,iIter)*Recruits(FMult_ad,iUnit,iIter);
-
-   return *(result.getADValue());}
+  double h = fd_step_F(FMult);
+  double yp = Biomass(FMult + h, iIter);
+  if (FMult > h)
+     return (yp - Biomass(FMult - h, iIter)) / (2.0 * h);
+  return (yp - Biomass(FMult, iIter)) / h;
+  }
 
 extern "C" SEXPDLLExport InitialCond(SEXP xStk, SEXP xSRModel, SEXP xSRPar, SEXP xCtrl){
    FLStock stock(xStk);
@@ -2105,4 +1655,4 @@ extern "C" SEXPDLLExport InitialCond(SEXP xStk, SEXP xSRModel, SEXP xSRPar, SEXP
 
    //brp.brp(SEXP Object);
 
-   return(stock.Return());}
+   return(stock.Return());}

@@ -18,8 +18,6 @@
 
 #include <iostream>
 #include <FLCoreClasses.h>
-#include <adolc/adtl.h>
-typedef adtl::adouble adouble;
 
 #define N_SR_PARAM 3;
    
@@ -136,23 +134,18 @@ protected:
 
    double YPR(     double, int);
    double YPR(     double, int, int);
-   adouble YPR(   adouble, int, int);
    
    double RPR(     double, int);
    double RPR(     double, int, int);
-   adouble RPR(   adouble, int, int);
    
    double PPR(     double, int);
    double PPR(     double, int, int);
-   adouble PPR(   adouble, int, int);
    
    double YS(      double, int);
 
    double    SSB( double, int);
-   double ad_SSB( double, int);
    
    double    Biomass( double, int);
-   double ad_Biomass( double, int);
    
    double yield(   double, int);
 
@@ -169,9 +162,6 @@ protected:
    double SSBGrad(    double FMult, int iIter);
    double BiomassGrad(double FMult, int iIter);
    double ProfitGrad( double FMult, int iIter);
-   adouble Recruits( adouble FMult, int iUnit, int iIter);
-   adouble SPR(      adouble FMult, int iUnit, int iIter);
-   adouble BPR(      adouble FMult, int iUnit, int iIter);
 };                  
 
 #endif /* _INC_FLBRP */
