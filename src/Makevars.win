@@ -1,1 +1,3 @@
 include Makevars
+
+PKG_LIBS = $(SUBLIBS) -lmingwex -lmsvcrt
