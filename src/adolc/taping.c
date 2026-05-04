@@ -32,7 +32,15 @@
 
 #include <adolc/param.h>
 
-#if defined(_WINDOWS) && !__STDC__
+
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+  /* MinGW-w64 (Rtools) does not provide stat64i32. Map it to a working variant. */
+  #ifndef stat64i32
+    #define stat64i32 _stat64
+  #endif
+#endif
+
+#if defined(_WIN32)
 #define stat _stat
 #define S_IFDIR _S_IFDIR
 #define S_IFMT _S_IFMT
