@@ -1,4 +1,13 @@
-HEADERS = -I../../inst/include -I../adolc
+
+# Compute package root from relative path
+PKG_ROOT := $(abspath $(CURDIR)/../..)
+HEADERS = -I$(PKG_ROOT)/inst/include -I$(CURDIR)
+
+# Set defaults for compilers if not provided by R build system
+CC ?= gcc
+CXX ?= g++
+AR ?= ar
+RANLIB ?= ranlib
 
 ADOLC_CXXFLAGS= -DHAVE_MALLOC=1 -DHAVE_REALLOC=1 -DADOLC_VERSION=1 -DADOLC_SUBVERSION=9 -DADOLC_PATCHLEVEL=0 -DADOLC_USE_CALLOC=1
 ADOLC_CFLAGS= -DHAVE_MALLOC=1 -DHAVE_REALLOC=1 -DADOLC_VERSION=1 -DADOLC_SUBVERSION=9 -DADOLC_PATCHLEVEL=0 -DADOLC_USE_CALLOC=1
@@ -20,21 +29,21 @@ library: lib
 
 %.o: %.c
 	@echo CC  $<
-	@${CC} ${HEADERS} ${ADOLC_CFLAGS} -fPIC -c $<
+	$(CC) $(CFLAGS) $(HEADERS) $(ADOLC_CFLAGS) -fPIC -c $<
 
 %.o: %.cpp
 	@echo CXX $<
-	@${CXX} ${CXXFLAGS} ${HEADERS} ${ADOLC_CXXFLAGS} -fPIC -c $<
+	$(CXX) $(CXXFLAGS) $(HEADERS) $(ADOLC_CXXFLAGS) -fPIC -c $<
 
 LIB = ../adolc.a
 
 lib: $(LIB)
 
 $(LIB): $(ADCOBJS)
-	@${AR} -rucs $(LIB) ${ADCOBJS}
+	$(AR) -rucs $(LIB) $(ADCOBJS)
 
 .PHONY: clean
 
 clean:
-	@-rm -f $(LIB)
-	@-rm -f $(ADCOBJS)
+	-rm -f $(LIB)
+	-rm -f $(ADCOBJS)

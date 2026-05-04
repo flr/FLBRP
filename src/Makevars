@@ -16,7 +16,7 @@ $(SHLIB): sublibs $(OBJECTS)
 
 sublibs: subclean
 	@for d in $(SUBDIRS); do \
-	  (cd $${d} && CC="$(CC)" CFLAGS="$(CFLAGS)" CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)" $(MAKE) library) || exit 1; \
+	  (cd $${d} && $(MAKE) library) || exit 1; \
 	done
 
 clean: subclean
@@ -24,7 +24,6 @@ clean: subclean
 	@-rm -f *.o $(SHLIB)
 
 subclean:
-	@-rm -f *.a
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) clean) || exit 1; \
 	done
