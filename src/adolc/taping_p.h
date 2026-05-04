@@ -21,6 +21,17 @@
 #include <adolc/taping.h>
 #include <errno.h>
 
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+  /*
+   * Rtools (mingw-w64) does not provide the legacy 'stat64i32' symbol.
+   * Some configurations/macros may rewrite stat() calls to stat64i32(),
+   * which then fails at link time. Map it to a supported CRT function.
+   */
+  #ifndef stat64i32
+    #define stat64i32 _stat64
+  #endif
+#endif
+
 BEGIN_C_DECLS
 
 enum WORKMODES {
