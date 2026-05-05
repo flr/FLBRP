@@ -5,10 +5,16 @@ HEADERS = -I$(PKG_ROOT)/inst/include -I$(CURDIR)
 
 # Set defaults for compilers if not provided by R build system
 CC ?= gcc
-cc ?= gcc
 CXX ?= g++
 AR ?= ar
 RANLIB ?= ranlib
+
+ifeq ($(OS),Windows_NT)
+  CC  := gcc
+  CXX := g++
+  AR  := ar
+  RANLIB := ranlib
+endif
 
 ADOLC_CXXFLAGS= -DHAVE_MALLOC=1 -DHAVE_REALLOC=1 -DADOLC_VERSION=1 -DADOLC_SUBVERSION=9 -DADOLC_PATCHLEVEL=0 -DADOLC_USE_CALLOC=1
 ADOLC_CFLAGS= -DHAVE_MALLOC=1 -DHAVE_REALLOC=1 -DADOLC_VERSION=1 -DADOLC_SUBVERSION=9 -DADOLC_PATCHLEVEL=0 -DADOLC_USE_CALLOC=1
