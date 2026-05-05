@@ -1,8 +1,12 @@
-# FLBRP 2.6.0
+# FLBRP 2.5.10
 
 ## NEW FEATURES
 
 - FLBRP(FLStockR) and FLBNRP(FLStock, predictModel) added to methods list.
+
+## BUG FIXES
+
+- src/Makevars and src/adolc/Makfile adapted to changes in R 4.6 toolchain
 
 # FLBRP 2.5.8
 
