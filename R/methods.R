@@ -304,8 +304,8 @@ setMethod('ssb', signature(object='FLBRP'),
     # CALL .biomass with mat as sel
     return(FLCore:::.biomass(n=stock.n(object), wt=flq %=% stock.wt(object),
       h=flq %=% harvest(object), m=flq %=% m(object),
-      th=flq %=% harvest.spwn(object), tm=flq %=% m.spwn(object),
-      time=flq %=% m.spwn(object), sel=flq %=% mat(object), byage=byage))
+      ph=flq %=% harvest.spwn(object), pm=flq %=% m.spwn(object),
+      sel=flq %=% mat(object), byage=byage))
   }
 )# }}}
 
