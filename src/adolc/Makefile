@@ -25,22 +25,27 @@ ADCOBJS= adalloc.o rpl_malloc.o adouble.o \
 	fov_offset_forward.o revolve.o advector.o adouble_tl.o \
 	param.o externfcts2.o
 
+FPIC =
+ifneq ($(OS),Windows_NT)
+  FPIC = -fPIC
+endif
+
 library: lib
 
 %.o: %.c
 	@echo CC  $<
-	$(CC) $(CFLAGS) $(HEADERS) $(ADOLC_CFLAGS) -fPIC -c $<
+	$(CC) $(CFLAGS) $(HEADERS) $(ADOLC_CFLAGS) $(FPIC) -c $<
 
 %.o: %.cpp
 	@echo CXX $<
-	$(CXX) $(CXXFLAGS) $(HEADERS) $(ADOLC_CXXFLAGS) -fPIC -c $<
+	$(CXX) $(CXXFLAGS) $(HEADERS) $(ADOLC_CXXFLAGS) $(FPIC) -c $<
 
 LIB = ../adolc.a
 
 lib: $(LIB)
 
 $(LIB): $(ADCOBJS)
-	$(AR) -rucs $(LIB) $(ADCOBJS)
+	$(AR) -rcs $(LIB) $(ADCOBJS)
 
 .PHONY: clean
 
