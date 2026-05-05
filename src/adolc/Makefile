@@ -5,6 +5,7 @@ HEADERS = -I$(PKG_ROOT)/inst/include -I$(CURDIR)
 
 # Set defaults for compilers if not provided by R build system
 CC ?= gcc
+cc ?= gcc
 CXX ?= g++
 AR ?= ar
 RANLIB ?= ranlib
