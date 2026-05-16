@@ -20,6 +20,7 @@
   colours = "missing",
   panels = NULL,
   ncol = 2,
+  removals = FALSE,
   ...
 )
 }
@@ -59,6 +60,7 @@ m(ple4brp)[1:3,] <- 0.2
 computeRefpts(ple4brp)
 data(ple4brp)
 plot(ple4brp)
+plot(ple4brp, catch=TRUE)
 # ADD observations
 plot(ple4brp, obs=TRUE)
 # SELECT which refpts to plot

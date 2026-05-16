@@ -5,7 +5,7 @@
 \alias{msyRange,FLBRP-method}
 \title{MSY range}
 \usage{
-\S4method{msyRange}{FLBRP}(object, range = 0.1)
+\S4method{msyRange}{FLBRP}(object, Ftarget = "msy", range = 0.1)
 }
 \arguments{
 \item{object}{\code{FLBRP}}
